@@ -3,39 +3,70 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>My Personal Library</title>
-		<link rel="stylesheet" type="text/css" href="css/mycv.css" >
-		<link rel="stylesheet" type="text/css" href="css/normalize.css" ><!--no need to change this-->
+		<!-- <link rel="stylesheet" type="text/css" href="css/mycv.css" >
+		<link rel="stylesheet" type="text/css" href="css/normalize.css" > --><!--no need to change this-->
+		<link rel="stylesheet" href="bootstrap/dist/css/bootstrap.min.css">
 		
 	</head>
 	<body>
-		<div id="wrapper">
+	
+		<nav class="navbar navbar-inverse">
+		  <div class="container-fluid">
+			<div class="navbar-header">
+			  <a class="navbar-brand" href="home.html">My Personal Library</a>
+			</div>
+			<ul class="nav navbar-nav">
+			  <li class="active"><a href="home.html">Home</a></li>
+			  <li><a href="daftar.php">Daftar Buku</a></li>
+			  <!--<li><a href="#">Page 2</a></li> -->
+			</ul>
+			<!-- <form class="navbar-form navbar-left">
+			  <div class="form-group">
+				<input type="text" class="form-control" placeholder="Username">
+				<input type="password" class="form-control" placeholder="Password">
+			  </div>
+			  <button type="submit" class="btn btn-default">Login</button>
+			</form> -->
+			<ul class="nav navbar-nav navbar-right">
+				<!-- <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li> -->
+				<?php 
+					session_start();
+					if (!isset($_SESSION["namauser"])){
+						echo "<li><a href='index.html'><span class='glyphicon glyphicon-log-in'></span>Login</a></li>";
+					}else if (isset($_SESSION["namauser"])){
+						echo "<li><a href='services/logout.php'><span class='glyphicon glyphicon-log-out'></span>Logout</a></li>";
+					}
+				?>
+			</ul>
+		  </div>
+		</nav>
+
+		<!-- <div id="wrapper">
 			<header>
 				<div id="title">
 					<h1 id="nomorOrang">My Personal Library</h1>
 				</div>
-				<input id="logout-btn" type="button" value="logout"><!-- <span>logout</span> --></input>
-			</header>
+				<a href="services/logout.php"><input id="logout-btn" type="button" value="logout"></input></a>
+			</header> -->
 			<div id="content">
-				<div id="profile">
-					
-					<div id="editor">
-						<fieldset>
-							
-						</fieldset>
-					</div>
-			
-				</div>
-				<div id="friendlist">
-				
-				</div>
-				
-				<div id="addfriends">
-					
+				<div class="container">
+				  <div class="jumbotron">
+					<h1>
+					Selamat Datang 
+					<?php
+						if (!isset($_SESSION["namauser"])){
+							header("Location: login.php");
+						}
+						echo $_SESSION["role"] + " " + $_SESSION["username"];
+					?>	
+					</h1>
+					<p>Anda telah memasuki digital library.</p>
+				  </div>
 				</div>
 			</div>
 		</div>
 		<script src="js/jquery-3.1.0.min.js"> </script>
-		<script src="js/home.js"> </script>
+		<script type="text/javascript" src="bootstrap/dist/js/bootstrap.min.js"></script>
 	</body>
 </html>
 
