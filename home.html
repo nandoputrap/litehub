@@ -32,7 +32,7 @@
 				<?php 
 					session_start();
 					if (!isset($_SESSION["namauser"])){
-						echo "<li><a href='index.html'><span class='glyphicon glyphicon-log-in'></span>Login</a></li>";
+						echo "<li><a href='index.php'><span class='glyphicon glyphicon-log-in'></span>Login</a></li>";
 					}else if (isset($_SESSION["namauser"])){
 						echo "<li><a href='services/logout.php'><span class='glyphicon glyphicon-log-out'></span>Logout</a></li>";
 					}

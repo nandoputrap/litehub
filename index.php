@@ -32,11 +32,11 @@
 			
 			$_SESSION["namauser"] = $row["username"];
 			$_SESSION["role"] = $row["role"];
-			header("Location: ../home.html");
+			header("Location: home.html");
 
 		}else {
 			echo  "<script type='text/javascript'>alert('Login Gagal');</script>";
-			header("Location: ../index.html");
+			header("Location: index.php");
 		}
 		
 	}
@@ -44,3 +44,24 @@
 	mysqli_close($databaseConnection);
 	
 ?>
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>My Personal Library</title>
+		<link rel="stylesheet" type="text/css" href="css/mycv.css" >
+		<link rel="stylesheet" type="text/css" href="css/normalize.css" > <!--no need to change this-->
+	</head>
+	<body>
+		<div class="login">
+			<h1>My Personal Library</h1>
+			<form method="post" action="index.php">
+				<input type="text" name="username" placeholder="Username" id="username" />
+				<input type="password" name="password" placeholder="Password" id="password" />
+				<input type="submit" class="submit-btn" value="Login"></input>
+			</form>
+		</div>
+		<script src="js/jquery-3.1.0.min.js"></script>
+	</body>
+</html>
