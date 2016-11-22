@@ -1,0 +1,12 @@
+* {
+	font-family: "Times New Roman", Georgia, Serif;
+}
+body {
+	background-image: url(../images/background.jpg);
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	background-attachment: fixed;
+}
+#loginTitle {
+	color: white;
+}

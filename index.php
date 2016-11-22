@@ -30,9 +30,10 @@
 			
 		if($count == 1) {
 			
+			$_SESSION["user_id"] = $row["user_id"];
 			$_SESSION["namauser"] = $row["username"];
 			$_SESSION["role"] = $row["role"];
-			header("Location: home.html");
+			header("Location: daftar.php");
 
 		}else {
 			echo  "<script type='text/javascript'>alert('Login Gagal');</script>";
@@ -46,22 +47,48 @@
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="id">
 	<head>
 		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>My Personal Library</title>
-		<link rel="stylesheet" type="text/css" href="css/mycv.css" >
-		<link rel="stylesheet" type="text/css" href="css/normalize.css" > <!--no need to change this-->
+		<link rel="stylesheet" href="bootstrap/dist/css/bootstrap.min.css">
+	    <link rel="stylesheet" type="text/css" href="css/index.css">
 	</head>
 	<body>
-		<div class="login">
-			<h1>My Personal Library</h1>
-			<form method="post" action="index.php">
-				<input type="text" name="username" placeholder="Username" id="username" />
-				<input type="password" name="password" placeholder="Password" id="password" />
-				<input type="submit" class="submit-btn" value="Login"></input>
-			</form>
+		<div class="obscure-background">
+			<h1 id="loginTitle" class="text-center">My Personal Library</h1>
+			<div class="span7 text-center">
+				<button type="button" class="btn-lg btn-primary" data-toggle="modal" data-target="#insertModal">
+					Masuk
+				</button>
+			</div>
+			<div class="modal fade" id="insertModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<h4 class="modal-title" id="insertModalLabel">Login Page</h4>
+						</div>
+						<div class="modal-body">
+							<form action="index.php" method="post">
+								<div class="form-group">
+									<label for="username">Username</label>
+									<input type="text" class="form-control" id="insert-username" name="username" placeholder="Username">
+								</div>
+								<div class="form-group">
+									<label for="password">Password</label>
+									<input type="password" class="form-control" id="insert-password" name="password" placeholder="Password">
+								</div>
+								<input type="hidden" id="insert-command" name="command" value="insert">
+								<button type="submit" class="btn btn-primary">Login</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			<script type="text/javascript" src="js/jquery-3.1.0.min.js"></script>
+			<script type="text/javascript" src="bootstrap/dist/js/bootstrap.min.js"></script>
 		</div>
-		<script src="js/jquery-3.1.0.min.js"></script>
 	</body>
 </html>

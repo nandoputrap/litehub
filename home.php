@@ -35,33 +35,36 @@
 		mysqli_close($conn);
 	}
 	
-	function detailBuku($book_id, $user_id) {
+	function reviewBuku($book_id, $user_id) {
 		
 		$conn = connectDB();
 		
 		$reviewBuku = $_POST['reviewBuku'];
-		$sql = "UPDATE review SET content='$reviewBuku' WHERE book_id=$book_id and user_id=$user_id";
-		
+		//$sql = "UPDATE review SET content='$reviewBuku' WHERE book_id='$book_id' and user_id='$user_id'";
+		$sql = "INSERT into review(book_id, user_id, date, content) values('$book_id', '$user_id' , '$date', '$reviewBuku')";
+
 		if($result = mysqli_query($conn, $sql)) {
 			echo "New record created successfully <br/>";
-			header("Location: latihan.php");
+			header("Location: daftar.php");
 			} else {
 			die("Error: $sql");
 		}
 		
-		$sql2 = "SELECT description FROM book WHERE book_id=$book_id";
-		
-		if(!$result = mysqli_query($conn, $sql2)) {
-			die("Error: $sql2");
-		}
-		mysqli_close($conn);
-		return $result;
 	}
 
-	function borrowBook($userid, $bookid) {
+	function pinjamBuku($user_id, $book_id) {
+		$conn = connectDB();
+
+		$sql = "INSERT into review(book_id, user_id) values('$book_id', '$user_id')";
 		
+		if($result = mysqli_query($conn, $sql)) {
+			echo "New record created successfully <br/>";
+			header("Location: daftar.php");
+			} else {
+			die("Error: $sql");
+		}
 	}
-	
+
 	function selectAllFromTable($table) {
 		$conn = connectDB();
 		
@@ -86,7 +89,7 @@
 		return $result;
 	}
 
-	function reviewBuku($table) {
+	function detailBuku($table) {
 		$conn = connectDB();
 
 		$sql = "SELECT book_id, user_id, date, content FROM $table";
@@ -102,7 +105,9 @@
 		if($_POST['command'] === 'insert') {
 			insertBuku();
 		}else if($_POST['command'] === 'update') {
-			detailBuku($_POST['bookid'],$_POST['userid']);
+			reviewBuku($_POST["book_id"],$_SESSION["user_id"]);
+		}else if ($_POST['command'] === 'delete'){
+
 		}
 	}
 	
@@ -130,8 +135,8 @@
 				  <a class="navbar-brand" href="home.php">My Personal Library</a>
 				</div>
 				<ul class="nav navbar-nav">
-				  <li><a href="home.php">Home</a></li>
-				  <li class="active"><a href="daftar.php">Daftar Buku</a></li>
+				  <li class="active"><a href="home.php">Home</a></li>
+				  <li><a href="daftar.php">Daftar Buku</a></li>
 				  <!--<li><a href="#">Page 2</a></li> -->
 				</ul>
 				<!-- <form class="navbar-form navbar-left">
@@ -228,7 +233,8 @@
                                 }
                                 if (isset($_SESSION["namauser"])){
                                     echo '<td>
-                                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#detailModal" onclick="setUpdateData(\''.$row[0].'\',\''.$row[1].'\',\''.$row[2].'\',\''.$row[3].'\',\''.$row[4].'\')">
+                                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#detailModal" 
+                                    onclick="setUpdateData(\''.$row[1].'\',\''.$row[2].'\',\''.$row[3].'\',\''.$row[4].'\')">  
                                     Detail
                                     </button>
                                     </td>';
@@ -262,7 +268,7 @@
                         	<fieldset>
                         		<legend>Review Buku</legend>
                         		<?php
-                        			$review = reviewBuku("review");
+                        			$review = detailBuku("review");
                         			while ($row = mysqli_fetch_row($review)){
                         				foreach($row as $key => $value) {
                         					echo "$value";
@@ -279,9 +285,6 @@
                                 <input type="hidden" id="update-packageid" name="packageid">
                                 <input type="hidden" id="update-command" name="command" value="update">
                                 <button type="submit" class="btn btn-primary">Submit</button>
-                                <?php
-
-                                ?>
                                 <button type="button" class="btn btn-default">Pinjam</button>
                             </form>
                         </div>
@@ -292,12 +295,11 @@
 		<script src="js/jquery-3.1.0.min.js"> </script>
 		<script src="bootstrap/dist/js/bootstrap.min.js"></script>		
 		<script>
-			function setUpdateData(id, namaPaket, tujuan, fitur, harga) {
-				$("#update-userid").val(id);
-				$("#update-fullname").val(namaPaket);
-				$("#update-email").val(tujuan);
-				$("#update-username").val(fitur);
-				$("#update-role").val(harga);
+			function setUpdateData(book_id, user_id, date, content) {
+				$("#update-book_id").val(book_id);
+				$("#update-user_id").val(user_id);
+				$("#update-date").val(date);
+				$("#update-content").val(content);
 			}
 		</script>
 	</body>
