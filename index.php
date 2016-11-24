@@ -37,7 +37,6 @@
 
 		}else {
 			echo  "<script type='text/javascript'>alert('Login Gagal');</script>";
-			header("Location: index.php");
 		}
 		
 	}

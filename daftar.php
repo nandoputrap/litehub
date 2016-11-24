@@ -35,12 +35,11 @@
 		mysqli_close($conn);
 	}
 	
-	function detailBuku($book_id, $user_id) {
+	function detailBuku($book_id) {
 		
 		$conn = connectDB();
 		
-		$reviewBuku = $_POST['reviewBuku'];
-		$sql = "UPDATE review SET content='$reviewBuku' WHERE book_id=$book_id and user_id=$user_id";
+		$sql = "SELECT * FROM book WHERE book_id = '$book_id'";
 		
 		if($result = mysqli_query($conn, $sql)) {
 			echo "New record created successfully <br/>";
@@ -48,17 +47,10 @@
 			} else {
 			die("Error: $sql");
 		}
-		
-		$sql2 = "SELECT description FROM book WHERE book_id=$book_id";
-		
-		if(!$result = mysqli_query($conn, $sql2)) {
-			die("Error: $sql2");
-		}
 		mysqli_close($conn);
-		return $result;
 	}
 
-	function borrowBook($userid, $bookid) {
+	function pinjamBuku($userid, $bookid) {
 		
 	}
 	
@@ -114,7 +106,9 @@
 		if($_POST['command'] === 'insert') {
 			insertBuku();
 		}else if($_POST['command'] === 'update') {
-			detailBuku($_POST['bookid'],$_POST['userid']);
+			
+		}else if ($_POST['command'] === 'detail'){
+			detailBuku($_POST['book_id']);
 		}
 	}
 	
@@ -228,7 +222,7 @@
                     <tbody>
                         <?php
                             $daftarbuku = daftarBuku("book");
-                            $loan = selectAllFromTable("loan");
+                            $pinjamBuku = selectAllFromTable("loan");
 
                             while ($row = mysqli_fetch_row($daftarbuku)) {
                                 echo "<tr>";
@@ -246,23 +240,27 @@
                                 }
                                 if (isset($_SESSION["namauser"])){
                                     echo '<td>
+									<form action="daftar.php" method="post">
+									<input type="hidden" id="detail-book_id" name="book_id" value="'.$row[0].'">
+									<input type="hidden" id="detail-command" name="command" value="detail">
                                     <button type="button" class="btn btn-default" data-toggle="modal" data-target="#detailModal">
                                     Detail
                                     </button>
+									</fotm>
                                     </td>';
-                                    if($row[4] > 0) {  
-                                    	$boolean = false;
-                                    	while($baris = mysqli_fetch_row($loan)) {
-                                    		foreach ($baris as $key => $value) {
-                                    			if
-                                    		}
-                                    	}  	
-                                    	if() {
+                                    // if($row[4] > 0) {  
+                                    	// $boolean = false;
+                                    	// while($baris = mysqli_fetch_row($loan)) {
+                                    		// foreach ($baris as $key => $value) {
+                                    			// if
+                                    		// }
+                                    	// }  	
+                                    	// if() {
 
-                                    	} else {
+                                    	// } else {
 
-                                    	}
-                                	}
+                                    	// }
+                                	// }
                                 }  
                                 echo "</tr>";
                             }
@@ -280,16 +278,31 @@
                         <div class="modal-body">
                         	<fieldset>
                         		<legend>Deskripsi Buku</legend>
-                        		<?php
-                        			$row = 
-                        			$deskripsi = deskripsiBuku("book");
-                        			while ($row = mysqli_fetch_row($deskripsi)){
-                        				foreach($row as $key => $value) {
-                        					echo "$value";
-                        				}
-                        			}
+                        		<table class='table'>
+									<thead> <tr><th>Book ID</th> <th>Display</th> <th>Judul Buku</th> <th>Pengarang</th> <th>Penerbit</th> <th>Stock</th> </tr> </thead>
+									<tbody>
+										<?php
+										
+											// $detail = selectAllFromTable("book");
 
-                        		?>
+											// while ($row = mysqli_fetch_row($detail)) {
+												// echo "<tr>";
+												// foreach($row as $key => $value) {
+													// if (!$key == "img_path"){
+														// echo "<td>$value</td>";
+													// }else {
+														// if($key == 1) {
+															// echo "<td><img class='img-responsive' src='$value' alt='$value'></td>";	
+														// }
+														// else {
+															// echo "<td>$value</td>";
+														// }
+													// }
+												// }
+											// }
+										?>
+									</tbody>
+								</table>
                         	</fieldset>
                         	<fieldset>
                         		<legend>Review Buku</legend>
