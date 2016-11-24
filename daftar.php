@@ -62,10 +62,22 @@
 		
 	}
 	
+	function daftarBuku($table) {
+		$conn = connectDB();
+		
+		$sql = "SELECT book_id, img_path, title, author, publisher, quantity FROM $table";
+		
+		if(!$result = mysqli_query($conn, $sql)) {
+			die("Error: $sql");
+		}
+		mysqli_close($conn);
+		return $result;
+	}
+
 	function selectAllFromTable($table) {
 		$conn = connectDB();
 		
-		$sql = "SELECT img_path, title, author, publisher, quantity FROM $table";
+		$sql = "SELECT * FROM $table";
 		
 		if(!$result = mysqli_query($conn, $sql)) {
 			die("Error: $sql");
@@ -212,27 +224,46 @@
             </div>
             <div class="table-responsive">
                 <table class='table'>
-                    <thead> <tr> <th>Display</th> <th>Judul Buku</th> <th>Pengarang</th> <th>Penerbit</th> <th>Stock</th> </tr> </thead>
+                    <thead> <tr><th>Book ID</th> <th>Display</th> <th>Judul Buku</th> <th>Pengarang</th> <th>Penerbit</th> <th>Stock</th> </tr> </thead>
                     <tbody>
                         <?php
-                            
-                            $buku = selectAllFromTable("book");
-                            while ($row = mysqli_fetch_row($buku)) {
+                            $daftarbuku = daftarBuku("book");
+                            $loan = selectAllFromTable("loan");
+
+                            while ($row = mysqli_fetch_row($daftarbuku)) {
                                 echo "<tr>";
                                 foreach($row as $key => $value) {
-                                    if ($key == "img_path"){
-                                        echo "<td><img class='img-responsive' src='$value' alt='$value'></td>";
-                                    }else {
+                                    if (!$key == "img_path"){
                                         echo "<td>$value</td>";
+                                    }else {
+                                    	if($key == 1) {
+                                    		echo "<td><img class='img-responsive' src='$value' alt='$value'></td>";	
+                                    	}
+                                        else {
+                                        	echo "<td>$value</td>";
+                                    	}
                                     }
                                 }
                                 if (isset($_SESSION["namauser"])){
                                     echo '<td>
-                                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#detailModal" onclick="setUpdateData(\''.$row[0].'\',\''.$row[1].'\',\''.$row[2].'\',\''.$row[3].'\',\''.$row[4].'\')">
+                                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#detailModal">
                                     Detail
                                     </button>
                                     </td>';
-                                }
+                                    if($row[4] > 0) {  
+                                    	$boolean = false;
+                                    	while($baris = mysqli_fetch_row($loan)) {
+                                    		foreach ($baris as $key => $value) {
+                                    			if
+                                    		}
+                                    	}  	
+                                    	if() {
+
+                                    	} else {
+
+                                    	}
+                                	}
+                                }  
                                 echo "</tr>";
                             }
                         ?>
@@ -250,6 +281,7 @@
                         	<fieldset>
                         		<legend>Deskripsi Buku</legend>
                         		<?php
+                        			$row = 
                         			$deskripsi = deskripsiBuku("book");
                         			while ($row = mysqli_fetch_row($deskripsi)){
                         				foreach($row as $key => $value) {
