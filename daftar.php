@@ -34,21 +34,6 @@
 		}
 		mysqli_close($conn);
 	}
-	
-	function detailBuku($book_id) {
-		
-		$conn = connectDB();
-		
-		$sql = "SELECT * FROM book WHERE book_id = '$book_id'";
-		
-		if($result = mysqli_query($conn, $sql)) {
-			echo "New record created successfully <br/>";
-			header("Location: latihan.php");
-			} else {
-			die("Error: $sql");
-		}
-		mysqli_close($conn);
-	}
 
 	function pinjamBuku($userid, $bookid) {
 		
@@ -101,14 +86,15 @@
 		mysqli_close($conn);
 		return $result;
 	}	
-	
+	$detail = Array();
 	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		if($_POST['command'] === 'insert') {
 			insertBuku();
 		}else if($_POST['command'] === 'update') {
 			
 		}else if ($_POST['command'] === 'detail'){
-			detailBuku($_POST['book_id']);
+			$detail = detailBuku($_POST['book_id']);
+			mysql_fetch_row($detail);
 		}
 	}
 	
@@ -238,15 +224,11 @@
                                     	}
                                     }
                                 }
-                                if (isset($_SESSION["namauser"])){
+                                //if (isset($_SESSION["namauser"])){
                                     echo '<td>
-									<form action="daftar.php" method="post">
-									<input type="hidden" id="detail-book_id" name="book_id" value="'.$row[0].'">
-									<input type="hidden" id="detail-command" name="command" value="detail">
-                                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#detailModal">
+                                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#detailModal" onclick="detailBuku('.$row[0].')">
                                     Detail
                                     </button>
-									</fotm>
                                     </td>';
                                     // if($row[4] > 0) {  
                                     	// $boolean = false;
@@ -261,7 +243,7 @@
 
                                     	// }
                                 	// }
-                                }  
+                                //}  
                                 echo "</tr>";
                             }
                         ?>
@@ -280,41 +262,14 @@
                         		<legend>Deskripsi Buku</legend>
                         		<table class='table'>
 									<thead> <tr><th>Book ID</th> <th>Display</th> <th>Judul Buku</th> <th>Pengarang</th> <th>Penerbit</th> <th>Stock</th> </tr> </thead>
-									<tbody>
-										<?php
-										
-											// $detail = selectAllFromTable("book");
-
-											// while ($row = mysqli_fetch_row($detail)) {
-												// echo "<tr>";
-												// foreach($row as $key => $value) {
-													// if (!$key == "img_path"){
-														// echo "<td>$value</td>";
-													// }else {
-														// if($key == 1) {
-															// echo "<td><img class='img-responsive' src='$value' alt='$value'></td>";	
-														// }
-														// else {
-															// echo "<td>$value</td>";
-														// }
-													// }
-												// }
-											// }
-										?>
+									<tbody id="detailBuku">
 									</tbody>
 								</table>
                         	</fieldset>
                         	<fieldset>
                         		<legend>Review Buku</legend>
-                        		<?php
-                        			$review = reviewBuku("review");
-                        			while ($row = mysqli_fetch_row($review)){
-                        				foreach($row as $key => $value) {
-                        					echo "$value";
-                        				}
-                        			}
-
-                        		?>
+                        		<div id="reviewBuku">
+								</div>
                         	</fieldset>
                             <form action="daftar.php" method="post">
                                 <div class="form-group">
@@ -343,6 +298,33 @@
 				$("#update-email").val(tujuan);
 				$("#update-username").val(fitur);
 				$("#update-role").val(harga);
+			}
+			function detailBuku(book_id){
+				reviewBuku(book_id);
+				$.ajax({
+					url: "http://localhost/tp2/ajax.php",
+					datatype: "html",
+					data: { book_id : book_id, command : "detail" },
+					method: "POST"
+				}).done(function(obj){
+					var temp = JSON.parse(obj);
+					$("#detailBuku").html("");
+					$("#detailBuku").html("<td>"+ temp[0] + "</td>" + "<td><img src='"+ temp[1] + "'></td>" + "<td>"+ temp[2] + "</td>" + "<td>"+ temp[3] + "</td>" + "<td>"+ temp[4] + "</td>" + 
+					"<td>"+ temp[5] + "</td>" + "<td>"+ temp[6] + "</td>");
+				});
+			}
+			function reviewBuku(book_id){
+				$.ajax({
+					url: "http://localhost/tp2/ajax.php",
+					datatype: "html",
+					data: { book_id : book_id, command : "review" },
+					method: "POST"
+				}).done(function(obj){
+					console.log(obj);
+					var temp = JSON.parse(obj);
+					$("#reviewBuku").html("");
+					$("#reviewBuku").html(temp[3] + " " + temp[4]);
+				}); 
 			}
 		</script>
 	</body>
