@@ -51,11 +51,10 @@
 		return $result;
 	}
 
-	function selectAllFromTable($table) {
+	function selectRowsFromLoan($userid) {
 		$conn = connectDB();
-		
-		$sql = "SELECT * FROM $table";
-		
+
+		$sql = "SELECT * FROM loan WHERE user_id = $userid";
 		if(!$result = mysqli_query($conn, $sql)) {
 			die("Error: $sql");
 		}
@@ -85,7 +84,8 @@
 		}
 		mysqli_close($conn);
 		return $result;
-	}	
+	}
+
 	$detail = Array();
 	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		if($_POST['command'] === 'insert') {
@@ -107,44 +107,45 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="bootstrap/dist/css/bootstrap.min.css">
+		<style>
+			#fotoBuku {
+				height: 50%;
+			}
+		</style>
 	</head>
 	<body>
 		<div class="container">
 			<div class="container">
-			  <div class="jumbotron">
-				<h1>My Personal Library</h1>
-				<p>My Personal Library is my first online library.</p>
-			  </div>
+				<div class="jumbotron">
+					<h1>My Personal Library</h1>
+					<p>My Personal Library is my first online library.</p>
+				</div>
 			</div>
 			<nav class="navbar navbar-inverse">
-			  <div class="container-fluid">
-				<div class="navbar-header">
-				  <a class="navbar-brand" href="home.php">My Personal Library</a>
+				<div class="container-fluid">
+					<div class="navbar-header">
+						<a class="navbar-brand" href="home.php">My Personal Library</a>
+					</div>
+					<ul class="nav navbar-nav">
+						<li><a href="home.php">Home</a></li>
+						<li class="active"><a href="daftar.php">Daftar Buku</a></li>
+						<?php
+							if (isset($_SESSION['namauser'])){
+								echo '<li><a href="profile.php">Daftar Pinjaman</a></li>';
+							}
+						?>
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
+						<?php 
+							session_start();
+							if (!isset($_SESSION["namauser"])){
+								echo "<li><a href='index.php'><span class='glyphicon glyphicon-log-in'></span>Login</a></li>";
+							}else if (isset($_SESSION["namauser"])){
+								echo "<li><a href='services/logout.php'><span class='glyphicon glyphicon-log-out'></span>Logout</a></li>";
+							}
+						?>
+					</ul>
 				</div>
-				<ul class="nav navbar-nav">
-				  <li><a href="home.php">Home</a></li>
-				  <li class="active"><a href="daftar.php">Daftar Buku</a></li>
-				  <!--<li><a href="#">Page 2</a></li> -->
-				</ul>
-				<!-- <form class="navbar-form navbar-left">
-				  <div class="form-group">
-					<input type="text" class="form-control" placeholder="Username">
-					<input type="password" class="form-control" placeholder="Password">
-				  </div>
-				  <button type="submit" class="btn btn-default">Login</button>
-				</form> -->
-				<ul class="nav navbar-nav navbar-right">
-					<!-- <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li> -->
-					<?php 
-						session_start();
-						if (!isset($_SESSION["namauser"])){
-							echo "<li><a href='index.php'><span class='glyphicon glyphicon-log-in'></span>Login</a></li>";
-						}else if (isset($_SESSION["namauser"])){
-							echo "<li><a href='services/logout.php'><span class='glyphicon glyphicon-log-out'></span>Logout</a></li>";
-						}
-					?>
-				</ul>
-			  </div>
 			</nav>
 			<h4>
                 Selamat Datang
@@ -161,7 +162,6 @@
                     </button>";
                 }
             ?>
-            
             <div class="modal fade" id="insertModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -208,43 +208,42 @@
                     <tbody>
                         <?php
                             $daftarbuku = daftarBuku("book");
-                            $pinjamBuku = selectAllFromTable("loan");
+                            // if(isset($_SESSION["user_id"])) {
+                            // 	$daftarpinjaman = selectRowsFromLoan((int)$_SESSION["user_id"]);	
+                            // } else {
+                            $daftarpinjaman = selectRowsFromLoan($_SESSION["user_id"]);
+                            // }
 
-                            while ($row = mysqli_fetch_row($daftarbuku)) {
+                            $sum = 0;
+                            while ($row = mysqli_fetch_row($daftarpinjaman)) {
+                            	$sum++;
+                            }
+                            
+                           	while ($row = mysqli_fetch_row($daftarbuku)) {
                                 echo "<tr>";
                                 foreach($row as $key => $value) {
-                                    if (!$key == "img_path"){
-                                        echo "<td>$value</td>";
-                                    }else {
-                                    	if($key == 1) {
-                                    		echo "<td><img class='img-responsive' src='$value' alt='$value'></td>";	
-                                    	}
-                                        else {
-                                        	echo "<td>$value</td>";
-                                    	}
-                                    }
+	                            	if($key == 1) {
+	                            		echo "<td><img class='img-responsive' src='$value' alt='$value'></td>";	
+	                            	}
+	                                else {
+	                                	echo "<td>$value</td>";
+	                            	}
                                 }
-                                //if (isset($_SESSION["namauser"])){
-                                    echo '<td>
-                                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#detailModal" onclick="detailBuku('.$row[0].')">
-                                    Detail
-                                    </button>
-                                    </td>';
-                                    // if($row[4] > 0) {  
-                                    	// $boolean = false;
-                                    	// while($baris = mysqli_fetch_row($loan)) {
-                                    		// foreach ($baris as $key => $value) {
-                                    			// if
-                                    		// }
-                                    	// }  	
-                                    	// if() {
+								if ($row[0] == 5 || $row[0] == 6 || $row[0] == 7){
+								}else {
+									echo '<td>
+									<button type="button" class="btn btn-default" data-toggle="modal" data-target="#detailModal" onclick="detailBuku('.$row[0].')">
+									Detail
+									</button>
+									</td>';
+								}
 
-                                    	// } else {
+								//PINJAM BALIKIN
+								// while ($baris = mysqli_fetch_row($daftarpinjaman)) {
 
-                                    	// }
-                                	// }
-                                //}  
-                                echo "</tr>";
+								// }
+
+								echo "</tr>";
                             }
                         ?>
                     </tbody>
@@ -258,32 +257,54 @@
                             <h4 class="modal-title black-modal" id="detailModalLabel">Detail Buku</h4>
                         </div>
                         <div class="modal-body">
+							<fieldset>
+                        		<legend>Display Buku</legend>
+								<div id="displayBuku">
+								</div>
+							</fieldset>
+							<fieldset>
+                        		<legend>Judul Buku</legend>
+								<div id="judulBuku">
+								</div>
+							</fieldset>
                         	<fieldset>
                         		<legend>Deskripsi Buku</legend>
-                        		<table class='table'>
-									<thead> <tr><th>Book ID</th> <th>Display</th> <th>Judul Buku</th> <th>Pengarang</th> <th>Penerbit</th> <th>Stock</th> </tr> </thead>
+								<div id="deskripsiBuku">
+								</div>
+							</fieldset>
+							<div style="overflow-x:auto;">
+								<table class='table'>
+									<thead> <tr><th>Book ID</th> <th>Pengarang</th> <th>Penerbit</th> <th>Stock</th> </tr> </thead>
 									<tbody id="detailBuku">
 									</tbody>
 								</table>
-                        	</fieldset>
-                        	<fieldset>
-                        		<legend>Review Buku</legend>
-                        		<div id="reviewBuku">
-								</div>
-                        	</fieldset>
-                            <form action="daftar.php" method="post">
-                                <div class="form-group">
-                                    <label for="reviewBuku">Review Buku</label>
-                                    <input type="text" class="form-control" id="update-reviewBuku" name="reviewBuku" placeholder="Review Buku">
-                                </div>
-                                <input type="hidden" id="update-packageid" name="packageid">
-                                <input type="hidden" id="update-command" name="command" value="update">
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                                <?php
-
-                                ?>
-                                <button type="button" class="btn btn-default">Pinjam</button>
-                            </form>
+							</div>
+							<?php
+								if (isset($_SESSION["namauser"])){
+									echo '
+										<div style="overflow-x:auto;">
+											<table class="table">
+												<thead> <tr><th>Review ID</th> <th>Book ID</th> <th>User ID</th> <th>Date</th> </tr> </thead>
+												<tbody id="detailReview">
+												</tbody>
+											</table>
+										</div>
+										<fieldset>
+											<legend>Review Buku</legend>
+											<div id="reviewBuku">
+											</div>
+										</fieldset>
+										<form action="daftar.php" method="post">
+											<div class="form-group">
+												<label for="reviewBuku">Review Buku</label>
+												<input type="text" class="form-control" id="update-reviewBuku" name="reviewBuku" placeholder="Review Buku">
+											</div>
+											<button type="button" class="btn btn-primary" onclick="komenBuku(<?php echo $_SESSION["namauser"];?>)">Submit</button>
+											<button type="button" class="btn btn-default">Pinjam</button>
+										</form>
+									';
+								}
+                            ?>
                         </div>
                     </div>
                 </div>
@@ -292,13 +313,6 @@
 		<script src="js/jquery-3.1.0.min.js"> </script>
 		<script src="bootstrap/dist/js/bootstrap.min.js"></script>		
 		<script>
-			function setUpdateData(id, namaPaket, tujuan, fitur, harga) {
-				$("#update-userid").val(id);
-				$("#update-fullname").val(namaPaket);
-				$("#update-email").val(tujuan);
-				$("#update-username").val(fitur);
-				$("#update-role").val(harga);
-			}
 			function detailBuku(book_id){
 				reviewBuku(book_id);
 				$.ajax({
@@ -308,9 +322,11 @@
 					method: "POST"
 				}).done(function(obj){
 					var temp = JSON.parse(obj);
-					$("#detailBuku").html("");
-					$("#detailBuku").html("<td>"+ temp[0] + "</td>" + "<td><img src='"+ temp[1] + "'></td>" + "<td>"+ temp[2] + "</td>" + "<td>"+ temp[3] + "</td>" + "<td>"+ temp[4] + "</td>" + 
-					"<td>"+ temp[5] + "</td>" + "<td>"+ temp[6] + "</td>");
+					$("#displayBuku").html("<td><img id='fotoBuku' src='"+ temp[1] + "'></td>");
+					$("#judulBuku").html(temp[2]);
+					$("#deskripsiBuku").html(temp[5]);
+					$("#detailBuku").html("<td id='book_id'>"+ temp[0] + "</td>" + "<td>"+ temp[3] + "</td>" + "<td>"+ temp[4] + "</td>" + 
+					"<td>"+ temp[6] + "</td>");
 				});
 			}
 			function reviewBuku(book_id){
@@ -320,11 +336,39 @@
 					data: { book_id : book_id, command : "review" },
 					method: "POST"
 				}).done(function(obj){
+					var temp = JSON.parse(obj);
+					$("#reviewBuku").html("");
+					$("#detailReview").html("");
+					for (var i = 0; i < temp.length; i++){
+						$("#reviewBuku").html($("#reviewBuku").html() + (i+1) + ".	" + temp[i][4] + "<br>");
+						for (var j = 0; j < temp[i].length; j++){
+							if (j === 0){
+								$("#detailReview").html($("#detailReview").html() + "<tr>");
+							}
+							if (j !== 4){
+								$("#detailReview").html($("#detailReview").html() + "<td>" + temp[i][j] + "</td>");
+							}
+							if (j === 4){
+								$("#detailReview").html($("#detailReview").html() + "</tr>");	
+							}
+						}
+					}
+				}); 
+			}
+			function komenBuku(user_id){
+				var idBuku = $("#book_id").val();
+				var isi = $("#update-reviewBuku").val();
+				$.ajax({
+					url: "http://localhost/tp2/ajax.php",
+					datatype: "html",
+					data: { book_id : idBuku, user_id : user_id, content : isi, command : "komentar" },
+					method: "POST"
+				}).done(function(obj){
 					console.log(obj);
 					var temp = JSON.parse(obj);
 					$("#reviewBuku").html("");
 					$("#reviewBuku").html(temp[3] + " " + temp[4]);
-				}); 
+				});ts3
 			}
 		</script>
 	</body>

@@ -22,21 +22,13 @@
 		
 		$sql = "SELECT * FROM book WHERE book_id = $book_id";
 		
-		$result = mysqli_query($conn, $sql);
-		$row = $result->fetch_array();
-		// echo $row[5];
-		// if(!$result = mysqli_query($conn, $sql)) {
-			// die("Error: $sql");
-		// }
+		if(!$result = mysqli_query($conn, $sql)) {
+			die("Error: $sql");
+		}
 		
-		// $row = mysqli_fetch_row($result);
-		// echo $row[0];
-		//$hasil='';
-		//$hasil.=(($hasil!=''?',':'').'{"book_id":"'.$baris[1].'","nama":"'.trim($ar[2]).'"}');
+		$row = mysqli_fetch_row($result);
 		mysqli_close($conn);
-		$json =  json_encode($row);
-		//return '{"detailBuku":['.$hasil.']}';
-		return $json;
+		return json_encode($row);
 		
 	}
 	
@@ -48,14 +40,36 @@
 		
 		if(!$result = mysqli_query($conn, $sql)) {
 			die("Error: $sql");
+		}else if (mysqli_num_rows($result = mysqli_query($conn, $sql)) == 0){
+			return "[]";
 		}
-		
-		$row = mysql_fetch_row($result);
+		$hasil = "[";
+		while ($row = mysqli_fetch_row($result)){
+			$hasil .= json_encode($row).",";
+		}
+		$hasil = substr($hasil,0,strlen($hasil)-1);
+		$hasil .= "]";
 		mysqli_close($conn);
-		$json =  json_encode($row);
-		return $json;
+		return $hasil;
 		
 	}
+	
+	function komenBuku($book_id,$user_id,$content) {
+		
+		$conn = connectDB();
+		
+		date_default_timezone_set("Asia/Jakarta");
+		$date = date("Y-m-d");
+		$sql = "INSERT into review (book_id, user_id, date, content) values($book_id, '$user_id', '$date', '$content')";
+		
+		if(!$result = mysqli_query($conn, $sql)) {
+			die("Error: $sql");
+		}
+		
+		mysqli_close($conn);
+		return reviewBuku($book_id);
+	}
+	
 	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		if ($_POST['command'] === 'detail'){
 			$detail = detailBuku($_POST['book_id']);
@@ -63,6 +77,9 @@
 		}else if ($_POST['command'] === 'review'){
 			$review = reviewBuku($_POST['book_id']);
 			echo $review;
-		}			
+		}else if ($_POST['command'] === 'komentar'){
+			$komen = komenBuku($_POST['book_id']);
+			echo $komen;
+		}				
 	}
 ?>
