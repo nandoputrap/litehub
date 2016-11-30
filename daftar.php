@@ -214,11 +214,10 @@
                             $daftarpinjaman = selectRowsFromLoan($_SESSION["user_id"]);
                             // }
 
-                            $sum = 0;
-                            while ($row = mysqli_fetch_row($daftarpinjaman)) {
-                            	$sum++;
+                            $arrayloan = array();
+                            while ($baris = mysqli_fetch_row($daftarpinjaman)) {
+                            	array_push($arrayloan, $baris);
                             }
-                            
                            	while ($row = mysqli_fetch_row($daftarbuku)) {
                                 echo "<tr>";
                                 foreach($row as $key => $value) {
@@ -237,12 +236,24 @@
 									</button>
 									</td>';
 								}
-
-								//PINJAM BALIKIN
-								// while ($baris = mysqli_fetch_row($daftarpinjaman)) {
-
-								// }
-
+								$flag = false;
+								for ($i=0; $i < count($arrayloan); $i++) { 
+									if ($arrayloan[$i][1] == $row[0]) {
+										echo '<td>
+										<button type="button" class="btn btn-default">
+										Restore
+										</button>
+										</td>';
+										$flag = true;
+									}
+								}
+								if($flag == false) {
+									echo '<td>
+										<button type="button" class="btn btn-default">
+										Borrow
+										</button>
+										</td>';
+								}
 								echo "</tr>";
                             }
                         ?>
