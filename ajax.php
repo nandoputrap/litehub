@@ -80,6 +80,6 @@
 		}else if ($_POST['command'] === 'komentar'){
 			$komen = komenBuku($_POST['book_id']);
 			echo $komen;
-		}				
+		}	
 	}
 ?>

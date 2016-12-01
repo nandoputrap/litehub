@@ -1,4 +1,5 @@
 <?php
+	session_start();
 	function connectDB() {
 		$servername = "localhost";
 		$username = "root";
@@ -33,10 +34,6 @@
 			die("Error: $sql");
 		}
 		mysqli_close($conn);
-	}
-
-	function pinjamBuku($userid, $bookid) {
-		
 	}
 	
 	function daftarBuku($table) {
@@ -86,6 +83,32 @@
 		return $result;
 	}
 
+	function pinjamBuku($book_id, $user_id) {
+		$conn = connectDB();
+		$sqlloan = "INSERT into loan (book_id, user_id) values ('$book_id','$user_id')";
+
+		$sqlbook = "UPDATE book SET quantity = quantity-1 where book_id = $book_id";
+		if(!$result = mysqli_query($conn, $sqlloan)) {
+			die("Error: $sqlloan");
+		}
+		if(!$result = mysqli_query($conn, $sqlbook)) {
+			die("Error: $sqlbook");
+		}
+		mysqli_close($conn);
+		header("Location: daftar.php");
+	}
+
+	function balikinBuku($book_id, $user_id) {
+		$conn = connectDB($book_id, $user_id);
+
+		if(!$result = mysqli_query($conn, $sql)) {
+			die("Error: $sql");
+		}
+		
+		mysqli_close($conn);
+		header("Location: daftar.php");
+	}
+
 	$detail = Array();
 	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		if($_POST['command'] === 'insert') {
@@ -95,6 +118,8 @@
 		}else if ($_POST['command'] === 'detail'){
 			$detail = detailBuku($_POST['book_id']);
 			mysql_fetch_row($detail);
+		} else if ($_POST['command'] === 'pinjam') {
+			pinjamBuku($_POST['book_id'],$_SESSION["user_id"]);
 		}
 	}
 	
@@ -136,8 +161,7 @@
 						?>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
-						<?php 
-							session_start();
+						<?php
 							if (!isset($_SESSION["namauser"])){
 								echo "<li><a href='index.php'><span class='glyphicon glyphicon-log-in'></span>Login</a></li>";
 							}else if (isset($_SESSION["namauser"])){
@@ -208,12 +232,7 @@
                     <tbody>
                         <?php
                             $daftarbuku = daftarBuku("book");
-                            // if(isset($_SESSION["user_id"])) {
-                            // 	$daftarpinjaman = selectRowsFromLoan((int)$_SESSION["user_id"]);	
-                            // } else {
                             $daftarpinjaman = selectRowsFromLoan($_SESSION["user_id"]);
-                            // }
-
                             $arrayloan = array();
                             while ($baris = mysqli_fetch_row($daftarpinjaman)) {
                             	array_push($arrayloan, $baris);
@@ -240,7 +259,7 @@
 								for ($i=0; $i < count($arrayloan); $i++) { 
 									if ($arrayloan[$i][1] == $row[0]) {
 										echo '<td>
-										<button type="button" class="btn btn-default">
+										<button type="button" class="btn btn-default" onclick="balikinBuku('.$row[0].','.$arrayloan[$i][2].')">
 										Restore
 										</button>
 										</td>';
@@ -249,10 +268,12 @@
 								}
 								if($flag == false) {
 									echo '<td>
-										<button type="button" class="btn btn-default">
-										Borrow
-										</button>
-										</td>';
+									<form action="daftar.php" method="post">
+										<input type="hidden" name="book_id" value="'.$row[0].'">
+										<input type="hidden" name="command" value="pinjam">
+										<button type="submit" class="btn btn-default">Pinjam</button>
+									</form>
+									</td>';
 								}
 								echo "</tr>";
                             }
