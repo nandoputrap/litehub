@@ -48,10 +48,10 @@
 		return $result;
 	}
 
-	function selectRowsFromLoan($userid) {
+	function selectRowsFromLoan() {
 		$conn = connectDB();
 
-		$sql = "SELECT * FROM loan WHERE user_id = $userid";
+		$sql = "SELECT * FROM loan WHERE user_id = ".$_SESSION["user_id"]."";
 		if(!$result = mysqli_query($conn, $sql)) {
 			die("Error: $sql");
 		}
@@ -98,13 +98,17 @@
 		header("Location: daftar.php");
 	}
 
-	function balikinBuku($book_id, $user_id) {
+	function balikBuku($book_id, $user_id) {
 		$conn = connectDB($book_id, $user_id);
+		$sqlloan = "DELETE FROM loan WHERE book_id = $book_id AND user_id = $user_id";
 
-		if(!$result = mysqli_query($conn, $sql)) {
-			die("Error: $sql");
+		$sqlbook = "UPDATE book SET quantity = quantity+1 where book_id = $book_id";
+		if(!$result = mysqli_query($conn, $sqlloan)) {
+			die("Error: $sqlloan");
 		}
-		
+		if(!$result = mysqli_query($conn, $sqlbook)) {
+			die("Error: $sqlbook");
+		}
 		mysqli_close($conn);
 		header("Location: daftar.php");
 	}
@@ -120,6 +124,8 @@
 			mysql_fetch_row($detail);
 		} else if ($_POST['command'] === 'pinjam') {
 			pinjamBuku($_POST['book_id'],$_SESSION["user_id"]);
+		} else if ($_POST['command'] === 'balik') {
+			balikBuku($_POST['book_id'],$_SESSION["user_id"]);
 		}
 	}
 	
@@ -132,6 +138,7 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="bootstrap/dist/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="css/style.css">
 		<style>
 			#fotoBuku {
 				height: 50%;
@@ -154,11 +161,6 @@
 					<ul class="nav navbar-nav">
 						<li><a href="home.php">Home</a></li>
 						<li class="active"><a href="daftar.php">Daftar Buku</a></li>
-						<?php
-							if (isset($_SESSION['namauser'])){
-								echo '<li><a href="profile.php">Daftar Pinjaman</a></li>';
-							}
-						?>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
 						<?php
@@ -232,11 +234,14 @@
                     <tbody>
                         <?php
                             $daftarbuku = daftarBuku("book");
-                            $daftarpinjaman = selectRowsFromLoan($_SESSION["user_id"]);
-                            $arrayloan = array();
-                            while ($baris = mysqli_fetch_row($daftarpinjaman)) {
-                            	array_push($arrayloan, $baris);
+                            if(isset($_SESSION['namauser'])) {
+                            	$daftarpinjaman = selectRowsFromLoan();
+	                            $arrayloan = array();
+	                            while ($baris = mysqli_fetch_row($daftarpinjaman)) {
+	                            	array_push($arrayloan, $baris[1]);
+	                            }
                             }
+                            
                            	while ($row = mysqli_fetch_row($daftarbuku)) {
                                 echo "<tr>";
                                 foreach($row as $key => $value) {
@@ -255,25 +260,29 @@
 									</button>
 									</td>';
 								}
-								$flag = false;
-								for ($i=0; $i < count($arrayloan); $i++) { 
-									if ($arrayloan[$i][1] == $row[0]) {
-										echo '<td>
-										<button type="button" class="btn btn-default" onclick="balikinBuku('.$row[0].','.$arrayloan[$i][2].')">
-										Restore
-										</button>
-										</td>';
-										$flag = true;
+								if(isset($_SESSION['namauser'])) {
+									$flag = false;
+									for ($i=0; $i < count($arrayloan); $i++) { 
+										if ($arrayloan[$i] == $row[0]) {
+											echo '<td>
+											<form action="daftar.php" method="post">
+												<input type="hidden" name="book_id" value="'.$row[0].'">
+												<input type="hidden" name="command" value="balik">
+												<button type="submit" class="btn btn-default">Balik</button>
+											</form>
+											</td>';
+											$flag = true;
+										}
 									}
-								}
-								if($flag == false) {
-									echo '<td>
-									<form action="daftar.php" method="post">
-										<input type="hidden" name="book_id" value="'.$row[0].'">
-										<input type="hidden" name="command" value="pinjam">
-										<button type="submit" class="btn btn-default">Pinjam</button>
-									</form>
-									</td>';
+									if($flag == false) {
+										echo '<td>
+										<form action="daftar.php" method="post">
+											<input type="hidden" name="book_id" value="'.$row[0].'">
+											<input type="hidden" name="command" value="pinjam">
+											<button type="submit" class="btn btn-default">Pinjam</button>
+										</form>
+										</td>';
+									}
 								}
 								echo "</tr>";
                             }
