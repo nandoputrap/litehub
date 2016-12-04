@@ -23,11 +23,14 @@
 		$sql = "SELECT * FROM book WHERE book_id = $book_id";
 		
 		if(!$result = mysqli_query($conn, $sql)) {
+			echo "error";
 			die("Error: $sql");
 		}
 		
 		$row = mysqli_fetch_row($result);
 		mysqli_close($conn);
+		//return '["'.$row[0].'","'.$row[1].'","'.$row[2].'","'.$row[3].'","'.$row[4].'","'.htmlspecialchars(nl2br($row[5])).'","'.$row[6].'"]';
+		$row = array_map('utf8_encode', $row);
 		return json_encode($row);
 		
 	}
@@ -60,7 +63,7 @@
 		
 		date_default_timezone_set("Asia/Jakarta");
 		$date = date("Y-m-d");
-		$sql = "INSERT into review (book_id, user_id, date, content) values($book_id, '$user_id', '$date', '$content')";
+		$sql = "INSERT into review (book_id, user_id, date, content) values($book_id, $user_id, '$date', '$content')";
 		
 		if(!$result = mysqli_query($conn, $sql)) {
 			die("Error: $sql");
@@ -72,13 +75,14 @@
 	
 	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		if ($_POST['command'] === 'detail'){
+			$_SESSION['book_id'] = $_POST['book_id'];
 			$detail = detailBuku($_POST['book_id']);
 			echo $detail;
 		}else if ($_POST['command'] === 'review'){
 			$review = reviewBuku($_POST['book_id']);
 			echo $review;
 		}else if ($_POST['command'] === 'komentar'){
-			$komen = komenBuku($_POST['book_id']);
+			$komen = komenBuku($_POST['book_id'],$_POST['user_id'],$_POST['content']);
 			echo $komen;
 		}	
 	}

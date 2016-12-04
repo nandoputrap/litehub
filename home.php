@@ -114,14 +114,6 @@
                     }
                 ?>
             </h4>
-            <?php
-                if (isset($_SESSION["namauser"]) && $_SESSION["role"] === "admin"){
-                    echo "<br><button type='button' class='btn btn-primary' data-toggle='modal' data-target='#insertModal'>
-                        Add Buku
-                    </button>";
-                }
-            ?>
-            
             <div class="modal fade" id="insertModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -167,33 +159,35 @@
                     <thead> <tr> <th>Display</th> <th>Judul Buku</th> <th>Pengarang</th> <th>Penerbit</th> <th>Stock</th> </tr> </thead>
                     <tbody>
                         <?php
-                            $arraybook = selectBooks();
-                            for ($i=0; $i < count($arraybook); $i++) { 
-                            	$buku = selectRowsFromBook($arraybook[$i]);
-	                            while ($row = mysqli_fetch_row($buku)) {
-	                                echo "<tr>";
-	                                foreach($row as $key => $value) {
-	                                	if($key == 1 || $key == 2 || $key == 3
-	                                		|| $key == 4 || $key == 6) {
-		                                	if ($key == 1){
-		                                        echo "<td><img class='img-responsive' src='$value' alt='$value'></td>";
-		                                    }else {
-		                                        echo "<td>$value</td>";
-						                        
-		                                    }	
-	                                	}
-	                                    
-	                                }
-                            		echo '<td>
-											<form action="home.php" method="post">
-												<input type="hidden" name="book_id" value="'.$row[0].'">
-												<input type="hidden" name="command" value="balik">
-												<button type="submit" class="btn btn-default">Balik</button>
-											</form>
-											</td>';
-	                                echo "</tr>";
-	                            }
-                            }
+							if (isset($_SESSION['namauser'])){
+								$arraybook = selectBooks();
+								for ($i=0; $i < count($arraybook); $i++) { 
+									$buku = selectRowsFromBook($arraybook[$i]);
+									while ($row = mysqli_fetch_row($buku)) {
+										echo "<tr>";
+										foreach($row as $key => $value) {
+											if($key == 1 || $key == 2 || $key == 3
+												|| $key == 4 || $key == 6) {
+												if ($key == 1){
+													echo "<td><img class='img-responsive' src='$value' alt='$value'></td>";
+												}else {
+													echo "<td>$value</td>";
+													
+												}	
+											}
+											
+										}
+										echo '<td>
+												<form action="home.php" method="post">
+													<input type="hidden" name="book_id" value="'.$row[0].'">
+													<input type="hidden" name="command" value="balik">
+													<button type="submit" class="btn btn-default">Balik</button>
+												</form>
+												</td>';
+										echo "</tr>";
+									}
+								}
+							}
                         ?>
                     </tbody>
                 </table>

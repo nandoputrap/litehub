@@ -113,16 +113,10 @@
 		header("Location: daftar.php");
 	}
 
-	$detail = Array();
 	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		if($_POST['command'] === 'insert') {
 			insertBuku();
-		}else if($_POST['command'] === 'update') {
-			
-		}else if ($_POST['command'] === 'detail'){
-			$detail = detailBuku($_POST['book_id']);
-			mysql_fetch_row($detail);
-		} else if ($_POST['command'] === 'pinjam') {
+		}else if ($_POST['command'] === 'pinjam') {
 			pinjamBuku($_POST['book_id'],$_SESSION["user_id"]);
 		} else if ($_POST['command'] === 'balik') {
 			balikBuku($_POST['book_id'],$_SESSION["user_id"]);
@@ -252,15 +246,15 @@
 	                                	echo "<td>$value</td>";
 	                            	}
                                 }
-								if ($row[0] == 5 || $row[0] == 6 || $row[0] == 7){
-								}else {
+								//if ($row[0] == 5 || $row[0] == 6 || $row[0] == 7){
+								//}else {
 									echo '<td>
 									<button type="button" class="btn btn-default" data-toggle="modal" data-target="#detailModal" onclick="detailBuku('.$row[0].')">
 									Detail
 									</button>
 									</td>';
-								}
-								if(isset($_SESSION['namauser'])) {
+								//}
+								if(isset($_SESSION['namauser']) && $_SESSION['role'] === 'user') {
 									$flag = false;
 									for ($i=0; $i < count($arrayloan); $i++) { 
 										if ($arrayloan[$i] == $row[0]) {
@@ -321,29 +315,28 @@
 								</table>
 							</div>
 							<?php
-								if (isset($_SESSION["namauser"])){
-									echo '
-										<div style="overflow-x:auto;">
-											<table class="table">
-												<thead> <tr><th>Review ID</th> <th>Book ID</th> <th>User ID</th> <th>Date</th> </tr> </thead>
-												<tbody id="detailReview">
-												</tbody>
-											</table>
+								echo '
+									<div style="overflow-x:auto;">
+										<table class="table">
+											<thead> <tr><th>Review ID</th> <th>Book ID</th> <th>User ID</th> <th>Date</th> </tr> </thead>
+											<tbody id="detailReview">
+											</tbody>
+										</table>
+									</div>
+									<fieldset>
+										<legend>Review Buku</legend>
+										<div id="reviewBuku">
 										</div>
-										<fieldset>
-											<legend>Review Buku</legend>
-											<div id="reviewBuku">
-											</div>
-										</fieldset>
-										<form action="daftar.php" method="post">
-											<div class="form-group">
-												<label for="reviewBuku">Review Buku</label>
-												<input type="text" class="form-control" id="update-reviewBuku" name="reviewBuku" placeholder="Review Buku">
-											</div>
-											<button type="button" class="btn btn-primary" onclick="komenBuku(<?php echo $_SESSION["namauser"];?>)">Submit</button>
-											<button type="button" class="btn btn-default">Pinjam</button>
-										</form>
-									';
+									</fieldset>';
+								if (isset($_SESSION['namauser']) && $_SESSION['role'] === 'user'){
+									echo 
+									'<div class="form-group">
+										<label for="reviewBuku">Review Buku</label>
+										<input type="text" class="form-control" id="update-reviewBuku" name="reviewBuku" placeholder="Review Buku">
+									</div>
+									<button type="button" class="btn btn-primary" onclick="komenBuku(';
+									echo $_SESSION["user_id"];
+									echo ')">Submit</button>';
 								}
                             ?>
                         </div>
@@ -381,23 +374,23 @@
 					$("#reviewBuku").html("");
 					$("#detailReview").html("");
 					for (var i = 0; i < temp.length; i++){
+						console.log("i "+i);
 						$("#reviewBuku").html($("#reviewBuku").html() + (i+1) + ".	" + temp[i][4] + "<br>");
+						var tmp = "";
 						for (var j = 0; j < temp[i].length; j++){
-							if (j === 0){
-								$("#detailReview").html($("#detailReview").html() + "<tr>");
-							}
+							console.log("j "+j);
 							if (j !== 4){
-								$("#detailReview").html($("#detailReview").html() + "<td>" + temp[i][j] + "</td>");
-							}
-							if (j === 4){
-								$("#detailReview").html($("#detailReview").html() + "</tr>");	
+								tmp = tmp + "<td>" + temp[i][j] + "</td>";
+								// $("#detailReview").html($("#detailReview").html() + "<td>" + temp[i][j] + "</td>");
 							}
 						}
+						
+						$("#detailReview").html($("#detailReview").html() +"<tr>"+ tmp +"</tr>");	
 					}
 				}); 
 			}
 			function komenBuku(user_id){
-				var idBuku = $("#book_id").val();
+				var idBuku = $("#book_id").html();
 				var isi = $("#update-reviewBuku").val();
 				$.ajax({
 					url: "http://localhost/tp2/ajax.php",
@@ -405,11 +398,8 @@
 					data: { book_id : idBuku, user_id : user_id, content : isi, command : "komentar" },
 					method: "POST"
 				}).done(function(obj){
-					console.log(obj);
-					var temp = JSON.parse(obj);
-					$("#reviewBuku").html("");
-					$("#reviewBuku").html(temp[3] + " " + temp[4]);
-				});ts3
+					reviewBuku(idBuku);
+				});
 			}
 		</script>
 	</body>
