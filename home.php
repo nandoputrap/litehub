@@ -1,74 +1,73 @@
 <?php
-session_start();
-function connectDB() {
-	$servername = "localhost";
-	$username = "root";
-	$password = "";
-	$dbname = "test";
-	$conn = mysqli_connect($servername, $username, $password, $dbname);
-	
-	if (!$conn) {
-		die("Connection failed: " + mysqli_connect_error());
+	session_start();
+	function connectDB() {
+		$servername = "localhost";
+		$username = "root";
+		$password = "";
+		$dbname = "test";
+		$conn = mysqli_connect($servername, $username, $password, $dbname);
+		
+		if (!$conn) {
+			die("Connection failed: " + mysqli_connect_error());
+		}
+		return $conn;
 	}
-	return $conn;
-}
 
-if(!isset($_SESSION["namauser"])) {
-	header("Location: daftar.php");
-}
-
-function selectRowsFromLoan() {
-	$conn = connectDB();
-
-	$sql = "SELECT * FROM loan WHERE user_id = ".$_SESSION["user_id"]."";
-	if(!$result = mysqli_query($conn, $sql)) {
-		die("Error: $sql");
+	if(!isset($_SESSION["namauser"])) {
+		header("Location: daftar.php");
 	}
-	mysqli_close($conn);
-	return $result;
-} 
 
-function selectBooks() {
-	$pinjam = selectRowsFromLoan();
-	$arrayloan = array();
-	while ($baris = mysqli_fetch_row($pinjam)) {
-		array_push($arrayloan, $baris[1]);
+	function selectRowsFromLoan() {
+		$conn = connectDB();
+
+		$sql = "SELECT * FROM loan WHERE user_id = ".$_SESSION["user_id"]."";
+		if(!$result = mysqli_query($conn, $sql)) {
+			die("Error: $sql");
+		}
+		mysqli_close($conn);
+		return $result;
+	} 
+
+	function selectBooks() {
+		$pinjam = selectRowsFromLoan();
+		$arrayloan = array();
+		while ($baris = mysqli_fetch_row($pinjam)) {
+			array_push($arrayloan, $baris[1]);
+		}
+		return $arrayloan;
 	}
-	return $arrayloan;
-}
 
-function selectAllFromBook($book_id) {
-	$conn = connectDB();
+	function selectAllFromBook($book_id) {
+		$conn = connectDB();
 
-	$sql = "SELECT * FROM book WHERE book_id = $book_id";
-	if(!$result = mysqli_query($conn, $sql)) {
-		die("Error: $sql");
+		$sql = "SELECT * FROM book WHERE book_id = $book_id";
+		if(!$result = mysqli_query($conn, $sql)) {
+			die("Error: $sql");
+		}
+		mysqli_close($conn);
+		return $result;
 	}
-	mysqli_close($conn);
-	return $result;
-}
 
-function balikBuku($book_id, $user_id) {
-	$conn = connectDB($book_id, $user_id);
-	$sqlloan = "DELETE FROM loan WHERE book_id = $book_id AND user_id = $user_id";
+	function balikBuku($book_id, $user_id) {
+		$conn = connectDB($book_id, $user_id);
+		$sqlloan = "DELETE FROM loan WHERE book_id = $book_id AND user_id = $user_id";
 
-	$sqlbook = "UPDATE book SET quantity = quantity+1 where book_id = $book_id";
-	if(!$result = mysqli_query($conn, $sqlloan)) {
-		die("Error: $sqlloan");
+		$sqlbook = "UPDATE book SET quantity = quantity+1 where book_id = $book_id";
+		if(!$result = mysqli_query($conn, $sqlloan)) {
+			die("Error: $sqlloan");
+		}
+		if(!$result = mysqli_query($conn, $sqlbook)) {
+			die("Error: $sqlbook");
+		}
+		mysqli_close($conn);
+		header("Location: home.php");
 	}
-	if(!$result = mysqli_query($conn, $sqlbook)) {
-		die("Error: $sqlbook");
-	}
-	mysqli_close($conn);
-	header("Location: home.php");
-}
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-	if ($_POST['command'] === 'balik') {
-		balikBuku($_POST['book_id'],$_SESSION["user_id"]);
+	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+		if ($_POST['command'] === 'balik') {
+			balikBuku($_POST['book_id'],$_SESSION["user_id"]);
+		}
 	}
-}
-
 
 ?>
 
@@ -123,18 +122,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			</div>
 		</div>
 	</div>
-	<nav id="nav_bar" class="navbar-inverse">
+	<nav class="navbar navbar-inverse">
 		<div class="container-fluid">
-		<?php
-		if (isset($_SESSION["namauser"])) {
-			echo '
 			<div class="navbar-header">
-				<a class="navbar-brand active" href="home.php">My Personal Library</a>
+				 <a class="navbar-brand" href="#">My Personal Library</a>
 			</div>
-			';
-		}
-		?>
 			<ul class="nav navbar-nav">
+				<?php
+				if (isset($_SESSION["namauser"])) {
+					echo '
+					<li class="active"><a href="home.php">Home</a></li>
+					';
+				}
+				?>
 				<li><a href="daftar.php">Daftar Buku</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
@@ -147,14 +147,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		</div>
 	</nav>
 	<div class="container">
-		<div class="well well-sm">
-			<strong>Tampilan</strong>
-			<div class="btn-group">
-				<a href="#" id="list" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-th-list">
-				</span>List</a> <a href="#" id="grid" class="btn btn-default btn-sm"><span
-				class="glyphicon glyphicon-th"></span>Grid</a>
-			</div>
-		</div>
+		<?php
+			if(isset($_SESSION['namauser']) && $_SESSION['role'] === 'user') {
+				echo '
+					<div class="well well-sm">
+						<strong>Tampilan</strong>
+						<div class="btn-group">
+							<a href="#" id="list" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-th-list">
+							</span>List</a> <a href="#" id="grid" class="btn btn-default btn-sm"><span
+							class="glyphicon glyphicon-th"></span>Grid</a>
+						</div>
+					</div>
+				';
+			}
+		?>
 		<div id="products" class="row list-group">
 			<?php
 			$arraybook = selectBooks();
@@ -169,11 +175,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 								<h4 class="title-book">'.$row[2].'</h4>
 								<p class="list-group-item-text">Penulis : '.$row[3].'</p>
 								<p class="list-group-item-text">Penerbit : '.$row[4].'</p>';
-								if($row[6] > 0) {
-									echo '<p class="list-group-item-text">Stok Tersedia : '.$row[6].'</p>';
-								} else {
-									echo '<p class="list-group-item-text" style="color:red;">Stok Kosong.</p>';
-								}
 								echo '
 								<div class="row">
 									<div class="col-md-6">

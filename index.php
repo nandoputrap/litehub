@@ -33,7 +33,12 @@
 			$_SESSION["user_id"] = $row["user_id"];
 			$_SESSION["namauser"] = $row["username"];
 			$_SESSION["role"] = $row["role"];
-			header("Location: daftar.php");
+			
+			if ($row["role"] === "user"){
+				header("Location: home.php");
+			}else{
+				header("Location: daftar.php");
+			}
 
 		}else {
 			echo  "<script type='text/javascript'>alert('Login Gagal');</script>";

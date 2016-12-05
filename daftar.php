@@ -133,11 +133,6 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="bootstrap/dist/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="css/style.css">
-		<style>
-			#fotoBuku {
-				height: 50%;
-			}
-		</style>
 	</head>
 	<body>
 		<div class="jumbotron">
@@ -181,19 +176,20 @@
 				</div>
 			</div>
 		</div>
-		<nav id="nav_bar" class="navbar-inverse">
+		<nav class="navbar navbar-inverse">
 			<div class="container-fluid">
-			<?php
-			if (isset($_SESSION["namauser"])) {
-				echo '
-				<div class="navbar-header">
-					<a class="navbar-brand active" href="home.php">My Personal Library</a>
-				</div>
-				';
-			}
-			?>
+			<div class="navbar-header">
+				 <a class="navbar-brand" href="#">My Personal Library</a>
+			</div>
 				<ul class="nav navbar-nav">
-					<li><a href="daftar.php">Daftar Buku</a></li>
+					<?php
+					if(isset($_SESSION['namauser']) && $_SESSION['role'] === 'user') {
+						echo '
+						<li><a href="home.php">Home</a></li>
+						';
+					}
+					?>
+					<li class="active"><a href="daftar.php">Daftar Buku</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<?php
@@ -293,7 +289,7 @@
 									Detail
 									</button>
 								</div>';
-								if(isset($_SESSION['namauser'])) {
+								if(isset($_SESSION['namauser']) && $_SESSION['role'] === 'user') {
 									$flag = false;
 									for ($i=0; $i < count($arrayloan); $i++) { 
 										if ($arrayloan[$i] == $row[0]) {
@@ -316,7 +312,7 @@
 												<button type="submit" class="btn btn-default" style="width:100%;">Pinjam</button>
 											</form></div>
 											';
-										} else {
+										}else {
 										echo '<div class="col-md-6">
 											<div style="width:100%; padding-top:5px;">Kosong</div>
 										</form></div>
@@ -378,7 +374,7 @@
 										<div id="reviewBuku">
 										</div>
 									</fieldset>';
-								if (isset($_SESSION['namauser']) && $_SESSION['role'] === 'user'){
+								if(isset($_SESSION['namauser']) && $_SESSION['role'] === 'user') {
 									echo 
 									'<div class="form-group">
 										<label for="reviewBuku">Review Buku</label>
@@ -401,7 +397,7 @@
 			function detailBuku(book_id){
 				reviewBuku(book_id);
 				$.ajax({
-					url: "http://localhost/tp2/ajax.php",
+					url: "http://localhost/tp2/services/ajax.php",
 					datatype: "html",
 					data: { book_id : book_id, command : "detail" },
 					method: "POST"
@@ -416,7 +412,7 @@
 			}
 			function reviewBuku(book_id){
 				$.ajax({
-					url: "http://localhost/tp2/ajax.php",
+					url: "http://localhost/tp2/services/ajax.php",
 					datatype: "html",
 					data: { book_id : book_id, command : "review" },
 					method: "POST"
@@ -425,14 +421,11 @@
 					$("#reviewBuku").html("");
 					$("#detailReview").html("");
 					for (var i = 0; i < temp.length; i++){
-						console.log("i "+i);
 						$("#reviewBuku").html($("#reviewBuku").html() + (i+1) + ".	" + temp[i][4] + "<br>");
 						var tmp = "";
 						for (var j = 0; j < temp[i].length; j++){
-							console.log("j "+j);
 							if (j !== 4){
 								tmp = tmp + "<td>" + temp[i][j] + "</td>";
-								// $("#detailReview").html($("#detailReview").html() + "<td>" + temp[i][j] + "</td>");
 							}
 						}
 						
@@ -444,7 +437,7 @@
 				var idBuku = $("#book_id").html();
 				var isi = $("#update-reviewBuku").val();
 				$.ajax({
-					url: "http://localhost/tp2/ajax.php",
+					url: "http://localhost/tp2/services/ajax.php",
 					datatype: "html",
 					data: { book_id : idBuku, user_id : user_id, content : isi, command : "komentar" },
 					method: "POST"
@@ -456,6 +449,6 @@
 	</body>
 	<footer>
 		<hr>
-		<h4>&copy; 2016 Bryanza N & M Akbar S. All rights reserved</h4>
+		<h4>&copy; 2016 Bryanza Novirahman & Muhammad Akbar Setiadi. All rights reserved</h4>
 	</footer>
 </html>							

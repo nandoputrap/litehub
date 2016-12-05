@@ -29,7 +29,6 @@
 		
 		$row = mysqli_fetch_row($result);
 		mysqli_close($conn);
-		//return '["'.$row[0].'","'.$row[1].'","'.$row[2].'","'.$row[3].'","'.$row[4].'","'.htmlspecialchars(nl2br($row[5])).'","'.$row[6].'"]';
 		$row = array_map('utf8_encode', $row);
 		return json_encode($row);
 		
