@@ -44,7 +44,6 @@
 	mysqli_close($databaseConnection);
 	
 ?>
-
 <!DOCTYPE html>
 <html lang="id">
 	<head>
@@ -55,39 +54,38 @@
 	    <link rel="stylesheet" type="text/css" href="css/index.css">
 	</head>
 	<body>
-		<div class="obscure-background">
-			<h1 id="loginTitle" class="text-center">My Personal Library</h1>
-			<div class="span7 text-center">
-				<button type="button" class="btn-lg btn-primary" data-toggle="modal" data-target="#insertModal">
-					Masuk
-				</button>
-			</div>
-			<div class="modal fade" id="insertModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-				<div class="modal-dialog" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-							<h4 class="modal-title" id="insertModalLabel">Login Page</h4>
-						</div>
-						<div class="modal-body">
-							<form action="index.php" method="post">
-								<div class="form-group">
-									<label for="username">Username</label>
-									<input type="text" class="form-control" id="insert-username" name="username" placeholder="Username">
-								</div>
-								<div class="form-group">
-									<label for="password">Password</label>
-									<input type="password" class="form-control" id="insert-password" name="password" placeholder="Password">
-								</div>
-								<input type="hidden" id="insert-command" name="command" value="insert">
-								<button type="submit" class="btn btn-primary">Login</button>
-							</form>
-						</div>
+		<div class="row">
+			<h1 class="title">PERSONAL LIBRARY</h1>
+			<button type="button" class="btn btn-lg btn-primary" data-toggle="modal" data-target="#insertModal">
+				Log in
+			</button>	
+			<a href="daftar.php" class="btn-nologin"><button type="button" class="btn btn-lg btn-primary">Masuk tanpa Log in</button></a>
+		</div>
+		<div class="modal fade" id="insertModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title" id="insertModalLabel">Login</h4>
+					</div>
+					<div class="modal-body">
+						<form action="index.php" method="post">
+							<div class="form-group">
+								<label for="username">Username</label>
+								<input type="text" class="form-control" id="insert-username" name="username" placeholder="Username">
+							</div>
+							<div class="form-group">
+								<label for="password">Password</label>
+								<input type="password" class="form-control" id="insert-password" name="password" placeholder="Password">
+							</div>
+							<input type="hidden" id="insert-command" name="command" value="insert">
+							<button type="submit" class="btn btn-primary">Login</button>
+						</form>
 					</div>
 				</div>
 			</div>
-			<script type="text/javascript" src="js/jquery-3.1.0.min.js"></script>
-			<script type="text/javascript" src="bootstrap/dist/js/bootstrap.min.js"></script>
 		</div>
+		<script type="text/javascript" src="js/jquery-3.1.0.min.js"></script>
+		<script type="text/javascript" src="bootstrap/dist/js/bootstrap.min.js"></script>
 	</body>
 </html>

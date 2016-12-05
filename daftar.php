@@ -140,44 +140,74 @@
 		</style>
 	</head>
 	<body>
-		<div class="container">
-			<div class="container">
-				<div class="jumbotron">
-					<h1>My Personal Library</h1>
-					<p>My Personal Library is my first online library.</p>
+		<div class="jumbotron">
+			<h1 style="font-size: 6em;">My Personal Library</h1>
+			<div class="welcome-text">
+			<h2>Selamat Datang <b>
+				<?php
+				if (isset($_SESSION["namauser"])){
+					echo $_SESSION["namauser"];
+				}
+				?></b>
+			</h2>
+			<?php
+				if(!isset($_SESSION['namauser'])) {
+					echo '<button type="button" class="btn btn-lg btn-primary" data-toggle="modal" data-target="#loginModal">Log in</button>';
+				}
+			?>
+			</div>
+		</div>
+		<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title" id="insertModalLabel">Login</h4>
+					</div>
+					<div class="modal-body">
+						<form action="index.php" method="post">
+							<div class="form-group">
+								<label for="username">Username</label>
+								<input type="text" class="form-control" id="insert-username" name="username" placeholder="Username">
+							</div>
+							<div class="form-group">
+								<label for="password">Password</label>
+								<input type="password" class="form-control" id="insert-password" name="password" placeholder="Password">
+							</div>
+							<input type="hidden" id="insert-command" name="command" value="insert">
+							<button type="submit" class="btn btn-primary">Login</button>
+						</form>
+					</div>
 				</div>
 			</div>
-			<nav class="navbar navbar-inverse">
-				<div class="container-fluid">
-					<div class="navbar-header">
-						<a class="navbar-brand" href="home.php">My Personal Library</a>
-					</div>
-					<ul class="nav navbar-nav">
-						<li><a href="home.php">Home</a></li>
-						<li class="active"><a href="daftar.php">Daftar Buku</a></li>
-					</ul>
-					<ul class="nav navbar-nav navbar-right">
-						<?php
-							if (!isset($_SESSION["namauser"])){
-								echo "<li><a href='index.php'><span class='glyphicon glyphicon-log-in'></span>Login</a></li>";
-							}else if (isset($_SESSION["namauser"])){
-								echo "<li><a href='services/logout.php'><span class='glyphicon glyphicon-log-out'></span>Logout</a></li>";
-							}
-						?>
-					</ul>
+		</div>
+		<nav id="nav_bar" class="navbar-inverse">
+			<div class="container-fluid">
+			<?php
+			if (isset($_SESSION["namauser"])) {
+				echo '
+				<div class="navbar-header">
+					<a class="navbar-brand active" href="home.php">My Personal Library</a>
 				</div>
-			</nav>
-			<h4>
-                Selamat Datang
-                <?php
-                    if (isset($_SESSION["namauser"])){
-                        echo $_SESSION["namauser"];
-                    }
-                ?>
-            </h4>
+				';
+			}
+			?>
+				<ul class="nav navbar-nav">
+					<li><a href="daftar.php">Daftar Buku</a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<?php
+						if (isset($_SESSION["namauser"])){
+							echo "<li><a href='services/logout.php'><span class='glyphicon glyphicon-log-out'></span>Logout</a></li>";
+						}
+					?>
+				</ul>
+			</div>
+		</nav>
+		<div class="container">
             <?php
                 if (isset($_SESSION["namauser"]) && $_SESSION["role"] === "admin"){
-                    echo "<br><button type='button' class='btn btn-primary' data-toggle='modal' data-target='#insertModal'>
+                    echo "<br><button type='button' class='btn-addbook btn btn-primary' data-toggle='modal' data-target='#insertModal'>
                         Add Buku
                     </button>";
                 }
@@ -222,68 +252,88 @@
                     </div>
                 </div>
             </div>
-            <div class="table-responsive">
-                <table class='table'>
-                    <thead> <tr><th>Book ID</th> <th>Display</th> <th>Judul Buku</th> <th>Pengarang</th> <th>Penerbit</th> <th>Stock</th> </tr> </thead>
-                    <tbody>
-                        <?php
-                            $daftarbuku = daftarBuku("book");
-                            if(isset($_SESSION['namauser'])) {
-                            	$daftarpinjaman = selectRowsFromLoan();
-	                            $arrayloan = array();
-	                            while ($baris = mysqli_fetch_row($daftarpinjaman)) {
-	                            	array_push($arrayloan, $baris[1]);
-	                            }
-                            }
-                            
-                           	while ($row = mysqli_fetch_row($daftarbuku)) {
-                                echo "<tr>";
-                                foreach($row as $key => $value) {
-	                            	if($key == 1) {
-	                            		echo "<td><img class='img-responsive' src='$value' alt='$value'></td>";	
-	                            	}
-	                                else {
-	                                	echo "<td>$value</td>";
-	                            	}
-                                }
-								//if ($row[0] == 5 || $row[0] == 6 || $row[0] == 7){
-								//}else {
-									echo '<td>
-									<button type="button" class="btn btn-default" data-toggle="modal" data-target="#detailModal" onclick="detailBuku('.$row[0].')">
+            <div class="well well-sm">
+		       <strong>Tampilan</strong>
+		        <div class="btn-group">
+		            <a href="#" id="list" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-th-list">
+		            </span>List</a> <a href="#" id="grid" class="btn btn-default btn-sm"><span
+		                class="glyphicon glyphicon-th"></span>Grid</a>
+		        </div>
+		    </div>
+		    <div id="products" class="row list-group">
+		    <?php
+		        $daftarbuku = daftarBuku("book");
+		        if(isset($_SESSION['namauser'])) {
+		        	$daftarpinjaman = selectRowsFromLoan();
+		            $arrayloan = array();
+		            while ($baris = mysqli_fetch_row($daftarpinjaman)) {
+		            	array_push($arrayloan, $baris[1]);
+		            }
+		        }
+
+		      while ($row = mysqli_fetch_row($daftarbuku)) {
+		        echo '
+				<div class="item  col-xs-4 col-lg-4">
+		            <div class="thumbnail">
+		            	<img class="list-group-image" style="width:300px; height:300px;" src="'.$row[1].'" />
+		            	<div class="caption">
+		            		<h4 class="title-book">'.$row[2].'</h4>
+			            	<p class="list-group-item-text">Penulis : '.$row[3].'</p>
+			            	<p class="list-group-item-text">Penerbit : '.$row[4].'</p>';
+			            	if($row[5] > 0) {
+			            		echo '<p class="list-group-item-text">Stok Tersedia : '.$row[5].'</p>';
+			            	} else {
+			            		echo '<p class="list-group-item-text" style="color:red;">Stok Kosong.</p>';
+			            	}
+			            	echo '
+			            	<div class="centered">
+			                  <div class="row">
+				                <div class="col-md-6">
+									<button type="button" class="btn btn-default" style="width:100%;" data-toggle="modal" data-target="#detailModal" onclick="detailBuku('.$row[0].')">
 									Detail
 									</button>
-									</td>';
-								//}
-								if(isset($_SESSION['namauser']) && $_SESSION['role'] === 'user') {
+								</div>';
+								if(isset($_SESSION['namauser'])) {
 									$flag = false;
 									for ($i=0; $i < count($arrayloan); $i++) { 
 										if ($arrayloan[$i] == $row[0]) {
-											echo '<td>
+											echo '<div class="col-md-6">
 											<form action="daftar.php" method="post">
 												<input type="hidden" name="book_id" value="'.$row[0].'">
 												<input type="hidden" name="command" value="balik">
-												<button type="submit" class="btn btn-default">Balik</button>
-											</form>
-											</td>';
+												<button type="submit" class="btn btn-default" style="width:100%;">Balik</button>
+											</form></div>
+											';
 											$flag = true;
 										}
 									}
 									if($flag == false) {
-										echo '<td>
-										<form action="daftar.php" method="post">
-											<input type="hidden" name="book_id" value="'.$row[0].'">
-											<input type="hidden" name="command" value="pinjam">
-											<button type="submit" class="btn btn-default">Pinjam</button>
-										</form>
-										</td>';
+										if($row[5] > 0) {
+											echo '<div class="col-md-6">
+											<form action="daftar.php" method="post">
+												<input type="hidden" name="book_id" value="'.$row[0].'">
+												<input type="hidden" name="command" value="pinjam">
+												<button type="submit" class="btn btn-default" style="width:100%;">Pinjam</button>
+											</form></div>
+											';
+										} else {
+										echo '<div class="col-md-6">
+											<div style="width:100%; padding-top:5px;">Kosong</div>
+										</form></div>
+										';
+										}
 									}
 								}
-								echo "</tr>";
-                            }
-                        ?>
-                    </tbody>
-                </table>
-            </div>
+			                    echo '
+			                  </div>
+			                </div>
+		            	</div>
+		            </div>
+		    	</div>
+		       	';
+		      }
+		    ?>
+		    </div>
             <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -345,7 +395,8 @@
             </div>
         </div>
 		<script src="js/jquery-3.1.0.min.js"> </script>
-		<script src="bootstrap/dist/js/bootstrap.min.js"></script>		
+		<script src="bootstrap/dist/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/jquery.js"></script>		
 		<script>
 			function detailBuku(book_id){
 				reviewBuku(book_id);
@@ -403,4 +454,8 @@
 			}
 		</script>
 	</body>
+	<footer>
+		<hr>
+		<h4>&copy; 2016 Bryanza N & M Akbar S. All rights reserved</h4>
+	</footer>
 </html>							
