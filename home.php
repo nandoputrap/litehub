@@ -78,7 +78,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="bootstrap/dist/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" type="text/css" href="css/home.css">
 </head>
 <body>
 	<div class="jumbotron">
@@ -196,7 +196,8 @@
 	</div>
 	<script type="text/javascript" src="js/jquery-3.1.0.min.js"></script>
 	<script type="text/javascript" src="bootstrap/dist/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="js/jquery.js"></script>	
+	<script type="text/javascript" src="js/home.js"></script>	
+	<script type="text/javascript" src="js/ajax.js"></script>
 </body>
 <footer>
 	<hr>

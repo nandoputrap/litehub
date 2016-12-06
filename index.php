@@ -61,10 +61,10 @@
 	<body>
 		<div class="row">
 			<h1 class="title">PERSONAL LIBRARY</h1>
-			<button type="button" class="btn btn-lg btn-primary" data-toggle="modal" data-target="#insertModal">
+			<button type="button" class="btn btn-lg btn-default" data-toggle="modal" data-target="#insertModal">
 				Log in
 			</button>	
-			<a href="daftar.php" class="btn-nologin"><button type="button" class="btn btn-lg btn-primary">Masuk tanpa Log in</button></a>
+			<a href="daftar.php" class="btn-nologin"><button type="button" class="btn btn-lg btn-default">Masuk tanpa Log in</button></a>
 		</div>
 		<div class="modal fade" id="insertModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 			<div class="modal-dialog" role="document">
@@ -77,11 +77,11 @@
 						<form action="index.php" method="post">
 							<div class="form-group">
 								<label for="username">Username</label>
-								<input type="text" class="form-control" id="insert-username" name="username" placeholder="Username">
+								<input type="text" class="form-control" id="insert-username" name="username" placeholder="Username" required>
 							</div>
 							<div class="form-group">
 								<label for="password">Password</label>
-								<input type="password" class="form-control" id="insert-password" name="password" placeholder="Password">
+								<input type="password" class="form-control" id="insert-password" name="password" placeholder="Password" required>
 							</div>
 							<input type="hidden" id="insert-command" name="command" value="insert">
 							<button type="submit" class="btn btn-primary">Login</button>
