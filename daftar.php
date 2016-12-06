@@ -16,26 +16,6 @@
 		return $conn;
 	}
 	
-	function insertBuku() {
-		$conn = connectDB();
-		
-		$displayBuku = $_POST['displayBuku'];
-		$judulBuku = $_POST['judulBuku'];
-		$pengarangBuku = $_POST['pengarangBuku'];
-		$penerbitBuku = $_POST['penerbitBuku'];
-		$deskripsiBuku = $_POST['deskripsiBuku'];
-		$stokBuku = $_POST['stokBuku'];
-		$sql = "INSERT into book (img_path, title, author, publisher, description, quantity) values('$displayBuku', '$judulBuku', '$pengarangBuku', '$penerbitBuku', '$deskripsiBuku', $stokBuku)";
-		
-		if($result = mysqli_query($conn, $sql)) {
-			echo "New record created successfully <br/>";
-			header("Location: daftar.php");
-			} else {
-			die("Error: $sql");
-		}
-		mysqli_close($conn);
-	}
-	
 	function daftarBuku($table) {
 		$conn = connectDB();
 		
@@ -111,6 +91,75 @@
 		}
 		mysqli_close($conn);
 		header("Location: daftar.php");
+	}
+
+	function showActButton($arrayloan, $bookid, $stocknum) {
+		if(isset($_SESSION['namauser']) && $_SESSION['role'] === 'user') {
+			$flag = false;
+			for ($i=0; $i < count($arrayloan); $i++) { 
+				if ($arrayloan[$i] == $bookid) {
+					echo '
+					<form action="daftar.php" method="post">
+						<input type="hidden" name="book_id" value="'.$bookid.'">
+						<input type="hidden" name="command" value="balik">
+						<button type="submit" class="btn btn-default" style="width:100%;">Balik</button>
+					</form>
+					';
+					$flag = true;
+				}
+			}
+			if($flag == false) {
+				if($stocknum > 0) {
+					echo '
+					<form action="daftar.php" method="post">
+						<input type="hidden" name="book_id" value="'.$bookid.'">
+						<input type="hidden" name="command" value="pinjam">
+						<button type="submit" class="btn btn-default" style="width:100%;">Pinjam</button>
+					</form>
+					';
+				}else {
+				echo '
+					<div style="width:100%; padding-top:5px;">Kosong</div>
+				</form>
+				';
+				}
+			}
+		}
+	}
+
+	function insertBuku() {
+		$conn = connectDB();
+		
+		$displayBuku = $_POST['displayBuku'];
+		$judulBuku = $_POST['judulBuku'];
+		$pengarangBuku = $_POST['pengarangBuku'];
+		$penerbitBuku = $_POST['penerbitBuku'];
+		$deskripsiBuku = $_POST['deskripsiBuku'];
+		$stokBuku = $_POST['stokBuku'];
+
+		$daftarbuku = daftarBuku("book");
+		$sdhAda = false;
+		$bookid = 0;
+		while ($row = mysqli_fetch_row($daftarbuku)) {	
+			if($row[2] == $judulBuku) {
+				$sdhAda = true;
+				$bookid = $row[0];
+				break;
+			}
+		}
+		if($sdhAda == true) {
+			$sql = "UPDATE book SET quantity = quantity + $stokBuku where book_id = $bookid";
+		} else {
+			$sql = "INSERT into book (img_path, title, author, publisher, description, quantity) values('$displayBuku', '$judulBuku', '$pengarangBuku', '$penerbitBuku', '$deskripsiBuku', $stokBuku)";
+		}
+		
+		if($result = mysqli_query($conn, $sql)) {
+			echo "New record created successfully <br/>";
+			header("Location: daftar.php");
+			} else {
+			die("Error: $sql");
+		}
+		mysqli_close($conn);
 	}
 
 	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -289,37 +338,9 @@
 									Detail
 									</button>
 								</div>';
-								if(isset($_SESSION['namauser']) && $_SESSION['role'] === 'user') {
-									$flag = false;
-									for ($i=0; $i < count($arrayloan); $i++) { 
-										if ($arrayloan[$i] == $row[0]) {
-											echo '<div class="col-md-6">
-											<form action="daftar.php" method="post">
-												<input type="hidden" name="book_id" value="'.$row[0].'">
-												<input type="hidden" name="command" value="balik">
-												<button type="submit" class="btn btn-default" style="width:100%;">Balik</button>
-											</form></div>
-											';
-											$flag = true;
-										}
-									}
-									if($flag == false) {
-										if($row[5] > 0) {
-											echo '<div class="col-md-6">
-											<form action="daftar.php" method="post">
-												<input type="hidden" name="book_id" value="'.$row[0].'">
-												<input type="hidden" name="command" value="pinjam">
-												<button type="submit" class="btn btn-default" style="width:100%;">Pinjam</button>
-											</form></div>
-											';
-										}else {
-										echo '<div class="col-md-6">
-											<div style="width:100%; padding-top:5px;">Kosong</div>
-										</form></div>
-										';
-										}
-									}
-								}
+								echo '<div class="col-md-6">';
+									showActButton($arrayloan,$row[0],$row[5]);
+								echo '</div>';
 			                    echo '
 			                  </div>
 			                </div>
