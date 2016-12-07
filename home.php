@@ -178,6 +178,11 @@
 								echo '
 								<div class="row">
 									<div class="col-md-6">
+										<button type="button" class="btn btn-default" style="width:100%;" data-toggle="modal" data-target="#detailModal" onclick="detailBuku('.$row[0].')">
+										Detail
+										</button>
+									</div>
+									<div id="tombolPinjam'.$row[0].'" class="col-md-6">
 										<form action="home.php" method="post">
 											<input type="hidden" name="book_id" value="'.$row[0].'">
 											<input type="hidden" name="command" value="balik">
@@ -193,6 +198,66 @@
 			}
 			?>
 		</div>
+		<div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title black-modal" id="detailModalLabel">Detail Buku</h4>
+                        </div>
+                        <div class="modal-body">
+							<fieldset>
+                        		<legend>Display Buku</legend>
+								<div id="displayBuku">
+								</div>
+							</fieldset>
+							<fieldset>
+                        		<legend>Judul Buku</legend>
+								<div id="judulBuku">
+								</div>
+							</fieldset>
+                        	<fieldset>
+                        		<legend>Deskripsi Buku</legend>
+								<div id="deskripsiBuku">
+								</div>
+							</fieldset>
+							<div style="overflow-x:auto;">
+								<table class='table'>
+									<thead> <tr><th>Book ID</th> <th>Pengarang</th> <th>Penerbit</th> <th>Stock</th> </tr> </thead>
+									<tbody id="detailBuku">
+									</tbody>
+								</table>
+							</div>
+							<?php
+								echo '
+									<div style="overflow-x:auto;">
+										<table class="table">
+											<thead> <tr><th>Review ID</th> <th>Book ID</th> <th>User ID</th> <th>Date</th> </tr> </thead>
+											<tbody id="detailReview">
+											</tbody>
+										</table>
+									</div>
+									<fieldset>
+										<legend>Review Buku</legend>
+										<div id="reviewBuku">
+										</div>
+									</fieldset>';
+								if(isset($_SESSION['namauser']) && $_SESSION['role'] === 'user') {
+									echo 
+									'<div class="form-group">
+										<label for="reviewBuku">Review Buku</label>
+										<input type="text" class="form-control" id="update-reviewBuku" name="reviewBuku" placeholder="Review Buku">
+									</div>
+									<button type="button" class="btn btn-default" style="width:100%;" onclick="komenBuku(';
+									echo $_SESSION["user_id"];
+									echo ')">Submit</button><br>';
+									echo '<br><div id="detailPinjam"></div>';
+								}
+                            ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
 	</div>
 	<script type="text/javascript" src="js/jquery-3.1.0.min.js"></script>
 	<script type="text/javascript" src="bootstrap/dist/js/bootstrap.min.js"></script>

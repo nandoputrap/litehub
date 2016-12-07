@@ -92,11 +92,6 @@
 					<button type="submit" class="btn btn-default" style="width:100%;">Pinjam</button>
 				</form>
 				';
-			}else {
-			echo '
-				<div style="width:100%; padding-top:5px;">Kosong</div>
-			</form>
-			';
 			}
 		}
 	}
@@ -121,15 +116,17 @@
 				break;
 			}
 		}
+		$_SESSION["titlebookadded"] = $judulBuku;
+		
 		if($sdhAda == true) {
 			$sql = "UPDATE book SET quantity = quantity + $stokBuku where book_id = $bookid";
 		} else {
 			$sql = "INSERT into book (img_path, title, author, publisher, description, quantity) values('$displayBuku', '$judulBuku', '$pengarangBuku', '$penerbitBuku', '$deskripsiBuku', $stokBuku)";
 		}
-		
+
 		if($result = mysqli_query($conn, $sql)) {
 			echo "New record created successfully <br/>";
-			header("Location: daftar.php");
+			header("Location: detail.php");
 			} else {
 			die("Error: $sql");
 		}
@@ -291,8 +288,7 @@
 			            		echo '<p class="list-group-item-text" style="color:red;">Stok Kosong.</p>';
 			            	}
 			            	echo '
-			            	<div class="centered">
-			                  <div class="row">
+			                <div class="row">
 				                <div class="col-md-6">
 									<button type="button" class="btn btn-default" style="width:100%;" data-toggle="modal" data-target="#detailModal" onclick="detailBuku('.$row[0].')">
 									Detail
@@ -304,7 +300,6 @@
 									}
 								echo '</div>';
 			                    echo '
-			                  </div>
 			                </div>
 		            	</div>
 		            </div>
