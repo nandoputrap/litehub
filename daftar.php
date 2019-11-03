@@ -3,8 +3,8 @@
 	function connectDB() {
 		$servername = "localhost";
 		$username = "root";
-		$password = "";
-		$dbname = "test";
+		$password = "password";
+		$dbname = "ebookhub";
 		
 		// Create connection
 		$conn = mysqli_connect($servername, $username, $password, $dbname);
@@ -28,10 +28,10 @@
 		return $result;
 	}
 
-	function selectRowsFromLoan() {
+	function selectRowsFromSubmission() {
 		$conn = connectDB();
 
-		$sql = "SELECT * FROM loan WHERE user_id = ".$_SESSION["user_id"]."";
+		$sql = "SELECT * FROM submission WHERE user_id = ".$_SESSION["user_id"]."";
 		if(!$result = mysqli_query($conn, $sql)) {
 			die("Error: $sql");
 		}
@@ -41,11 +41,11 @@
 
 	function pinjamBuku($book_id, $user_id) {
 		$conn = connectDB();
-		$sqlloan = "INSERT into loan (book_id, user_id) values ('$book_id','$user_id')";
+		$sqlsubmission = "INSERT into submission (book_id, user_id) values ('$book_id','$user_id')";
 
 		$sqlbook = "UPDATE book SET quantity = quantity-1 where book_id = $book_id";
-		if(!$result = mysqli_query($conn, $sqlloan)) {
-			die("Error: $sqlloan");
+		if(!$result = mysqli_query($conn, $sqlsubmission)) {
+			die("Error: $sqlsubmission");
 		}
 		if(!$result = mysqli_query($conn, $sqlbook)) {
 			die("Error: $sqlbook");
@@ -56,11 +56,11 @@
 
 	function balikBuku($book_id, $user_id) {
 		$conn = connectDB($book_id, $user_id);
-		$sqlloan = "DELETE FROM loan WHERE book_id = $book_id AND user_id = $user_id";
+		$sqlsubmission = "DELETE FROM submission WHERE book_id = $book_id AND user_id = $user_id";
 
 		$sqlbook = "UPDATE book SET quantity = quantity+1 where book_id = $book_id";
-		if(!$result = mysqli_query($conn, $sqlloan)) {
-			die("Error: $sqlloan");
+		if(!$result = mysqli_query($conn, $sqlsubmission)) {
+			die("Error: $sqlsubmission");
 		}
 		if(!$result = mysqli_query($conn, $sqlbook)) {
 			die("Error: $sqlbook");
@@ -69,10 +69,10 @@
 		header("Location: daftar.php");
 	}
 
-	function showActButton($arrayloan, $bookid, $stocknum) {
+	function showActButton($arraysubmission, $bookid, $stocknum) {
 		$flag = false;
-		for ($i=0; $i < count($arrayloan); $i++) { 
-			if ($arrayloan[$i] == $bookid) {
+		for ($i=0; $i < count($arraysubmission); $i++) { 
+			if ($arraysubmission[$i] == $bookid) {
 				echo '
 				<form action="daftar.php" method="post">
 					<input type="hidden" name="book_id" value="'.$bookid.'">
@@ -266,10 +266,10 @@
 		    <?php
 		        $daftarbuku = daftarBuku("book");
 		        if(isset($_SESSION['namauser'])) {
-		        	$daftarpinjaman = selectRowsFromLoan();
-		            $arrayloan = array();
+		        	$daftarpinjaman = selectRowsFromSubmission();
+		            $arraysubmission = array();
 		            while ($baris = mysqli_fetch_row($daftarpinjaman)) {
-		            	array_push($arrayloan, $baris[1]);
+		            	array_push($arraysubmission, $baris[1]);
 		            }
 		        }
 
@@ -296,7 +296,7 @@
 								</div>';
 								echo '<div id="tombolPinjam'.$row[0].'" class="col-md-6">';
 									if(isset($_SESSION['namauser']) && $_SESSION['role'] === 'user') {
-										showActButton($arrayloan,$row[0],$row[5]);
+										showActButton($arraysubmission,$row[0],$row[5]);
 									}
 								echo '</div>';
 			                    echo '
@@ -342,21 +342,21 @@
 								echo '
 									<div style="overflow-x:auto;">
 										<table class="table">
-											<thead> <tr><th>Review ID</th> <th>Book ID</th> <th>User ID</th> <th>Date</th> </tr> </thead>
-											<tbody id="detailReview">
+											<thead> <tr><th>Purchase ID</th> <th>Book ID</th> <th>User ID</th> <th>Date</th> </tr> </thead>
+											<tbody id="detailPurchase">
 											</tbody>
 										</table>
 									</div>
 									<fieldset>
-										<legend>Review Buku</legend>
-										<div id="reviewBuku">
+										<legend>Book Purchase</legend>
+										<div id="bookPurchase">
 										</div>
 									</fieldset>';
 								if(isset($_SESSION['namauser']) && $_SESSION['role'] === 'user') {
 									echo 
 									'<div class="form-group">
-										<label for="reviewBuku">Review Buku</label>
-										<input type="text" class="form-control" id="update-reviewBuku" name="reviewBuku" placeholder="Review Buku">
+										<label for="bookPurchase">Book Purchase</label>
+										<input type="text" class="form-control" id="update-bookPurchase" name="bookPurchase" placeholder="Book Purchase">
 									</div>
 									<button type="button" class="btn btn-default" style="width:100%;" onclick="komenBuku(';
 									echo $_SESSION["user_id"];
@@ -376,6 +376,6 @@
 	</body>
 	<footer>
 		<hr>
-		<h4>&copy; 2016 Bryanza Novirahman & Muhammad Akbar Setiadi. All rights reserved</h4>
+		<h4>&copy; 2019 Litehub Inc. All rights reserved</h4>
 	</footer>
 </html>							

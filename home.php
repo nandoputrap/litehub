@@ -3,8 +3,8 @@
 	function connectDB() {
 		$servername = "localhost";
 		$username = "root";
-		$password = "";
-		$dbname = "test";
+		$password = "password";
+		$dbname = "ebookhub";
 		$conn = mysqli_connect($servername, $username, $password, $dbname);
 		
 		if (!$conn) {
@@ -17,10 +17,10 @@
 		header("Location: daftar.php");
 	}
 
-	function selectRowsFromLoan() {
+	function selectRowsFromSubmission() {
 		$conn = connectDB();
 
-		$sql = "SELECT * FROM loan WHERE user_id = ".$_SESSION["user_id"]."";
+		$sql = "SELECT * FROM submission WHERE user_id = ".$_SESSION["user_id"]."";
 		if(!$result = mysqli_query($conn, $sql)) {
 			die("Error: $sql");
 		}
@@ -29,12 +29,12 @@
 	} 
 
 	function selectBooks() {
-		$pinjam = selectRowsFromLoan();
-		$arrayloan = array();
+		$pinjam = selectRowsFromSubmission();
+		$arraysubmission = array();
 		while ($baris = mysqli_fetch_row($pinjam)) {
-			array_push($arrayloan, $baris[1]);
+			array_push($arraysubmission, $baris[1]);
 		}
-		return $arrayloan;
+		return $arraysubmission;
 	}
 
 	function selectAllFromBook($book_id) {
@@ -50,11 +50,11 @@
 
 	function balikBuku($book_id, $user_id) {
 		$conn = connectDB($book_id, $user_id);
-		$sqlloan = "DELETE FROM loan WHERE book_id = $book_id AND user_id = $user_id";
+		$sqlsubmission = "DELETE FROM submission WHERE book_id = $book_id AND user_id = $user_id";
 
 		$sqlbook = "UPDATE book SET quantity = quantity+1 where book_id = $book_id";
-		if(!$result = mysqli_query($conn, $sqlloan)) {
-			die("Error: $sqlloan");
+		if(!$result = mysqli_query($conn, $sqlsubmission)) {
+			die("Error: $sqlsubmission");
 		}
 		if(!$result = mysqli_query($conn, $sqlbook)) {
 			die("Error: $sqlbook");
@@ -232,21 +232,21 @@
 								echo '
 									<div style="overflow-x:auto;">
 										<table class="table">
-											<thead> <tr><th>Review ID</th> <th>Book ID</th> <th>User ID</th> <th>Date</th> </tr> </thead>
-											<tbody id="detailReview">
+											<thead> <tr><th>Purchase ID</th> <th>Book ID</th> <th>User ID</th> <th>Date</th> </tr> </thead>
+											<tbody id="detailPurchase">
 											</tbody>
 										</table>
 									</div>
 									<fieldset>
-										<legend>Review Buku</legend>
-										<div id="reviewBuku">
+										<legend>Book Purchase</legend>
+										<div id="bookPurchase">
 										</div>
 									</fieldset>';
 								if(isset($_SESSION['namauser']) && $_SESSION['role'] === 'user') {
 									echo 
 									'<div class="form-group">
-										<label for="reviewBuku">Review Buku</label>
-										<input type="text" class="form-control" id="update-reviewBuku" name="reviewBuku" placeholder="Review Buku">
+										<label for="bookPurchase">Book Purchase</label>
+										<input type="text" class="form-control" id="update-bookPurchase" name="bookPurchase" placeholder="Book Purchase">
 									</div>
 									<button type="button" class="btn btn-default" style="width:100%;" onclick="komenBuku(';
 									echo $_SESSION["user_id"];
@@ -266,6 +266,6 @@
 </body>
 <footer>
 	<hr>
-	<h4>&copy; 2016 Bryanza N & M Akbar S. All rights reserved</h4>
+	<h4>&copy; 2019 Litehub Inc. All rights reserved</h4>
 </footer>
 </html>							

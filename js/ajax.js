@@ -1,5 +1,5 @@
 function detailBuku(book_id){
-	reviewBuku(book_id);
+	bookPurchase(book_id);
 	$.ajax({
 		url: "http://localhost/tp2/services/ajax.php",
 		datatype: "html",
@@ -21,18 +21,18 @@ function detailBuku(book_id){
 		$("#detailPinjam").html($("#tombolPinjam" + book_id).html());
 	});
 }
-function reviewBuku(book_id){
+function bookPurchase(book_id){
 	$.ajax({
 		url: "http://localhost/tp2/services/ajax.php",
 		datatype: "html",
-		data: { book_id : book_id, command : "review" },
+		data: { book_id : book_id, command : "purchase" },
 		method: "POST"
 	}).done(function(obj){
 		var temp = JSON.parse(obj);
-		$("#reviewBuku").html("");
-		$("#detailReview").html("");
+		$("#bookPurchase").html("");
+		$("#detailPurchase").html("");
 		for (var i = 0; i < temp.length; i++){
-			$("#reviewBuku").html($("#reviewBuku").html() + (i+1) + ".	" + temp[i][4] + "<br>");
+			$("#bookPurchase").html($("#bookPurchase").html() + (i+1) + ".	" + temp[i][4] + "<br>");
 			var tmp = "";
 			for (var j = 0; j < temp[i].length; j++){
 				if (j !== 4){
@@ -40,19 +40,19 @@ function reviewBuku(book_id){
 				}
 			}
 			
-			$("#detailReview").html($("#detailReview").html() +"<tr>"+ tmp +"</tr>");	
+			$("#detailPurchase").html($("#detailPurchase").html() +"<tr>"+ tmp +"</tr>");	
 		}
 	}); 
 }
 function komenBuku(user_id){
 	var idBuku = $("#book_id").html();
-	var isi = $("#update-reviewBuku").val();
+	var isi = $("#update-bookPurchase").val();
 	$.ajax({
 		url: "http://localhost/tp2/services/ajax.php",
 		datatype: "html",
 		data: { book_id : idBuku, user_id : user_id, content : isi, command : "komentar" },
 		method: "POST"
 	}).done(function(obj){
-		reviewBuku(idBuku);
+		bookPurchase(idBuku);
 	});
 }
