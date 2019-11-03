@@ -1,10 +1,11 @@
 <?php
 	session_start();
 	function connectDB() {
-		$servername = "localhost";
-		$username = "root";
-		$password = "password";
-		$dbname = "ebookhub";
+		$databaseServer = "sql12.freesqldatabase.com";
+		$databaseUsername = "sql12310568";
+		$databasePassword = "wmiLAF7a6g";
+		$databaseName = "sql12310568";
+
 		$conn = mysqli_connect($servername, $username, $password, $dbname);
 		
 		if (!$conn) {
