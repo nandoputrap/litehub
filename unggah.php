@@ -1,10 +1,11 @@
 <?php
 	session_start();
 	function connectDB() {
+		// require 'config/connect.php';
 		$servername = "localhost";
 		$username = "root";
-		$password = "password";
-		$dbname = "ebookhub";
+		$password = "";
+		$dbname = "litehub";
 		
 		// Create connection
 		$conn = mysqli_connect($servername, $username, $password, $dbname);
@@ -27,25 +28,21 @@
 		mysqli_close($conn);
 		return $result;
 	}
-
-	function selectRowsFromSubmission() {
+	function selectRowsFromLoan() {
 		$conn = connectDB();
-
-		$sql = "SELECT * FROM submission WHERE user_id = ".$_SESSION["user_id"]."";
+		$sql = "SELECT * FROM loan WHERE user_id = ".$_SESSION["user_id"]."";
 		if(!$result = mysqli_query($conn, $sql)) {
 			die("Error: $sql");
 		}
 		mysqli_close($conn);
 		return $result;
 	}
-
 	function pinjamBuku($book_id, $user_id) {
-		$conn = connectDB();
-		$sqlsubmission = "INSERT into submission (book_id, user_id) values ('$book_id','$user_id')";
-
+		// $conn = connectDB();
+		$sqlloan = "INSERT into loan (book_id, user_id) values ('$book_id','$user_id')";
 		$sqlbook = "UPDATE book SET quantity = quantity-1 where book_id = $book_id";
-		if(!$result = mysqli_query($conn, $sqlsubmission)) {
-			die("Error: $sqlsubmission");
+		if(!$result = mysqli_query($conn, $sqlloan)) {
+			die("Error: $sqlloan");
 		}
 		if(!$result = mysqli_query($conn, $sqlbook)) {
 			die("Error: $sqlbook");
@@ -53,14 +50,12 @@
 		mysqli_close($conn);
 		header("Location: daftar.php");
 	}
-
 	function balikBuku($book_id, $user_id) {
-		$conn = connectDB($book_id, $user_id);
-		$sqlsubmission = "DELETE FROM submission WHERE book_id = $book_id AND user_id = $user_id";
-
+		// $conn = connectDB($book_id, $user_id);
+		$sqlloan = "DELETE FROM loan WHERE book_id = $book_id AND user_id = $user_id";
 		$sqlbook = "UPDATE book SET quantity = quantity+1 where book_id = $book_id";
-		if(!$result = mysqli_query($conn, $sqlsubmission)) {
-			die("Error: $sqlsubmission");
+		if(!$result = mysqli_query($conn, $sqlloan)) {
+			die("Error: $sqlloan");
 		}
 		if(!$result = mysqli_query($conn, $sqlbook)) {
 			die("Error: $sqlbook");
@@ -68,11 +63,10 @@
 		mysqli_close($conn);
 		header("Location: daftar.php");
 	}
-
-	function showActButton($arraysubmission, $bookid, $stocknum) {
+	function showActButton($arrayloan, $bookid, $stocknum) {
 		$flag = false;
-		for ($i=0; $i < count($arraysubmission); $i++) { 
-			if ($arraysubmission[$i] == $bookid) {
+		for ($i=0; $i < count($arrayloan); $i++) { 
+			if ($arrayloan[$i] == $bookid) {
 				echo '
 				<form action="daftar.php" method="post">
 					<input type="hidden" name="book_id" value="'.$bookid.'">
@@ -95,9 +89,8 @@
 			}
 		}
 	}
-
 	function insertBuku() {
-		$conn = connectDB();
+		// $conn = connectDB();
 		
 		$displayBuku = $_POST['displayBuku'];
 		$judulBuku = $_POST['judulBuku'];
@@ -105,7 +98,6 @@
 		$penerbitBuku = $_POST['penerbitBuku'];
 		$deskripsiBuku = $_POST['deskripsiBuku'];
 		$stokBuku = $_POST['stokBuku'];
-
 		$daftarbuku = daftarBuku("book");
 		$sdhAda = false;
 		$bookid = 0;
@@ -123,7 +115,6 @@
 		} else {
 			$sql = "INSERT into book (img_path, title, author, publisher, description, quantity) values('$displayBuku', '$judulBuku', '$pengarangBuku', '$penerbitBuku', '$deskripsiBuku', $stokBuku)";
 		}
-
 		if($result = mysqli_query($conn, $sql)) {
 			echo "New record created successfully <br/>";
 			header("Location: detail.php");
@@ -132,7 +123,6 @@
 		}
 		mysqli_close($conn);
 	}
-
 	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		if($_POST['command'] === 'insert') {
 			insertBuku();
@@ -170,7 +160,7 @@
 		<nav class="navbar navbar-inverse">
 			<div class="container-fluid">
 				<div class="navbar-header">
-					<a class="navbar-brand" href="#">Ebookhub.ID</a>
+					 <a class="navbar-brand" href="#">Ebookhub.ID</a>
 				</div>
 				<ul class="nav navbar-nav">
 					<?php
@@ -180,8 +170,8 @@
 						';
 					}
 					?>
-					<li class="active"><a href="daftar.php">Daftar Buku</a></li>
-					<li><a href="unggah.php">Unggah Buku</a></li>
+					<li><a href="daftar.php">Daftar Buku</a></li>
+					<li class="active"><a href="unggah.php">Unggah Buku</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<?php
@@ -220,20 +210,20 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title black-modal" id="insertModalLabel">Add Book</h4>
+                            <h4 class="modal-title black-modal" id="insertModalLabel">Unggah Buku</h4>
                         </div>
                         <div class="modal-body">
-                            <form action="daftar.php" method="post">
-                                <div class="form-group">
-                                    <label for="displayBuku">Display Buku</label>
-                                    <input type="url" class="form-control" id="insert-displayBuku" name="displayBuku" placeholder="Link Buku">
+                            <form action="unggah.php" method="post">
+								<div class="form-group">
+									<label for="judulBuku">Judul Buku</label>
+									<input type="text" class="form-control" id="insert-judulBuku" name="judulBuku" placeholder="Masukkan Judul" required>
+                                </div>
+								<div class="form-group">
+                                    <label for="displayBuku">Nama Penulis</label>
+                                    <input type="url" class="form-control" id="insert-namaPenulis" name="namaPenulis" placeholder="Masukkan Nama Penulis">
                                 </div>
                                 <div class="form-group">
-                                    <label for="judulBuku">Judul Buku</label>
-                                    <input type="text" class="form-control" id="insert-judulBuku" name="judulBuku" placeholder="Judul Buku" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="pengarangBuku">Pengarang Buku</label>
+                                    <label for="pengarangBuku">Kategori</label>
                                     <input type="text" class="form-control" id="insert-pengarangBuku" name="pengarangBuku" placeholder="Pengarang Buku">
                                 </div>
                                 <div class="form-group">
@@ -267,13 +257,12 @@
 		    <?php
 		        $daftarbuku = daftarBuku("book");
 		        if(isset($_SESSION['namauser'])) {
-		        	$daftarpinjaman = selectRowsFromSubmission();
-		            $arraysubmission = array();
+		        	$daftarpinjaman = selectRowsFromLoan();
+		            $arrayloan = array();
 		            while ($baris = mysqli_fetch_row($daftarpinjaman)) {
-		            	array_push($arraysubmission, $baris[1]);
+		            	array_push($arrayloan, $baris[1]);
 		            }
 		        }
-
 		      while ($row = mysqli_fetch_row($daftarbuku)) {
 		        echo '
 				<div class="item  col-xs-4 col-lg-4">
@@ -297,7 +286,7 @@
 								</div>';
 								echo '<div id="tombolPinjam'.$row[0].'" class="col-md-6">';
 									if(isset($_SESSION['namauser']) && $_SESSION['role'] === 'user') {
-										showActButton($arraysubmission,$row[0],$row[5]);
+										showActButton($arrayloan,$row[0],$row[5]);
 									}
 								echo '</div>';
 			                    echo '
@@ -343,21 +332,21 @@
 								echo '
 									<div style="overflow-x:auto;">
 										<table class="table">
-											<thead> <tr><th>Purchase ID</th> <th>Book ID</th> <th>User ID</th> <th>Date</th> </tr> </thead>
-											<tbody id="detailPurchase">
+											<thead> <tr><th>Review ID</th> <th>Book ID</th> <th>User ID</th> <th>Date</th> </tr> </thead>
+											<tbody id="detailReview">
 											</tbody>
 										</table>
 									</div>
 									<fieldset>
-										<legend>Book Purchase</legend>
-										<div id="bookPurchase">
+										<legend>Review Buku</legend>
+										<div id="reviewBuku">
 										</div>
 									</fieldset>';
 								if(isset($_SESSION['namauser']) && $_SESSION['role'] === 'user') {
 									echo 
 									'<div class="form-group">
-										<label for="bookPurchase">Book Purchase</label>
-										<input type="text" class="form-control" id="update-bookPurchase" name="bookPurchase" placeholder="Book Purchase">
+										<label for="reviewBuku">Review Buku</label>
+										<input type="text" class="form-control" id="update-reviewBuku" name="reviewBuku" placeholder="Review Buku">
 									</div>
 									<button type="button" class="btn btn-default" style="width:100%;" onclick="komenBuku(';
 									echo $_SESSION["user_id"];
@@ -377,6 +366,6 @@
 	</body>
 	<footer>
 		<hr>
-		<h4>&copy; 2019 Litehub Inc. All rights reserved</h4>
+		<h4>&copy; 2016 Bryanza Novirahman & Muhammad Akbar Setiadi. All rights reserved</h4>
 	</footer>
-</html>							
+</html>
