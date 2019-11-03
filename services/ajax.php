@@ -3,8 +3,8 @@
 	function connectDB() {
 		$servername = "localhost";
 		$username = "root";
-		$password = "";
-		$dbname = "test";
+		$password = "password";
+		$dbname = "ebookhub";
 		
 		// Create connection
 		$conn = mysqli_connect($servername, $username, $password, $dbname);
