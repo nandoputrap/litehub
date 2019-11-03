@@ -1,13 +1,15 @@
 <?php
 	
-	$databaseServer = "localhost";
-	$databaseUsername = "root";
-	$databasePassword = "";
-	$databaseName = "test";
+	// require 'config/connect.php';
+
+	$servername = "localhost";
+	$username = "root";
+	$password = "";
+	$dbname = "litehub";
 	
-	$databaseConnection = mysqli_connect($databaseServer, $databaseUsername, $databasePassword, $databaseName);
+	$conn = mysqli_connect($servername, $username, $password, $dbname);
 	
-	if (!$databaseConnection){
+	if (!$conn){
 		die ("Connection to database failed");
 	}
 	
@@ -19,15 +21,14 @@
 		$username = $_POST['username'];
 		$password = $_POST['password']; 
 				
-		$queryLogin = "SELECT * FROM user WHERE username = '$username' and password = '$password'";
-		$resultLogin = mysqli_query($databaseConnection,$queryLogin);
+		$queryLogin = "SELECT * FROM user WHERE username = '$username' AND password = '$password'";
+		$resultLogin = mysqli_query($conn,$queryLogin);
 		
 		$row = mysqli_fetch_array($resultLogin,MYSQLI_ASSOC);
 		$active = $row['active'];
 		  
 		$count = mysqli_num_rows($resultLogin);
 		// If result matched $myusername and $mypassword, table row must be 1 row
-			
 		if($count == 1) {
 			
 			$_SESSION["user_id"] = $row["user_id"];
@@ -46,7 +47,7 @@
 		
 	}
 	
-	mysqli_close($databaseConnection);
+	mysqli_close($conn);
 	
 ?>
 <!DOCTYPE html>
@@ -54,13 +55,13 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>My Personal Library</title>
+		<title>EBOOKHUB.ID</title>
 		<link rel="stylesheet" href="bootstrap/dist/css/bootstrap.min.css">
 	    <link rel="stylesheet" type="text/css" href="css/index.css">
 	</head>
 	<body>
 		<div class="row">
-			<h1 class="title">PERSONAL LIBRARY</h1>
+			<h1 class="title">EBOOKHUB.ID</h1>
 			<button type="button" class="btn btn-lg btn-default" data-toggle="modal" data-target="#insertModal">
 				Log in
 			</button>	
@@ -86,6 +87,8 @@
 							<input type="hidden" id="insert-command" name="command" value="insert">
 							<button type="submit" class="btn btn-primary">Login</button>
 						</form>
+						<br />
+						<a href="">Don't have an account?</a>
 					</div>
 				</div>
 			</div>

@@ -181,8 +181,8 @@
 						';
 					}
 					?>
-					<li class="active"><a href="daftar.php">Daftar Buku</a></li>
-					<li><a href="unggah.php">Unggah Buku</a></li>
+					<li><a href="daftar.php">Daftar Buku</a></li>
+					<li class="active"><a href="unggah.php">Unggah Buku</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<?php
@@ -221,20 +221,20 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title black-modal" id="insertModalLabel">Add Book</h4>
+                            <h4 class="modal-title black-modal" id="insertModalLabel">Unggah Buku</h4>
                         </div>
                         <div class="modal-body">
-                            <form action="daftar.php" method="post">
-                                <div class="form-group">
-                                    <label for="displayBuku">Display Buku</label>
-                                    <input type="url" class="form-control" id="insert-displayBuku" name="displayBuku" placeholder="Link Buku">
+                            <form action="unggah.php" method="post">
+								<div class="form-group">
+									<label for="judulBuku">Judul Buku</label>
+									<input type="text" class="form-control" id="insert-judulBuku" name="judulBuku" placeholder="Masukkan Judul" required>
+                                </div>
+								<div class="form-group">
+                                    <label for="displayBuku">Nama Penulis</label>
+                                    <input type="url" class="form-control" id="insert-namaPenulis" name="namaPenulis" placeholder="Masukkan Nama Penulis">
                                 </div>
                                 <div class="form-group">
-                                    <label for="judulBuku">Judul Buku</label>
-                                    <input type="text" class="form-control" id="insert-judulBuku" name="judulBuku" placeholder="Judul Buku" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="pengarangBuku">Pengarang Buku</label>
+                                    <label for="pengarangBuku">Kategori</label>
                                     <input type="text" class="form-control" id="insert-pengarangBuku" name="pengarangBuku" placeholder="Pengarang Buku">
                                 </div>
                                 <div class="form-group">

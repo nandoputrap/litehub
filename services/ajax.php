@@ -1,10 +1,13 @@
 <?php 
 	
+	
+
 	function connectDB() {
+	// require '../config/connect.php';
 		$servername = "localhost";
 		$username = "root";
 		$password = "";
-		$dbname = "test";
+		$dbname = "litehub";
 		
 		// Create connection
 		$conn = mysqli_connect($servername, $username, $password, $dbname);

@@ -1,10 +1,11 @@
 <?php
 	session_start();
 	function connectDB() {
+	// require 'config/connect.php';
 		$servername = "localhost";
 		$username = "root";
 		$password = "";
-		$dbname = "test";
+		$dbname = "litehub";
 		$conn = mysqli_connect($servername, $username, $password, $dbname);
 		
 		if (!$conn) {
@@ -74,7 +75,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>My Personal Library</title>
+	<title>EBOOKHUB.ID</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="bootstrap/dist/css/bootstrap.min.css">
@@ -82,7 +83,7 @@
 </head>
 <body>
 	<div class="jumbotron">
-		<h1 style="font-size: 6em;">My Personal Library</h1>
+		<h1 style="font-size: 6em;">EBOOKHUB.ID</h1>
 		<div class="welcome-text">
 		<h2>Selamat Datang <b>
 			<?php
