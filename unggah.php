@@ -2,10 +2,10 @@
 	session_start();
 	function connectDB() {
 		// require 'config/connect.php';
-		$databaseServer = "sql12.freesqldatabase.com";
-        $databaseUsername = "sql12310568";
-        $databasePassword = "wmiLAF7a6g";
-        $databaseName = "sql12310568";
+		$servername = "sql12.freesqldatabase.com";
+		$username = "sql12310568";
+		$password = "wmiLAF7a6g";
+		$dbname = "sql12310568";
 		
 		// Create connection
 		$conn = mysqli_connect($servername, $username, $password, $dbname);
