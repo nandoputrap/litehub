@@ -58,60 +58,23 @@
 
     if (isset($_POST['submit'])) {
 
-		$currentDir = getcwd();
-    $uploadDirectory = "/file_buku/";
-
-    $errors = []; // Store all foreseen and unforseen errors here
-
-    $fileExtensions = ['doc','docx']; // Get all the file extensions
-
-    $fileName = $_FILES['fileBuku']['name'];
-    $fileSize = $_FILES['fileBuku']['size'];
-    $fileTmpName  = $_FILES['fileBuku']['tmp_name'];
-    $fileType = $_FILES['fileBuku']['type'];
-    $fileExtension = strtolower(end(explode('.',$fileName)));
-	die($fileName . $fileSize);
-    $uploadPath = $currentDir . $uploadDirectory . basename($fileName); 
-
-        if (! in_array($fileExtension,$fileExtensions)) {
-            $errors[] = "This file extension is not allowed. Please upload a JPEG or PNG file";
-        }
-
-        if ($fileSize > 2000000) {
-            $errors[] = "This file is more than 2MB. Sorry, it has to be less than or equal to 2MB";
-        }
-
-        if (empty($errors)) {
-            $didUpload = move_uploaded_file($fileTmpName, $uploadPath);
-
-            if ($didUpload) {
-                echo "The file " . basename($fileName) . " has been uploaded";
-            } else {
-                echo "An error occurred somewhere. Try again or contact the admin";
-            }
-        } else {
-            foreach ($errors as $error) {
-                echo $error . "These are the errors" . "\n";
-            }
-        }
-    // }
-		// 	$temp_file = $_FILES['fileBuku']['tmp_name'];
-		// 	$name_file = $_FILES['fileBuku']['name'];
-		// 	$type = $_FILES['fileBuku']['type'];
-		// 	$x = explode('.', $name_file);
-        // 	$ekstensi = strtolower(end($x));
-		// 	$type_apr = array('doc','docx');
-		// 	$size = $_FILES['fileBuku']['size'];
-		// 	$folder = "file_buku/";
-		// 	die($temp_file);
-		// 	if ($size < 52428800 and (in_array($ekstensi, $type_apr) === true)) {
-		// 		move_uploaded_file($temp_file, $folder . $name_file);
-		// 		mysqli_query($conn, "INSERT into unggah (file) values ('$name_file')");
-		// 		header('location:unggah.php');
+			$temp_file = $_FILES['fileBuku']['tmp_name'];
+			$name_file = $_FILES['fileBuku']['name'];
+			$type = $_FILES['fileBuku']['type'];
+			$x = explode('.', $name_file);
+        	$ekstensi = strtolower(end($x));
+			$type_apr = array('doc','docx');
+			$size = $_FILES['fileBuku']['size'];
+			$folder = "file_buku/";
+			die($temp_file);
+			if ($size < 52428800 and (in_array($ekstensi, $type_apr) === true)) {
+				move_uploaded_file($temp_file, $folder . $name_file);
+				mysqli_query($conn, "INSERT into unggah (file) values ('$name_file')");
+				header('location:unggah.php');
 				
-		// 	}else{
-		// 		echo "Gagal Upload File";
-		// 	}
+			}else{
+				echo "Gagal Upload File";
+			}
 		}
 
 		// if($_POST['submit']){
@@ -290,7 +253,29 @@
                                 <div class="form-group">
                                     <label for="kategori">Kategori</label>
 									<select class="form-control" id="insert-kategori" name="kategori" placeholder="Pilih Kategori">
-										<option>Pilih kategori...</option>
+										<option>Umum</option>
+										<option>Filsafat</option>
+										<option>Psikologi</option>
+										<option>Agama</option>
+										<option>Sejarah</option>
+										<option>Sosial</option>
+										<option>Bahasa</option>
+										<option>Sains</option>
+										<option>Geografi</option>
+										<option>Teknologi</option>
+										<option>Seni</option>
+										<option>Literatur</option>
+										<option>Sastra</option>
+										<option>Biografi</option>
+										<option>Matematika</option>
+										<option>Novel</option>
+										<option>Cerpen</option>
+										<option>Puisi</option>
+										<option>Drama</option>
+										<option>Komik</option>
+										<option>Dongeng</option>
+										<option>Fabel</option>
+										<option>Mitos</option>
 									</select>
                                 </div>
                                 <div class="form-group">
