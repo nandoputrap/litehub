@@ -57,7 +57,6 @@
 		// {
 
     if (isset($_POST['submit'])) {
-		die($_FILES);
 
 		$currentDir = getcwd();
     $uploadDirectory = "/file_buku/";
@@ -65,8 +64,9 @@
     $errors = []; // Store all foreseen and unforseen errors here
 
     $fileExtensions = ['doc','docx']; // Get all the file extensions
-    $fileName = $_FILES['fileBuku'];
-    $fileSize = $_FILES['fileBuku'];
+
+    $fileName = $_FILES['fileBuku']['name'];
+    $fileSize = $_FILES['fileBuku']['size'];
     $fileTmpName  = $_FILES['fileBuku']['tmp_name'];
     $fileType = $_FILES['fileBuku']['type'];
     $fileExtension = strtolower(end(explode('.',$fileName)));
