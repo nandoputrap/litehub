@@ -1,8 +1,8 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "litehub";
+$servername = "sql12.freesqldatabase.com";
+$username = "sql12310568";
+$password = "wmiLAF7a6g";
+$dbname = "sql12310568";
 		
 // Create connection
 $conn = mysqli_connect($servername, $username, $password, $dbname);
