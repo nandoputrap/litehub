@@ -20,7 +20,7 @@
 	function daftarBuku($table) {
 		$conn = connectDB();
 		
-		$sql = "SELECT book_id, img_path, title, author, publisher, quantity FROM $table";
+		$sql = "SELECT no, title, author, category, description, file, upload_date, status FROM $table";
 		
 		if(!$result = mysqli_query($conn, $sql)) {
 			die("Error: $sql");
@@ -28,108 +28,114 @@
 		mysqli_close($conn);
 		return $result;
 	}
-	function selectRowsFromLoan() {
+
+	function selectRowsFromSubmission() {
 		$conn = connectDB();
-		$sql = "SELECT * FROM loan WHERE user_id = ".$_SESSION["user_id"]."";
+
+		$sql = "SELECT * FROM submission WHERE user_id = ".$_SESSION["user_id"]."";
 		if(!$result = mysqli_query($conn, $sql)) {
 			die("Error: $sql");
 		}
 		mysqli_close($conn);
 		return $result;
 	}
-	function pinjamBuku($book_id, $user_id) {
-		// $conn = connectDB();
-		$sqlloan = "INSERT into loan (book_id, user_id) values ('$book_id','$user_id')";
-		$sqlbook = "UPDATE book SET quantity = quantity-1 where book_id = $book_id";
-		if(!$result = mysqli_query($conn, $sqlloan)) {
-			die("Error: $sqlloan");
-		}
-		if(!$result = mysqli_query($conn, $sqlbook)) {
-			die("Error: $sqlbook");
-		}
-		mysqli_close($conn);
-		header("Location: daftar.php");
-	}
-	function balikBuku($book_id, $user_id) {
-		// $conn = connectDB($book_id, $user_id);
-		$sqlloan = "DELETE FROM loan WHERE book_id = $book_id AND user_id = $user_id";
-		$sqlbook = "UPDATE book SET quantity = quantity+1 where book_id = $book_id";
-		if(!$result = mysqli_query($conn, $sqlloan)) {
-			die("Error: $sqlloan");
-		}
-		if(!$result = mysqli_query($conn, $sqlbook)) {
-			die("Error: $sqlbook");
-		}
-		mysqli_close($conn);
-		header("Location: daftar.php");
-	}
-	function showActButton($arrayloan, $bookid, $stocknum) {
-		$flag = false;
-		for ($i=0; $i < count($arrayloan); $i++) { 
-			if ($arrayloan[$i] == $bookid) {
-				echo '
-				<form action="daftar.php" method="post">
-					<input type="hidden" name="book_id" value="'.$bookid.'">
-					<input type="hidden" name="command" value="balik">
-					<button type="submit" class="btn btn-default" style="width:100%;">Balik</button>
-				</form>
-				';
-				$flag = true;
-			}
-		}
-		if($flag == false) {
-			if($stocknum > 0) {
-				echo '
-				<form action="daftar.php" method="post">
-					<input type="hidden" name="book_id" value="'.$bookid.'">
-					<input type="hidden" name="command" value="pinjam">
-					<button type="submit" class="btn btn-default" style="width:100%;">Pinjam</button>
-				</form>
-				';
-			}
-		}
-	}
-	function insertBuku() {
-		// $conn = connectDB();
+
+	function unggahBuku() {
+		$conn = connectDB();
 		
-		$displayBuku = $_POST['displayBuku'];
 		$judulBuku = $_POST['judulBuku'];
-		$pengarangBuku = $_POST['pengarangBuku'];
-		$penerbitBuku = $_POST['penerbitBuku'];
+		$namaPenulis = $_POST['namaPenulis'];
+		$kategori = $_POST['kategori'];
 		$deskripsiBuku = $_POST['deskripsiBuku'];
-		$stokBuku = $_POST['stokBuku'];
-		$daftarbuku = daftarBuku("book");
-		$sdhAda = false;
-		$bookid = 0;
-		while ($row = mysqli_fetch_row($daftarbuku)) {	
-			if($row[2] == $judulBuku) {
-				$sdhAda = true;
-				$bookid = $row[0];
-				break;
-			}
-		}
-		$_SESSION["titlebookadded"] = $judulBuku;
+		$file = $_POST['fileBuku'];
+		$tanggalUpload = date("Y-m-d");
+		$status = 'Dalam proses penyuntingan';
+
+		$daftarbuku = daftarBuku("unggah");
+		$temp_file = $_FILES['fileBuku']['tmp_name'];
+		$name_file = $_FILES['fileBuku']['name'];
+		$type = $_FILES['fileBuku']['type'];
+		$x = explode('.', $name_file);
+		$ekstensi = strtolower(end($x));
+		$size = $_FILES['fileBuku'];
+		$folder = "file_buku/";
+		$debug = in_array($ekstensi, $type_apr);
+		// die($temp_file);
+		if ($size < 52428800 and (in_array($ekstensi, $type_apr) === true)) {
+			move_uploaded_file($temp_file, $folder . $name_file);
+			echo  "<script type='text/javascript'>alert('Upload berhasil');</script>";
+			// mysqli_query($conn, "INSERT into unggah (file) values ('$name_file')");
+			// header('location:unggah.php');
+			$_SESSION["titlebookadded"] = $judulBuku;
 		
-		if($sdhAda == true) {
-			$sql = "UPDATE book SET quantity = quantity + $stokBuku where book_id = $bookid";
-		} else {
-			$sql = "INSERT into book (img_path, title, author, publisher, description, quantity) values('$displayBuku', '$judulBuku', '$pengarangBuku', '$penerbitBuku', '$deskripsiBuku', $stokBuku)";
-		}
-		if($result = mysqli_query($conn, $sql)) {
-			echo "New record created successfully <br/>";
-			header("Location: detail.php");
-			} else {
-			die("Error: $sql");
+			$sql = "INSERT into unggah (title, author, category, description, file, upload_date, status) values('$judulBuku', '$namaPenulis', '$kategori', '$deskripsiBuku', '$file', '$tanggalUpload', '$status')";
+	
+			if($result = mysqli_query($conn, $sql)) {
+				echo "New record created successfully <br/>";
+				// header("Location: unggah.php");
+			} 
+			else {
+				die("Error: $sql");
+			}
+		}else{
+			echo  "<script type='text/javascript'>alert('". gettype($temp_file) . "');</script>";
+			// echo"
+			// <script type='text/javascript'>
+			// 	alert('Buku gagal ditambahkan!');
+			// 	history.back(self);
+			// </script>";
 		}
 		mysqli_close($conn);
 	}
+	// if(isset($_POST['submit']))
+	// {
+	// if($_POST['submit']){
+	// 	$fileTmpPath = $_FILES['fileBuku']['tmp_name'];
+	// 	$fileName = $_FILES['fileBuku']['name'];
+	// 	$fileSize = $_FILES['fileBuku']['size'];
+	// 	$fileType = $_FILES['fileBuku']['type'];
+	// 	$fileNameCmps = explode(".", $fileName);
+	// 	$fileExtension = strtolower(end($fileNameCmps));
+		// $diizinkan	= array('doc','docx');
+		// $nama = $_FILES['fileBuku']['name'];
+		// $x = explode('.', $nama);
+		// $ekstensi = strtolower(end($x));
+		// $ukuran	= $_FILES['fileBuku']['size'];
+		// $file_tmp = $_FILES['fileBuku']['tmp_name'];
+		// $allowedfileExtensions = array('doc', 'docx');
+		// if (in_array($fileExtension, $allowedfileExtensions)) {
+		// 	$uploadFileDir = './file_buku/';
+		// 	$dest_path = $uploadFileDir . $newFileName;
+			
+		// 	if(move_uploaded_file($fileTmpPath, $dest_path))
+		// 	{
+		// 		$message ='File is successfully uploaded.';
+		// 	}
+		// 	else
+		// 	{
+		// 		$message = 'There was some error moving the file to upload directory. Please make sure the upload directory is writable by web server.';
+		// 	}
+		// }
+		// if(in_array($ekstensi, $diizinkan) === true){
+		// 	if($ukuran <= 52428800){			
+		// 		move_uploaded_file($file_tmp, './file_buku/'.$nama);
+		// 		$query = mysql_query("INSERT INTO unggah VALUES(NULL, '$nama')");
+		// 		if($query){
+		// 			echo 'FILE BERHASIL DI UPLOAD';
+		// 		}else{
+		// 			echo 'GAGAL MENGUPLOAD FILE';
+		// 		}
+		// 	}else{
+		// 	echo 'UKURAN FILE TERLALU BESAR';
+		// 	}
+		// }else{
+		// 	echo 'EKSTENSI INI TIDAK DIPERBOLEHKAN';
+		// }
+	// }
+
 	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		if($_POST['command'] === 'insert') {
-			insertBuku();
-		}else if ($_POST['command'] === 'pinjam') {
-			pinjamBuku($_POST['book_id'],$_SESSION["user_id"]);
-		} else if ($_POST['command'] === 'balik') {
-			balikBuku($_POST['book_id'],$_SESSION["user_id"]);
+			unggahBuku();
 		}
 	}
 	
@@ -143,6 +149,22 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="bootstrap/dist/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="css/home.css">
+		<style>
+			.labelunggah{
+                font-style: normal;
+                font-weight: bold;
+                color: #0A5494;
+                font-size: 20px;
+            }
+			.field-pengajuan{
+                font-weight: bold;
+                vertical-align: text-top;
+                width: 130px; 
+        	}
+            .isi-pengajuan{
+                text-align:justify;
+            }
+		</style>
 	</head>
 	<body>
 		<div class="jumbotron">
@@ -160,7 +182,7 @@
 		<nav class="navbar navbar-inverse">
 			<div class="container-fluid">
 				<div class="navbar-header">
-					 <a class="navbar-brand" href="#">Ebookhub.ID</a>
+					<a class="navbar-brand" href="#">Ebookhub.ID</a>
 				</div>
 				<ul class="nav navbar-nav">
 					<?php
@@ -201,7 +223,7 @@
             <?php
                 if (isset($_SESSION["namauser"]) && $_SESSION["role"] === "admin"){
                     echo "<br><button type='button' class='btn-addbook btn btn-primary' data-toggle='modal' data-target='#insertModal'>
-                        Add Buku
+                        Unggah Buku
                     </button>";
                 }
             ?>
@@ -213,159 +235,190 @@
                             <h4 class="modal-title black-modal" id="insertModalLabel">Unggah Buku</h4>
                         </div>
                         <div class="modal-body">
-                            <form action="unggah.php" method="post">
+                            <form action="services/upload.php" method="post" enctype="multipart/form-data">
 								<div class="form-group">
-									<label for="judulBuku">Judul Buku</label>
-									<input type="text" class="form-control" id="insert-judulBuku" name="judulBuku" placeholder="Masukkan Judul" required>
+                                    <label for="judulBuku">Judul Buku</label>
+                                    <input type="text" class="form-control" id="insert-judulBuku" name="judulBuku" placeholder="Masukkan Judul Buku" required>
                                 </div>
 								<div class="form-group">
-                                    <label for="displayBuku">Nama Penulis</label>
-                                    <input type="url" class="form-control" id="insert-namaPenulis" name="namaPenulis" placeholder="Masukkan Nama Penulis">
+                                    <label for="namaPenulis">Nama Penulis</label>
+                                    <input type="text" class="form-control" id="insert-namaPenulis" name="namaPenulis" placeholder="Masukkan Nama Penulis">
                                 </div>
                                 <div class="form-group">
-                                    <label for="pengarangBuku">Kategori</label>
-                                    <input type="text" class="form-control" id="insert-pengarangBuku" name="pengarangBuku" placeholder="Pengarang Buku">
-                                </div>
-                                <div class="form-group">
-                                    <label for="penerbitBuku">Penerbit Buku</label>
-                                    <input type="text" class="form-control" id="insert-penerbitBuku" name="penerbitBuku" placeholder="Penerbit Buku">
+                                    <label for="kategori">Kategori</label>
+									<select class="form-control" id="insert-kategori" name="kategori" placeholder="Pilih Kategori">
+										<option>Umum</option>
+										<option>Filsafat</option>
+										<option>Psikologi</option>
+										<option>Agama</option>
+										<option>Sejarah</option>
+										<option>Sosial</option>
+										<option>Bahasa</option>
+										<option>Sains</option>
+										<option>Geografi</option>
+										<option>Teknologi</option>
+										<option>Seni</option>
+										<option>Literatur</option>
+										<option>Sastra</option>
+										<option>Biografi</option>
+										<option>Matematika</option>
+										<option>Novel</option>
+										<option>Cerpen</option>
+										<option>Puisi</option>
+										<option>Drama</option>
+										<option>Komik</option>
+										<option>Dongeng</option>
+										<option>Fabel</option>
+										<option>Mitos</option>
+									</select>
                                 </div>
                                 <div class="form-group">
                                     <label for="deskripsiBuku">Deskripsi Buku</label>
-                                    <input type="text" class="form-control" id="insert-deskripsiBuku" name="deskripsiBuku" placeholder="Deskripsi Buku">
+                                    <textarea class="form-control" id="insert-deskripsiBuku" name="deskripsiBuku" placeholder="Deskripsi Buku" rows="3"></textarea>
                                 </div>
                                 <div class="form-group">
-                                    <label for="stokBuku">Stok Buku</label>
-                                    <input type="number" class="form-control" id="insert-stokBuku" name="stokBuku" placeholder="Stok Buku" required>
+									<input type="file" name="fileToUpload" id="fileToUpload">
+									<!-- <button class="btn btn-secondary" method="post" action="upload.php" enctype="multipart/form-data">Upload Buku</button> -->
+                					<h6>Format buku dalam bentuk .doc atau .docx. Format penulisan dan layout dapat dilihat pada halaman <a href="#">ini</a>. Ukuran file maksimal 50 MB.</h6>
                                 </div>
                                 <input type="hidden" id="insert-command" name="command" value="insert">
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button type="submit" class="btn btn-primary" name="submit">Submit</button>
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="well well-sm">
-		       <strong>Tampilan</strong>
-		        <div class="btn-group">
-		            <a href="#" id="list" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-th-list">
-		            </span>List</a> <a href="#" id="grid" class="btn btn-default btn-sm"><span
-		                class="glyphicon glyphicon-th"></span>Grid</a>
-		        </div>
-		    </div>
-		    <div id="products" class="row list-group">
-		    <?php
-		        $daftarbuku = daftarBuku("book");
-		        if(isset($_SESSION['namauser'])) {
-		        	$daftarpinjaman = selectRowsFromLoan();
-		            $arrayloan = array();
-		            while ($baris = mysqli_fetch_row($daftarpinjaman)) {
-		            	array_push($arrayloan, $baris[1]);
-		            }
-		        }
-		      while ($row = mysqli_fetch_row($daftarbuku)) {
-		        echo '
-				<div class="item  col-xs-4 col-lg-4">
-		            <div class="thumbnail">
-		            	<img class="list-group-image" style="width:300px; height:300px;" src="'.$row[1].'" />
-		            	<div class="caption">
-		            		<h4 class="title-book">'.$row[2].'</h4>
-			            	<p class="list-group-item-text">Penulis : '.$row[3].'</p>
-			            	<p class="list-group-item-text">Penerbit : '.$row[4].'</p>';
-			            	if($row[5] > 0) {
-			            		echo '<p class="list-group-item-text">Stok Tersedia : '.$row[5].'</p>';
-			            	} else {
-			            		echo '<p class="list-group-item-text" style="color:red;">Stok Kosong.</p>';
-			            	}
-			            	echo '
-			                <div class="row">
-				                <div class="col-md-6">
-									<button type="button" class="btn btn-default" style="width:100%;" data-toggle="modal" data-target="#detailModal" onclick="detailBuku('.$row[0].')">
-									Detail
-									</button>
-								</div>';
-								echo '<div id="tombolPinjam'.$row[0].'" class="col-md-6">';
-									if(isset($_SESSION['namauser']) && $_SESSION['role'] === 'user') {
-										showActButton($arrayloan,$row[0],$row[5]);
-									}
-								echo '</div>';
-			                    echo '
-			                </div>
-		            	</div>
-		            </div>
-		    	</div>
-		       	';
-		      }
-		    ?>
-		    </div>
-            <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title black-modal" id="detailModalLabel">Detail Buku</h4>
-                        </div>
-                        <div class="modal-body">
-							<fieldset>
-                        		<legend>Display Buku</legend>
-								<div id="displayBuku">
+			<div class="uploadpage">
+				<form action="#" method="post">
+					<label class="labelunggah">Menunggu Proses Pengajuan</label>
+					<table class="table info-upload">
+						<thead>
+							<tr>
+								<th>Judul Buku</th>
+								<th>Penulis</th>
+								<th>Tanggal Unggah</th>
+								<th>Detail</th>
+							</tr>
+						</thead>
+						<?php
+							$daftarbuku = daftarBuku("unggah");
+							if(isset($_SESSION['namauser'])) {
+								$daftardiunggah = selectRowsFromSubmission();
+							    $arraysubmission = array();
+							    while ($baris = mysqli_fetch_row($daftardiunggah)) {
+							    	array_push($arraysubmission, $baris[1]);
+							    }
+							}
+							while ($row = mysqli_fetch_row($daftarbuku)) {
+								 if($row[7] = "Dalam Proses Penyuntingan") {
+									echo'
+									<tbody>
+									<tr>
+										<td>'.$row[1].'</td>
+										<td>'.$row[2].'</td>
+										<td>'.$row[6].'</td>
+										<td><a data-toggle="modal" data-target="#detailUpload" href="#detailUpload?id='.$row[1].'">Detail</a></td>
+									</tr>
+									</tbody>';
+								 }
+							}
+						?>
+					</table>
+					<label class="labelunggah">Sudah Diterima</label>
+					<table class="table info-upload">
+						<thead>
+							<tr>
+								<th>Judul Buku</th>
+								<th>Penulis</th>
+								<th>Tanggal Unggah</th>
+								<th>Detail</th>
+							</tr>
+						</thead>
+						<?php
+							$daftarbuku = daftarBuku("unggah");
+							if(isset($_SESSION['namauser'])) {
+								$daftardiunggah = selectRowsFromSubmission();
+							    $arraysubmission = array();
+							    while ($baris = mysqli_fetch_row($daftardiunggah)) {
+							    	array_push($arraysubmission, $baris[1]);
+							    }
+							}
+							while ($row = mysqli_fetch_row($daftarbuku)) {
+								 if($row[7] == "Sudah Diterima") {
+									echo'
+									<tbody>
+									<tr>
+										<td>'.$row[1].'</td>
+										<td>'.$row[2].'</td>
+										<td>'.$row[6].'</td>
+										<td><a data-toggle="modal" data-target="#detailUpload">Detail</a></td>
+									</tr>
+									</tbody>';
+								 }
+							}	
+						?>
+					</table>
+				</form>
+			</div>
+			<?php
+				$daftarbuku = daftarBuku("unggah");
+				if(isset($_SESSION['namauser'])) {
+					$daftardiunggah = selectRowsFromSubmission();
+				    $arraysubmission = array();
+				    while ($baris = mysqli_fetch_row($daftardiunggah)) {
+				    	array_push($arraysubmission, $baris[1]);
+				    }
+				}
+				while ($row = mysqli_fetch_array($daftarbuku)) {
+					echo'
+					<div class="modal fade" id="detailUpload" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+									<h4 class="modal-title black-modal" id="detailModalLabel">Detail Buku</h4>
 								</div>
-							</fieldset>
-							<fieldset>
-                        		<legend>Judul Buku</legend>
-								<div id="judulBuku">
+								<div class="modal-body">
+									<table class="detail-pengajuan">
+										<tbody>
+											<tr>
+												<td class="field-pengajuan">Judul Buku</td>
+												<td class="isi-pengajuan">'.$row[1].'</td>
+											</tr>
+											<tr>
+												<td class="field-pengajuan">Nama Penulis</td>
+												<td class="isi-pengajuan">'.$row[2].'</td>
+											</tr>
+											<tr>
+												<td class="field-pengajuan">Kategori</td>
+												<td class="isi-pengajuan">'.$row[3].'</td>
+											</tr>
+											<tr>
+												<td class="field-pengajuan">Deskripsi</td>
+												<td class="isi-pengajuan">'.$row[4].'</td>
+											</tr>
+											<tr>
+												<td class="field-pengajuan">Tanggal unggah</td>
+												<td class="isi-pengajuan">'.$row[6].'</td>
+											</tr>
+											<tr>
+												<td class="field-pengajuan">Status pengajuan</td>
+												<td class="isi-pengajuan" style="font-weight: bold">'.$row[7].'</td>
+											</tr>
+										</tbody>
+									</table>
 								</div>
-							</fieldset>
-                        	<fieldset>
-                        		<legend>Deskripsi Buku</legend>
-								<div id="deskripsiBuku">
-								</div>
-							</fieldset>
-							<div style="overflow-x:auto;">
-								<table class='table'>
-									<thead> <tr><th>Book ID</th> <th>Pengarang</th> <th>Penerbit</th> <th>Stock</th> </tr> </thead>
-									<tbody id="detailBuku">
-									</tbody>
-								</table>
 							</div>
-							<?php
-								echo '
-									<div style="overflow-x:auto;">
-										<table class="table">
-											<thead> <tr><th>Review ID</th> <th>Book ID</th> <th>User ID</th> <th>Date</th> </tr> </thead>
-											<tbody id="detailReview">
-											</tbody>
-										</table>
-									</div>
-									<fieldset>
-										<legend>Review Buku</legend>
-										<div id="reviewBuku">
-										</div>
-									</fieldset>';
-								if(isset($_SESSION['namauser']) && $_SESSION['role'] === 'user') {
-									echo 
-									'<div class="form-group">
-										<label for="reviewBuku">Review Buku</label>
-										<input type="text" class="form-control" id="update-reviewBuku" name="reviewBuku" placeholder="Review Buku">
-									</div>
-									<button type="button" class="btn btn-default" style="width:100%;" onclick="komenBuku(';
-									echo $_SESSION["user_id"];
-									echo ')">Submit</button><br>';
-									echo '<br><div id="detailPinjam"></div>';
-								}
-                            ?>
-                        </div>
-                    </div>
-                </div>
-            </div>
+						</div>
+					</div>';
+				}
+			?>
         </div>
 		<script src="js/jquery-3.1.0.min.js"> </script>
-		<script src="bootstrap/dist/js/bootstrap.min.js"></script>
-		<script type="text/javascript" src="js/home.js"></script>
-		<script type="text/javascript" src="js/ajax.js"></script>		
+		<script src="bootstrap/dist/js/bootstrap.min.js"></script>	
 	</body>
 	<footer>
 		<hr>
-		<h4>&copy; 2016 Bryanza Novirahman & Muhammad Akbar Setiadi. All rights reserved</h4>
+		<h4>&copy; 2019 Litehub Inc. All rights reserved</h4>
 	</footer>
-</html>
+</html>							
