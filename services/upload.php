@@ -2,10 +2,10 @@
 // error_reporting(E_ALL);
 // ini_set('display_errors',1);
 function connectDB() {
-    $servername = "localhost";
-    $username = "root";
-    $password = "password";
-    $dbname = "ebookhub";
+    $servername = "sql12.freesqldatabase.com";
+    $username = "sql12310568";
+    $password = "wmiLAF7a6g";
+    $dbname = "sql12310568";
     
     // Create connection
     $conn = mysqli_connect($servername, $username, $password, $dbname);
