@@ -3,7 +3,7 @@
 	function connectDB() {
 		$servername = "localhost";
 		$username = "root";
-		$password = "";
+		$password = "password";
 		$dbname = "ebookhub";
 		
 		// Create connection
@@ -51,93 +51,86 @@
 		$status = 'Dalam proses penyuntingan';
 
 		$daftarbuku = daftarBuku("unggah");
-
+		$temp_file = $_FILES['fileBuku']['tmp_name'];
+		$name_file = $_FILES['fileBuku']['name'];
+		$type = $_FILES['fileBuku']['type'];
+		$x = explode('.', $name_file);
+		$ekstensi = strtolower(end($x));
+		$size = $_FILES['fileBuku'];
+		$folder = "file_buku/";
+		$debug = in_array($ekstensi, $type_apr);
+		// die($temp_file);
+		if ($size < 52428800 and (in_array($ekstensi, $type_apr) === true)) {
+			move_uploaded_file($temp_file, $folder . $name_file);
+			echo  "<script type='text/javascript'>alert('Upload berhasil');</script>";
+			// mysqli_query($conn, "INSERT into unggah (file) values ('$name_file')");
+			// header('location:unggah.php');
+			$_SESSION["titlebookadded"] = $judulBuku;
 		
-		// if(isset($_POST['submit']))
-		// {
-
-    if (isset($_POST['submit'])) {
-
-			$temp_file = $_FILES['fileBuku']['tmp_name'];
-			$name_file = $_FILES['fileBuku']['name'];
-			$type = $_FILES['fileBuku']['type'];
-			$x = explode('.', $name_file);
-        	$ekstensi = strtolower(end($x));
-			$type_apr = array('doc','docx');
-			$size = $_FILES['fileBuku']['size'];
-			$folder = "file_buku/";
-			die($temp_file);
-			if ($size < 52428800 and (in_array($ekstensi, $type_apr) === true)) {
-				move_uploaded_file($temp_file, $folder . $name_file);
-				mysqli_query($conn, "INSERT into unggah (file) values ('$name_file')");
-				header('location:unggah.php');
-				
-			}else{
-				echo "Gagal Upload File";
+			$sql = "INSERT into unggah (title, author, category, description, file, upload_date, status) values('$judulBuku', '$namaPenulis', '$kategori', '$deskripsiBuku', '$file', '$tanggalUpload', '$status')";
+	
+			if($result = mysqli_query($conn, $sql)) {
+				echo "New record created successfully <br/>";
+				// header("Location: unggah.php");
+			} 
+			else {
+				die("Error: $sql");
 			}
-		}
-
-		// if($_POST['submit']){
-		// 	$fileTmpPath = $_FILES['fileBuku']['tmp_name'];
-		// 	$fileName = $_FILES['fileBuku']['name'];
-		// 	$fileSize = $_FILES['fileBuku']['size'];
-		// 	$fileType = $_FILES['fileBuku']['type'];
-		// 	$fileNameCmps = explode(".", $fileName);
-		// 	$fileExtension = strtolower(end($fileNameCmps));
-			// $diizinkan	= array('doc','docx');
-			// $nama = $_FILES['fileBuku']['name'];
-			// $x = explode('.', $nama);
-			// $ekstensi = strtolower(end($x));
-			// $ukuran	= $_FILES['fileBuku']['size'];
-			// $file_tmp = $_FILES['fileBuku']['tmp_name'];
-			// $allowedfileExtensions = array('doc', 'docx');
-			// if (in_array($fileExtension, $allowedfileExtensions)) {
-			// 	$uploadFileDir = './file_buku/';
-			// 	$dest_path = $uploadFileDir . $newFileName;
-				
-			// 	if(move_uploaded_file($fileTmpPath, $dest_path))
-			// 	{
-			// 		$message ='File is successfully uploaded.';
-			// 	}
-			// 	else
-			// 	{
-			// 		$message = 'There was some error moving the file to upload directory. Please make sure the upload directory is writable by web server.';
-			// 	}
-			// }
-			// if(in_array($ekstensi, $diizinkan) === true){
-			// 	if($ukuran <= 52428800){			
-			// 		move_uploaded_file($file_tmp, './file_buku/'.$nama);
-			// 		$query = mysql_query("INSERT INTO unggah VALUES(NULL, '$nama')");
-			// 		if($query){
-			// 			echo 'FILE BERHASIL DI UPLOAD';
-			// 		}else{
-			// 			echo 'GAGAL MENGUPLOAD FILE';
-			// 		}
-			// 	}else{
-			// 	echo 'UKURAN FILE TERLALU BESAR';
-			// 	}
-			// }else{
-			// 	echo 'EKSTENSI INI TIDAK DIPERBOLEHKAN';
-			// }
-		// }
-
-		$_SESSION["titlebookadded"] = $judulBuku;
-		
-		$sql = "INSERT into unggah (title, author, category, description, file, upload_date, status) values('$judulBuku', '$namaPenulis', '$kategori', '$deskripsiBuku', '$file', '$tanggalUpload', '$status')";
-
-		if($result = mysqli_query($conn, $sql)) {
-			echo "New record created successfully <br/>";
+		}else{
+			echo  "<script type='text/javascript'>alert('". gettype($temp_file) . "');</script>";
 			// echo"
 			// <script type='text/javascript'>
-			// 	alert('Buku berhasil ditambahkan!');
+			// 	alert('Buku gagal ditambahkan!');
 			// 	history.back(self);
 			// </script>";
-			header("Location: unggah.php");
-			} else {
-			die("Error: $sql");
 		}
 		mysqli_close($conn);
 	}
+	// if(isset($_POST['submit']))
+	// {
+	// if($_POST['submit']){
+	// 	$fileTmpPath = $_FILES['fileBuku']['tmp_name'];
+	// 	$fileName = $_FILES['fileBuku']['name'];
+	// 	$fileSize = $_FILES['fileBuku']['size'];
+	// 	$fileType = $_FILES['fileBuku']['type'];
+	// 	$fileNameCmps = explode(".", $fileName);
+	// 	$fileExtension = strtolower(end($fileNameCmps));
+		// $diizinkan	= array('doc','docx');
+		// $nama = $_FILES['fileBuku']['name'];
+		// $x = explode('.', $nama);
+		// $ekstensi = strtolower(end($x));
+		// $ukuran	= $_FILES['fileBuku']['size'];
+		// $file_tmp = $_FILES['fileBuku']['tmp_name'];
+		// $allowedfileExtensions = array('doc', 'docx');
+		// if (in_array($fileExtension, $allowedfileExtensions)) {
+		// 	$uploadFileDir = './file_buku/';
+		// 	$dest_path = $uploadFileDir . $newFileName;
+			
+		// 	if(move_uploaded_file($fileTmpPath, $dest_path))
+		// 	{
+		// 		$message ='File is successfully uploaded.';
+		// 	}
+		// 	else
+		// 	{
+		// 		$message = 'There was some error moving the file to upload directory. Please make sure the upload directory is writable by web server.';
+		// 	}
+		// }
+		// if(in_array($ekstensi, $diizinkan) === true){
+		// 	if($ukuran <= 52428800){			
+		// 		move_uploaded_file($file_tmp, './file_buku/'.$nama);
+		// 		$query = mysql_query("INSERT INTO unggah VALUES(NULL, '$nama')");
+		// 		if($query){
+		// 			echo 'FILE BERHASIL DI UPLOAD';
+		// 		}else{
+		// 			echo 'GAGAL MENGUPLOAD FILE';
+		// 		}
+		// 	}else{
+		// 	echo 'UKURAN FILE TERLALU BESAR';
+		// 	}
+		// }else{
+		// 	echo 'EKSTENSI INI TIDAK DIPERBOLEHKAN';
+		// }
+	// }
 
 	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		if($_POST['command'] === 'insert') {
@@ -241,7 +234,7 @@
                             <h4 class="modal-title black-modal" id="insertModalLabel">Unggah Buku</h4>
                         </div>
                         <div class="modal-body">
-                            <form action="unggah.php" method="post">
+                            <form action="services/upload.php" method="post" enctype="multipart/form-data">
 								<div class="form-group">
                                     <label for="judulBuku">Judul Buku</label>
                                     <input type="text" class="form-control" id="insert-judulBuku" name="judulBuku" placeholder="Masukkan Judul Buku" required>
@@ -282,8 +275,8 @@
                                     <label for="deskripsiBuku">Deskripsi Buku</label>
                                     <textarea class="form-control" id="insert-deskripsiBuku" name="deskripsiBuku" placeholder="Deskripsi Buku" rows="3"></textarea>
                                 </div>
-                                <div class="form-group" action="" enctype="multipart/form-data">
-									<input type="file" id="insert-fileBuku" name="fileBuku">
+                                <div class="form-group">
+									<input type="file" name="fileToUpload" id="fileToUpload">
 									<!-- <button class="btn btn-secondary" method="post" action="upload.php" enctype="multipart/form-data">Upload Buku</button> -->
                 					<h6>Format buku dalam bentuk .doc atau .docx. Format penulisan dan layout dapat dilihat pada halaman <a href="#">ini</a>. Ukuran file maksimal 50 MB.</h6>
                                 </div>
