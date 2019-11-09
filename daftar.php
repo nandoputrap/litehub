@@ -181,7 +181,20 @@
 					}
 					?>
 					<li class="active"><a href="daftar.php">Daftar Buku</a></li>
-					<li><a href="unggah.php">Unggah Buku</a></li>
+					<?php
+					if(isset($_SESSION['namauser']) && $_SESSION['role'] === 'penulis') {
+						echo '
+						<li><a href="unggah.php">Unggah Buku</a></li>
+						';
+					}
+					?>
+					<?php
+					if(isset($_SESSION['namauser']) && $_SESSION['role'] === 'editor') {
+						echo '
+						<li><a href="unduh.php">Unduh Buku</a></li>
+						';
+					}
+					?>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<?php

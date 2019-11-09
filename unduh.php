@@ -2,10 +2,10 @@
 	session_start();
 	function connectDB() {
 		// require 'config/connect.php';
-		$servername = "localhost";
-		$username = "root";
-		$password = "password";
-		$dbname = "ebookhub";
+		$servername = "sql12.freesqldatabase.com";
+		$username = "sql12310568";
+		$password = "wmiLAF7a6g";
+		$dbname = "sql12310568";
 		
 		// Create connection
 		$conn = mysqli_connect($servername, $username, $password, $dbname);
@@ -15,6 +15,10 @@
 			die("Connection failed: " + mysqli_connect_error());
 		}
 		return $conn;
+	}
+
+	if(!isset($_SESSION["namauser"])) {
+		header("Location: daftar.php");
 	}
 	
 	function daftarBuku($table) {
@@ -100,7 +104,7 @@
 					}
 					?>
 					<li><a href="daftar.php">Daftar Buku</a></li>
-					<li class="active"><a href="unggah.php">Unggah Buku</a></li>
+					<li class="active"><a href="unduh.php">Unduh Buku</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<?php
@@ -198,6 +202,7 @@
 								<th>Penulis</th>
 								<th>Tanggal Unggah</th>
 								<th>Detail</th>
+								<th>Download</th>
 							</tr>
 						</thead>
 						<?php

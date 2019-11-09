@@ -49,6 +49,10 @@
 			
 			if ($row["role"] === "user"){
 				header("Location: home.php");
+			}else if ($row["role"] === "penulis"){
+				header("Location: unggah.php");
+			}else if ($row["role"] === "editor"){
+				header("Location: unduh.php");
 			}else{
 				header("Location: daftar.php");
 			}
