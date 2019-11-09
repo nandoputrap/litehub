@@ -143,6 +143,8 @@ INSERT INTO `user` (`user_id`, `username`, `password`, `role`) VALUES
 (8, 'boltzmann', 'ludwig', 'user'),
 (9, 'planck', 'max', 'user'),
 (10, 'bohr', 'niels', 'user');
+(11, 'asd', '123', 'penulis');
+(12, 'test', '123', 'editor');
 
 --
 -- Constraints for dumped tables
