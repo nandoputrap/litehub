@@ -39,105 +39,6 @@
 		mysqli_close($conn);
 		return $result;
 	}
-
-	function unggahBuku() {
-		$conn = connectDB();
-		
-		$judulBuku = $_POST['judulBuku'];
-		$namaPenulis = $_POST['namaPenulis'];
-		$kategori = $_POST['kategori'];
-		$deskripsiBuku = $_POST['deskripsiBuku'];
-		$file = $_POST['fileBuku'];
-		$tanggalUpload = date("Y-m-d");
-		$status = 'Dalam proses penyuntingan';
-
-		$daftarbuku = daftarBuku("unggah");
-		$temp_file = $_FILES['fileBuku']['tmp_name'];
-		$name_file = $_FILES['fileBuku']['name'];
-		$type = $_FILES['fileBuku']['type'];
-		$x = explode('.', $name_file);
-		$ekstensi = strtolower(end($x));
-		$size = $_FILES['fileBuku'];
-		$folder = "file_buku/";
-		$debug = in_array($ekstensi, $type_apr);
-		// die($temp_file);
-		if ($size < 52428800 and (in_array($ekstensi, $type_apr) === true)) {
-			move_uploaded_file($temp_file, $folder . $name_file);
-			echo  "<script type='text/javascript'>alert('Upload berhasil');</script>";
-			// mysqli_query($conn, "INSERT into unggah (file) values ('$name_file')");
-			// header('location:unggah.php');
-			$_SESSION["titlebookadded"] = $judulBuku;
-		
-			$sql = "INSERT into unggah (title, author, category, description, file, upload_date, status) values('$judulBuku', '$namaPenulis', '$kategori', '$deskripsiBuku', '$file', '$tanggalUpload', '$status')";
-	
-			if($result = mysqli_query($conn, $sql)) {
-				echo "New record created successfully <br/>";
-				// header("Location: unggah.php");
-			} 
-			else {
-				die("Error: $sql");
-			}
-		}else{
-			echo  "<script type='text/javascript'>alert('". gettype($temp_file) . "');</script>";
-			// echo"
-			// <script type='text/javascript'>
-			// 	alert('Buku gagal ditambahkan!');
-			// 	history.back(self);
-			// </script>";
-		}
-		mysqli_close($conn);
-	}
-	// if(isset($_POST['submit']))
-	// {
-	// if($_POST['submit']){
-	// 	$fileTmpPath = $_FILES['fileBuku']['tmp_name'];
-	// 	$fileName = $_FILES['fileBuku']['name'];
-	// 	$fileSize = $_FILES['fileBuku']['size'];
-	// 	$fileType = $_FILES['fileBuku']['type'];
-	// 	$fileNameCmps = explode(".", $fileName);
-	// 	$fileExtension = strtolower(end($fileNameCmps));
-		// $diizinkan	= array('doc','docx');
-		// $nama = $_FILES['fileBuku']['name'];
-		// $x = explode('.', $nama);
-		// $ekstensi = strtolower(end($x));
-		// $ukuran	= $_FILES['fileBuku']['size'];
-		// $file_tmp = $_FILES['fileBuku']['tmp_name'];
-		// $allowedfileExtensions = array('doc', 'docx');
-		// if (in_array($fileExtension, $allowedfileExtensions)) {
-		// 	$uploadFileDir = './file_buku/';
-		// 	$dest_path = $uploadFileDir . $newFileName;
-			
-		// 	if(move_uploaded_file($fileTmpPath, $dest_path))
-		// 	{
-		// 		$message ='File is successfully uploaded.';
-		// 	}
-		// 	else
-		// 	{
-		// 		$message = 'There was some error moving the file to upload directory. Please make sure the upload directory is writable by web server.';
-		// 	}
-		// }
-		// if(in_array($ekstensi, $diizinkan) === true){
-		// 	if($ukuran <= 52428800){			
-		// 		move_uploaded_file($file_tmp, './file_buku/'.$nama);
-		// 		$query = mysql_query("INSERT INTO unggah VALUES(NULL, '$nama')");
-		// 		if($query){
-		// 			echo 'FILE BERHASIL DI UPLOAD';
-		// 		}else{
-		// 			echo 'GAGAL MENGUPLOAD FILE';
-		// 		}
-		// 	}else{
-		// 	echo 'UKURAN FILE TERLALU BESAR';
-		// 	}
-		// }else{
-		// 	echo 'EKSTENSI INI TIDAK DIPERBOLEHKAN';
-		// }
-	// }
-
-	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-		if($_POST['command'] === 'insert') {
-			unggahBuku();
-		}
-	}
 	
 ?>
 
@@ -302,26 +203,45 @@
 						</thead>
 						<?php
 							$daftarbuku = daftarBuku("unggah");
-							if(isset($_SESSION['namauser'])) {
-								$daftardiunggah = selectRowsFromSubmission();
-							    $arraysubmission = array();
-							    while ($baris = mysqli_fetch_row($daftardiunggah)) {
-							    	array_push($arraysubmission, $baris[1]);
-							    }
+							// if(isset($_SESSION['namauser'])) {
+							// 	$daftardiunggah = selectRowsFromSubmission();
+							//     $arraysubmission = array();
+							//     while ($baris = mysqli_fetch_row($daftardiunggah)) {
+							//     	array_push($arraysubmission, $baris[1]);
+							//     }
+							// }
+							if (mysqli_num_rows($daftarbuku) > 0) {
+								while ($row = mysqli_fetch_assoc($daftarbuku)) {
+									$olddate = $row['upload_date'];
+									$bulan = array (1 =>   	'Januari',
+															'Februari',
+															'Maret',
+															'April',
+															'Mei',
+															'Juni',
+															'Juli',
+															'Agustus',
+															'September',
+															'Oktober',
+															'November',
+															'Desember'
+													);
+									$split = explode('-', $olddate);
+									$tanggal = $split[2] . ' ' . $bulan[(int)$split[1]] . ' ' . $split[0];
+									 if($row['status'] = "Dalam Proses Penyuntingan") {
+										echo'
+										<tbody>
+										<tr>
+											<td>'.$row['title'].'</td>
+											<td>'.$row['category'].'</td>
+											<td>'.$tanggal.'</td>
+											<td><a href="unggah_detail.php?id='.$row['no'].'">Detail</a></td>
+										</tr>
+										</tbody>';
+									 }
+								}
 							}
-							while ($row = mysqli_fetch_row($daftarbuku)) {
-								 if($row[7] = "Dalam Proses Penyuntingan") {
-									echo'
-									<tbody>
-									<tr>
-										<td>'.$row[1].'</td>
-										<td>'.$row[2].'</td>
-										<td>'.$row[6].'</td>
-										<td><a data-toggle="modal" data-target="#detailUpload" href="#detailUpload?id='.$row[1].'">Detail</a></td>
-									</tr>
-									</tbody>';
-								 }
-							}
+							
 						?>
 					</table>
 					<label class="labelunggah">Sudah Diterima</label>
@@ -336,86 +256,105 @@
 						</thead>
 						<?php
 							$daftarbuku = daftarBuku("unggah");
-							if(isset($_SESSION['namauser'])) {
-								$daftardiunggah = selectRowsFromSubmission();
-							    $arraysubmission = array();
-							    while ($baris = mysqli_fetch_row($daftardiunggah)) {
-							    	array_push($arraysubmission, $baris[1]);
-							    }
+							// if(isset($_SESSION['namauser'])) {
+							// 	$daftardiunggah = selectRowsFromSubmission();
+							//     $arraysubmission = array();
+							//     while ($baris = mysqli_fetch_row($daftardiunggah)) {
+							//     	array_push($arraysubmission, $baris[1]);
+							//     }
+							// }
+							if (mysqli_num_rows($daftarbuku) > 0) {
+								while ($row = mysqli_fetch_assoc($daftarbuku)) {
+									$olddate = $row['upload_date'];
+									$bulan = array (1 =>   	'Januari',
+															'Februari',
+															'Maret',
+															'April',
+															'Mei',
+															'Juni',
+															'Juli',
+															'Agustus',
+															'September',
+															'Oktober',
+															'November',
+															'Desember'
+													);
+									$split = explode('-', $olddate);
+									$tanggal = $split[2] . ' ' . $bulan[(int)$split[1]] . ' ' . $split[0];
+									 if($row['status'] == "Sudah Diterima") {
+										echo'
+										<tbody>
+										<tr>
+											<td>'.$row['title'].'</td>
+											<td>'.$row['category'].'</td>
+											<td>'.$tanggal.'</td>
+											<td><a href="unggah_detail.php?id='.$row['no'].'">Detail</a></td>
+										</tr>
+										</tbody>';
+									 }
+								}
 							}
-							while ($row = mysqli_fetch_row($daftarbuku)) {
-								 if($row[7] == "Sudah Diterima") {
-									echo'
-									<tbody>
-									<tr>
-										<td>'.$row[1].'</td>
-										<td>'.$row[2].'</td>
-										<td>'.$row[6].'</td>
-										<td><a data-toggle="modal" data-target="#detailUpload">Detail</a></td>
-									</tr>
-									</tbody>';
-								 }
-							}	
 						?>
 					</table>
 				</form>
 			</div>
 			<?php
-				$daftarbuku = daftarBuku("unggah");
-				if(isset($_SESSION['namauser'])) {
-					$daftardiunggah = selectRowsFromSubmission();
-				    $arraysubmission = array();
-				    while ($baris = mysqli_fetch_row($daftardiunggah)) {
-				    	array_push($arraysubmission, $baris[1]);
-				    }
-				}
-				while ($row = mysqli_fetch_array($daftarbuku)) {
-					echo'
-					<div class="modal fade" id="detailUpload" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-						<div class="modal-dialog" role="document">
-							<div class="modal-content">
-								<div class="modal-header">
-									<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-									<h4 class="modal-title black-modal" id="detailModalLabel">Detail Buku</h4>
-								</div>
-								<div class="modal-body">
-									<table class="detail-pengajuan">
-										<tbody>
-											<tr>
-												<td class="field-pengajuan">Judul Buku</td>
-												<td class="isi-pengajuan">'.$row[1].'</td>
-											</tr>
-											<tr>
-												<td class="field-pengajuan">Nama Penulis</td>
-												<td class="isi-pengajuan">'.$row[2].'</td>
-											</tr>
-											<tr>
-												<td class="field-pengajuan">Kategori</td>
-												<td class="isi-pengajuan">'.$row[3].'</td>
-											</tr>
-											<tr>
-												<td class="field-pengajuan">Deskripsi</td>
-												<td class="isi-pengajuan">'.$row[4].'</td>
-											</tr>
-											<tr>
-												<td class="field-pengajuan">Tanggal unggah</td>
-												<td class="isi-pengajuan">'.$row[6].'</td>
-											</tr>
-											<tr>
-												<td class="field-pengajuan">Status pengajuan</td>
-												<td class="isi-pengajuan" style="font-weight: bold">'.$row[7].'</td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-							</div>
-						</div>
-					</div>';
-				}
+				// $daftarbuku = daftarBuku("unggah");
+				// if(isset($_SESSION['namauser'])) {
+				// 	$daftardiunggah = selectRowsFromSubmission();
+				//     $arraysubmission = array();
+				//     while ($baris = mysqli_fetch_row($daftardiunggah)) {
+				//     	array_push($arraysubmission, $baris[1]);
+				//     }
+				// }
+				// while ($row = mysqli_fetch_assoc($daftarbuku)) {
+				// 	echo'
+				// 	<div class="modal fade" id="detailUpload" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+				// 		<div class="modal-dialog" role="document">
+				// 			<div class="modal-content">
+				// 				<div class="modal-header">
+				// 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				// 					<h4 class="modal-title black-modal" id="detailModalLabel">Detail Buku</h4>
+				// 				</div>
+				// 				<div class="modal-body">
+				// 					<table class="detail-pengajuan">
+				// 						<tbody>
+				// 							<tr>
+				// 								<td class="field-pengajuan">Judul Buku</td>
+				// 								<td class="isi-pengajuan" id="judulBuku">'.$row['title'].'</td>
+				// 							</tr>
+				// 							<tr>
+				// 								<td class="field-pengajuan">Nama Penulis</td>
+				// 								<td class="isi-pengajuan" id="namaPenulis">'.$row['author'].'</td>
+				// 							</tr>
+				// 							<tr>
+				// 								<td class="field-pengajuan">Kategori</td>
+				// 								<td class="isi-pengajuan" id="kategori">'.$row['category'].'</td>
+				// 							</tr>
+				// 							<tr>
+				// 								<td class="field-pengajuan">Deskripsi</td>
+				// 								<td class="isi-pengajuan" id="deskripsiBuku">'.$row['description'].'</td>
+				// 							</tr>
+				// 							<tr>
+				// 								<td class="field-pengajuan">Tanggal unggah</td>
+				// 								<td class="isi-pengajuan" id="tanggalUpload">'.$row['upload_date'].'</td>
+				// 							</tr>
+				// 							<tr>
+				// 								<td class="field-pengajuan">Status pengajuan</td>
+				// 								<td class="isi-pengajuan" style="font-weight: bold" id="status">'.$row['status'].'</td>
+				// 							</tr>
+				// 						</tbody>
+				// 					</table>
+				// 				</div>
+				// 			</div>
+				// 		</div>
+				// 	</div>';
+				// }
 			?>
         </div>
 		<script src="js/jquery-3.1.0.min.js"> </script>
 		<script src="bootstrap/dist/js/bootstrap.min.js"></script>	
+		<!-- <script type="text/javascript" src="js/unggah.js"></script> -->
 	</body>
 	<footer>
 		<hr>
