@@ -18,11 +18,9 @@
 	}
 	
 	if (isset($_GET['id'])) {
-		// jika ada ambil nilai id
 		$no = $_GET['id'];
 	  } 
 	  else {
-		// jika tidak ada redirect ke unggah.php
 		header('Location:unggah.php');
 	  }
 	
@@ -37,16 +35,24 @@
 		<link rel="stylesheet" href="bootstrap/dist/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="css/home.css">
 		<style>
-			.labelunggah{
+			.detailPage{
+				margin-left: 50px;
+				margin-right: 50px;
+			}
+			.detailLabel{
                 font-style: normal;
                 font-weight: bold;
                 color: #0A5494;
-                font-size: 20px;
+                font-size: 30px;
+				margin-bottom: 30px;
             }
+			.detail-pengajuan{
+				font-size: 16px;
+			}
 			.field-pengajuan{
                 font-weight: bold;
                 vertical-align: text-top;
-                width: 130px; 
+                width: 160px; 
         	}
             .isi-pengajuan{
                 text-align:justify;
@@ -79,8 +85,8 @@
 						';
 					}
 					?>
-					<li><a href="#">Daftar Buku</a></li>
-					<li class="active"><a href="#">Unggah Buku</a></li>
+					<li><a href="daftar.php">Daftar Buku</a></li>
+					<li class="active"><a href="unggah.php">Unggah Buku</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<?php
@@ -110,7 +116,7 @@
 			$conn = connectDB();
 			$query = "SELECT * FROM unggah where no = '$no'";
 			$detail_unggah = mysqli_query($conn, $query);
-			// $row = mysqli_fetch_assoc($detail_unggah);
+
 			if (mysqli_num_rows($detail_unggah) > 0) {
 				$row = mysqli_fetch_assoc($detail_unggah);
 				$olddate = $row['upload_date'];
@@ -130,36 +136,37 @@
 				$split = explode('-', $olddate);
 				$tanggal = $split[2] . ' ' . $bulan[(int)$split[1]] . ' ' . $split[0];
 				echo'
-									
-									<h4 class="modal-title black-modal" id="detailModalLabel">Detail Buku</h4>
-									<table class="detail-pengajuan">
-										<tbody>
-											<tr>
-												<td class="field-pengajuan">Judul Buku</td>
-												<td class="isi-pengajuan" id="judulBuku">'.$row['title'].'</td>
-											</tr>
-											<tr>
-												<td class="field-pengajuan">Nama Penulis</td>
-												<td class="isi-pengajuan" id="namaPenulis">'.$row['author'].'</td>
-											</tr>
-											<tr>
-												<td class="field-pengajuan">Kategori</td>
-												<td class="isi-pengajuan" id="kategori">'.$row['category'].'</td>
-											</tr>
-											<tr>
-												<td class="field-pengajuan">Deskripsi</td>
-												<td class="isi-pengajuan" id="deskripsiBuku">'.$row['description'].'</td>
-											</tr>
-											<tr>
-												<td class="field-pengajuan">Tanggal unggah</td>
-												<td class="isi-pengajuan" id="tanggalUpload">'.$tanggal.'</td>
-											</tr>
-											<tr>
-												<td class="field-pengajuan">Status pengajuan</td>
-												<td class="isi-pengajuan" style="font-weight: bold" id="status">'.$row['status'].'</td>
-											</tr>
-										</tbody>
-									</table>';
+					<div class="detailPage">
+						<h4 class="detailLabel">Deskripsi Pengajuan</h4>
+						<table class="detail-pengajuan">
+								<tbody>
+									<tr>
+										<td class="field-pengajuan">Judul Buku</td>
+										<td class="isi-pengajuan" id="judulBuku">'.$row['title'].'</td>
+									</tr>
+									<tr>
+										<td class="field-pengajuan">Nama Penulis</td>
+										<td class="isi-pengajuan" id="namaPenulis">'.$row['author'].'</td>
+									</tr>
+									<tr>
+										<td class="field-pengajuan">Kategori</td>
+										<td class="isi-pengajuan" id="kategori">'.$row['category'].'</td>
+									</tr>
+									<tr>
+										<td class="field-pengajuan">Deskripsi</td>
+										<td class="isi-pengajuan" id="deskripsiBuku">'.$row['description'].'</td>
+									</tr>
+									<tr>
+										<td class="field-pengajuan">Tanggal unggah</td>
+										<td class="isi-pengajuan" id="tanggalUpload">'.$tanggal.'</td>
+									</tr>
+									<tr>
+										<td class="field-pengajuan">Status pengajuan</td>
+										<td class="isi-pengajuan" style="font-weight: bold" id="status">'.$row['status'].'</td>
+									</tr>
+								</tbody>
+						</table>
+					</div>';
 			}
 		?>		
         </div>
