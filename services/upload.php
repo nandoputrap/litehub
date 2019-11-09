@@ -56,7 +56,8 @@ if ($uploadOk == 0) {
 // if everything is ok, try to upload file
 } else {
     if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-        echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
+        $filename = $_FILES["fileToUpload"]["name"];
+        echo "The file ". basename( $filename). " has been uploaded.";
         $conn = connectDB();
         $judulBuku = $_POST['judulBuku'];
         $namaPenulis = $_POST['namaPenulis'];
@@ -67,7 +68,7 @@ if ($uploadOk == 0) {
         $status = 'Dalam proses penyuntingan';
         $_SESSION["titlebookadded"] = $judulBuku;
 		
-        $sql = "INSERT into unggah (title, author, category, description, file, upload_date, status) values('$judulBuku', '$namaPenulis', '$kategori', '$deskripsiBuku', '$file', '$tanggalUpload', '$status')";
+        $sql = "INSERT into unggah (title, author, category, description, file, upload_date, status) values('$judulBuku', '$namaPenulis', '$kategori', '$deskripsiBuku', '$filename', '$tanggalUpload', '$status')";
 
         if($result = mysqli_query($conn, $sql)) {
             echo "New record created successfully <br/>";
