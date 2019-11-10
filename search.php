@@ -186,12 +186,6 @@
 					}
 					?>
 					<li class="active"><a href="daftar.php">Daftar Buku</a></li>
-					<li>
-					<form action="search.php" method="GET">
-    					<input type="text" name="query" placeholder="Judul buku/penulis"/>
-						<input type="submit" value="Cari" />
-					</form>
-					</li>
 					<?php
 					if(isset($_SESSION['namauser']) && $_SESSION['role'] === 'penulis') {
 						echo '
@@ -207,7 +201,14 @@
 						';
 					}
 					?>
-				
+					<li>
+					<form class="form-inline navbar-form" action="search.php" method="GET">
+					<div class="form-group">
+    					<input class="form-control type="text" name="query" placeholder="Judul buku/penulis"/>
+					</div>
+					<button class="btn btn-default" type="submit">Cari</button>
+					</form>
+					</li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<?php
