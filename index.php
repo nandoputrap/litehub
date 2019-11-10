@@ -81,7 +81,7 @@
 			<button type="button" class="btn btn-lg btn-default" data-toggle="modal" data-target="#insertModal">
 				Log in
 			</button>	
-			<a href="daftar.php" class="btn-nologin"><button type="button" class="btn btn-lg btn-default">Masuk tanpa Log in</button></a>
+			<a href="landing.php" class="btn-nologin"><button type="button" class="btn btn-lg btn-default">Masuk tanpa Log in</button></a>
 		</div>
 		<div class="modal fade" id="insertModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 			<div class="modal-dialog" role="document">
