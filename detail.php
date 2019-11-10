@@ -109,6 +109,6 @@
 	</body>
 	<footer>
 		<hr>
-		<h4>&copy; 2016 Bryanza Novirahman & Muhammad Akbar Setiadi. All rights reserved</h4>
+		<h4>&copy; 2019 Litehub Inc. All rights reserved</h4>
 	</footer>
 </html>

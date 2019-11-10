@@ -1,7 +1,7 @@
 function detailBuku(book_id){
 	bookPurchase(book_id);
 	$.ajax({
-		url: "https://desolate-reaches-00434.herokuapp.com/services/ajax.php",
+		url: "http://localhost/litehub/services/ajax.php",
 		datatype: "html",
 		data: { book_id : book_id, command : "detail" },
 		method: "POST"
@@ -23,7 +23,7 @@ function detailBuku(book_id){
 }
 function bookPurchase(book_id){
 	$.ajax({
-		url: "https://desolate-reaches-00434.herokuapp.com/services/ajax.php",
+		url: "http://localhost/litehub/services/ajax.php",
 		datatype: "html",
 		data: { book_id : book_id, command : "purchase" },
 		method: "POST"
@@ -48,7 +48,7 @@ function komenBuku(user_id){
 	var idBuku = $("#book_id").html();
 	var isi = $("#update-bookPurchase").val();
 	$.ajax({
-		url: "https://desolate-reaches-00434.herokuapp.com/services/ajax.php",
+		url: "http://localhost/litehub/services/ajax.php",
 		datatype: "html",
 		data: { book_id : idBuku, user_id : user_id, content : isi, command : "komentar" },
 		method: "POST"
