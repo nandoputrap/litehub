@@ -17,9 +17,14 @@
 	}
 	
 	function daftarBuku($table) {
+		$query = $_GET['query']; 
+    // gets value sent over search form
+     
+    	$min_length = 3;
 		$conn = connectDB();
 		
-		$sql = "SELECT book_id, img_path, title, author, publisher, quantity FROM $table";
+		$sql = "SELECT book_id, img_path, title, author, publisher, quantity FROM $table
+		WHERE (`title` LIKE '%".$query."%') OR (`author` LIKE '%".$query."%')";
 		
 		if(!$result = mysqli_query($conn, $sql)) {
 			die("Error: $sql");
@@ -187,7 +192,6 @@
 						<input type="submit" value="Cari" />
 					</form>
 					</li>
-					
 					<?php
 					if(isset($_SESSION['namauser']) && $_SESSION['role'] === 'penulis') {
 						echo '
