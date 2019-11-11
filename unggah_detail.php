@@ -171,8 +171,7 @@
 		?>		
         </div>
 		<script src="js/jquery-3.1.0.min.js"> </script>
-		<script src="bootstrap/dist/js/bootstrap.min.js"></script>	
-		<!-- <script type="text/javascript" src="js/unggah.js"></script> -->
+		<script src="bootstrap/dist/js/bootstrap.min.js"></script>
 	</body>
 	<footer>
 		<hr>
