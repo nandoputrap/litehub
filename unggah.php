@@ -31,6 +31,7 @@
 	
 ?>
 
+<!-- start fungsinya -->
 <!DOCTYPE html>
 <html lang="en">
 	<head>
