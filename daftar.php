@@ -182,6 +182,8 @@
 					?>
 					<li class="active"><a href="daftar.php">Daftar Buku</a></li>
 					<li><a href="unggah.php">Unggah Buku</a></li>
+					<li><a href="statistik.php">Statistik</a></li>
+
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<?php
