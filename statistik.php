@@ -39,6 +39,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="bootstrap/dist/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="css/home.css">
+		<link rel="stylesheet" href="css/all.min.css">
   		<link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 	</head>
 	<body>
@@ -141,11 +142,11 @@
 
                 <div class="d-flex flex-row justify-content-end">
                   <span class="mr-2">
-                    <i class="fas fa-square text-primary"></i> Non Fiksi
+                    <i class="fas fa-square text-primary" style="color:#007bff"></i> Non Fiksi
                   </span>
 
                   <span>
-                    <i class="fas fa-square text-gray" style="color:gray"></i> Fiksi
+                    <i class="fas fa-square text-gray" style="color:#ced4da"></i> Fiksi
                   </span>
                 </div>
               </div>
@@ -166,11 +167,11 @@
 
                 <div class="d-flex flex-row justify-content-end">
                   <span class="mr-2">
-                    <i class="fas fa-square text-primary" style="backgroundcolor:#007bff"></i> Dalam proses pengajuan
+                    <i class="fa-square text-primary" style="color:#007bff"></i> Dalam proses pengajuan
                   </span>
 
                   <span>
-                    <i class="fas fa-square text-gray" style="backgroundcolor:#ced4da"></i> Sudah diterima
+                    <i class="fa-square text-gray" style="color:#ced4da"></i> Sudah diterima
                   </span>
                 </div>
               </div>
@@ -274,7 +275,7 @@ $(function () {
       labels  : ['Juli', 'Agustus', 'September', 'Oktober', 'November'],
       datasets: [{
         type                : 'line',
-        data                : [192, 100, 120, 170, 167],
+        data                : [96, 50, 60, 85, 83],
         backgroundColor     : 'transparent',
         borderColor         : '#007bff',
         pointBorderColor    : '#007bff',
@@ -285,7 +286,7 @@ $(function () {
       },
         {
           type                : 'line',
-          data                : [60, 80, 70, 67, 80, 77],
+          data                : [30, 40, 35, 33, 40, 38],
           backgroundColor     : 'tansparent',
           borderColor         : '#ced4da',
           pointBorderColor    : '#ced4da',
@@ -319,7 +320,6 @@ $(function () {
           },
           ticks    : $.extend({
             beginAtZero : true,
-            suggestedMax: 200
           }, ticksStyle)
         }],
         xAxes: [{
