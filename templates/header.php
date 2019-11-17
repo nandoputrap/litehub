@@ -30,6 +30,9 @@
     <script src="js/jquery-3.4.1.js"></script>
     <script src="js/custom.js"></script>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
   </head>
 
   <body>
@@ -51,6 +54,7 @@
         <div class="collapse navbar-collapse" id="myNavbar">
           <ul class="nav navbar-nav navbar-right">
             <li><a href="#about">Kategori</a></li>
+            <li><a href="shop.php">Shop</a></li>
 
             <li>
 
@@ -63,8 +67,20 @@
                   </div>
               </form>
             </li>
+
+            <li> <a data-toggle="modal" href="#myModal">Masuk</a> </li>
           </ul>
         </div>
+
+        <!-- Trigger the modal with a button -->
+<!-- <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button> -->
+
+<!-- Modal -->
+
       </div>
     </nav>
     <!-- End navigation -->
+
+    <?php
+      require_once("login.php");
+     ?>

@@ -19,7 +19,7 @@
 
       <div class="col-md-3">
         <div class="item">
-          <div class="card box-shadow text-center card-product">
+          <div class="card box-shadow text-center card-product-details">
             <img class="card-img-top img-fluid" src="images/ebook-1.png" alt="card-img">
           </div>
 
@@ -53,10 +53,27 @@
         </div>
       </div>
 
-      <div class="col-md-9">
-        <h4>Menampilkan 1-6 dari 200 e-book Teknologi</h4>
+      <div class="col-md-9 description-box">
 
         <div class="row">
+          <h1 id="ebook-title">Judul Buku</h1>
+
+          <p class="ebook-author">Nama Penulis</p>
+
+          <p class="ebook-description text-justify">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+          <p class="ebook-author">Format yang tersedia:</p>
+          <ul class="list-inline">
+            <li>.pdf</li>
+            <li>.epub</li>
+            <li>.mobi</li>
+          </ul>
+
+          <h4 class="ebook-price ebook-price-single"><strong>Rp. 100.000</strong></h4>
+
+          <a class="btn btn-lg btn-danger btn-beli text-capitalize"><i class="fa fa-shopping-cart"></i>&nbsp; Beli</a>
+          <a href="cart.php" class="btn btn-lg btn-info btn-beli text-capitalize"><i class="fa fa-plus"> </i>&nbsp; Tambah ke Keranjang</a>
+
 
         </div>
       </div>

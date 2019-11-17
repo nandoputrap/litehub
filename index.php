@@ -53,7 +53,10 @@
 				header("Location: unggah.php");
 			}else if ($row["role"] === "editor"){
 				header("Location: unduh.php");
-			}else{
+			}else if ($row["role"] === "admin"){
+				header("Location: statistik.php");
+			}
+			else{
 				header("Location: daftar.php");
 			}
 
