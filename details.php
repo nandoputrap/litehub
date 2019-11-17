@@ -2,6 +2,34 @@
   require_once("templates/header.php");
 ?>
 
+<?php
+	session_start();
+	function connectDB() {
+		// require 'config/connect.php';
+		$servername = "sql12.freesqldatabase.com";
+		$username = "sql12310568";
+		$password = "wmiLAF7a6g";
+		$dbname = "sql12310568";
+		
+		// Create connection
+		$conn = mysqli_connect($servername, $username, $password, $dbname);
+		
+		// Check connection
+		if (!$conn) {
+			die("Connection failed: " + mysqli_connect_error());
+		}
+		return $conn;
+	}
+	
+	if (isset($_GET['id'])) {
+		$no = $_GET['id'];
+	  } 
+	  else {
+		header('Location:shop.php');
+	  }
+	
+?>
+
 <div class="shop">
   <div class="container">
     <div class="row">
@@ -20,7 +48,18 @@
       <div class="col-md-3">
         <div class="item">
           <div class="card box-shadow text-center card-product-details">
-            <img class="card-img-top img-fluid" src="images/ebook-1.png" alt="card-img">
+          <?php
+          $conn = connectDB();
+          $query = "SELECT * FROM book where book_id = '$no'";
+          $detail_unggah = mysqli_query($conn, $query);
+
+          if (mysqli_num_rows($detail_unggah) > 0) {
+            $row = mysqli_fetch_assoc($detail_unggah);
+            echo '
+            <img class="card-img-top img-fluid" style="height:300px;" src="'.$row['img_path'].'" alt="card-img">
+            ';
+          }
+          ?>
           </div>
 
           <div class="table-details">
@@ -56,24 +95,35 @@
       <div class="col-md-9 description-box">
 
         <div class="row">
-          <h1 id="ebook-title">Judul Buku</h1>
+        <?php
+			$conn = connectDB();
+			$query = "SELECT * FROM book where book_id = '$no'";
+			$detail_unggah = mysqli_query($conn, $query);
 
-          <p class="ebook-author">Nama Penulis</p>
-
-          <p class="ebook-description text-justify">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-
-          <p class="ebook-author">Format yang tersedia:</p>
-          <ul class="list-inline">
-            <li>.pdf</li>
-            <li>.epub</li>
-            <li>.mobi</li>
-          </ul>
-
-          <h4 class="ebook-price ebook-price-single"><strong>Rp. 100.000</strong></h4>
-
+			if (mysqli_num_rows($detail_unggah) > 0) {
+				$row = mysqli_fetch_assoc($detail_unggah);
+        echo'
+        <h1 id="ebook-title">'.$row['title'].'</h1>
+        <p class="ebook-author">Penulis : '.$row['author'].'</p>
+        <p class="ebook-author">Penerbit : '.$row['publisher'].'</p>
+        <p class="ebook-description text-justify">'.$row['description'].'</p>
+        <p class="ebook-author">Format yang tersedia:</p>
+        <ul class="list-inline">
+          <li>.pdf</li>
+          <li>.epub</li>
+          <li>.mobi</li>
+        </ul>
+        ';
+        if($row['quantity'] > 0) {
+          echo '<h4 class="card-title ebook-price"><strong>Rp. '.$row['quantity'].'</strong></h4>';
+        } else {
+          echo '<h4 class="card-title ebook-price"><strong>Stok Kosong</strong></h4>';
+        }
+			}
+		?>	
+          
           <a class="btn btn-lg btn-danger btn-beli text-capitalize"><i class="fa fa-shopping-cart"></i>&nbsp; Beli</a>
           <a href="cart.php" class="btn btn-lg btn-info btn-beli text-capitalize"><i class="fa fa-plus"> </i>&nbsp; Tambah ke Keranjang</a>
-
 
         </div>
       </div>

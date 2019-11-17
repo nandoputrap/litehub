@@ -1,4 +1,7 @@
 <!--  -->
+<?php
+	session_start();
+?>
 
 
 <!DOCTYPE html>
@@ -47,7 +50,7 @@
             <span class="icon-bar"></span>
           </button>
 
-          <a class="navbar-brand" href="index.php"><img alt="Ebookhub.id" src="images/logo.png" class="img-responsive" /></a>
+          <a class="navbar-brand" href="landing.php"><img alt="Ebookhub.id" src="images/logo.png" class="img-responsive" /></a>
 
         </div>
 
@@ -58,17 +61,26 @@
 
             <li>
 
-              <form class="navbar-form" role="search">
+              <form class="navbar-form" role="search" action="search_shop.php" method="GET">
                   <div class="input-group">
-                      <input type="text" class="form-control" placeholder="Search" name="q">
+                      <input type="text" class="form-control" placeholder="Search" name="query">
                       <div class="input-group-btn">
                           <button class="btn btn-default hidden-xs" type="submit">Cari</button>
                       </div>
                   </div>
               </form>
             </li>
-
-            <li> <a data-toggle="modal" href="#myModal">Masuk</a> </li>
+            <?php
+						if (isset($_SESSION["namauser"])){
+              echo '
+              <li> <a data-toggle="modal" href="services/logout.php">Keluar</a> </li>
+							';
+						}else if(!isset($_SESSION['namauser'])) {
+							echo '
+              <li> <a data-toggle="modal" href="#myModal">Masuk</a> </li>
+							';
+						}
+					?>
           </ul>
         </div>
 

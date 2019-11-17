@@ -1,3 +1,61 @@
+<?php
+	
+	$databaseServer = "sql12.freesqldatabase.com";
+	$databaseUsername = "sql12310568";
+	$databasePassword = "wmiLAF7a6g";
+	$databaseName = "sql12310568";
+	
+	$databaseConnection = mysqli_connect($databaseServer, $databaseUsername, $databasePassword, $databaseName);
+
+	if (!$databaseConnection){
+		die ("Connection to database failed");
+	}
+	
+	if($_SERVER["REQUEST_METHOD"] == "POST") {
+		
+		// username and password sent from form 
+		session_start();
+		
+		$username = $_POST['username'];
+		$password = $_POST['password']; 
+				
+		$queryLogin = "SELECT * FROM user WHERE username = '$username' AND password = '$password'";
+		$resultLogin = mysqli_query($databaseConnection,$queryLogin);
+		
+		$row = mysqli_fetch_array($resultLogin,MYSQLI_ASSOC);
+		$active = $row['active'];
+		  
+		$count = mysqli_num_rows($resultLogin);
+		// If result matched $myusername and $mypassword, table row must be 1 row
+			
+		if($count == 1) {
+			
+			$_SESSION["user_id"] = $row["user_id"];
+			$_SESSION["namauser"] = $row["username"];
+			$_SESSION["role"] = $row["role"];
+			
+			if ($row["role"] === "user"){
+				header("Location: shop.php");
+			}else if ($row["role"] === "penulis"){
+				header("Location: unggah.php");
+			}else if ($row["role"] === "editor"){
+				header("Location: unduh.php");
+			}else if ($row["role"] === "admin"){
+				header("Location: statistik.php");
+			}
+			else{
+				header("Location: daftar.php");
+			}
+
+		}else {
+			echo  "<script type='text/javascript'>alert('Login Gagal');</script>";
+		}
+		
+	}
+	
+	mysqli_close($databaseConnection);
+	
+?>
 <div id="myModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
 
@@ -10,9 +68,12 @@
         </div>
 
         <div class="modal-form text-center input-login">
-          <input type="email" class="form-control" placeholder="Masukkan alamat e-mail...">
-          <input type="password" class="form-control" placeholder="Masukkan kata sandi...">
-          <button type="button" class="btn btn-primary btn-block btn-ebookhub">Masuk</button>
+        <form action="login.php" method="post">
+          <input type="text" id="insert-username" name="username" class="form-control" placeholder="Masukkan username..." required>
+          <input type="password" id="insert-password" name="password" class="form-control" placeholder="Masukkan kata sandi..." required>
+          <input type="hidden" id="insert-command" name="command" value="insert">
+          <button type="submit" class="btn btn-primary btn-block btn-ebookhub">Masuk</button>
+        </form>
         </div>
       </div>
 
