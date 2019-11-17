@@ -113,7 +113,7 @@
 		</nav>
 		<div class="container">
             <?php
-                if (isset($_SESSION["namauser"]) && $_SESSION["role"] === "admin"){
+                if (isset($_SESSION["namauser"]) && $_SESSION["role"] === "penulis"){
                     echo "<br><button type='button' class='btn-addbook btn btn-primary' data-toggle='modal' data-target='#insertModal'>
                         Unggah Buku
                     </button>";

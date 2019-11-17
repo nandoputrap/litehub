@@ -180,10 +180,33 @@
 						';
 					}
 					?>
+					<?php
+					if(isset($_SESSION['namauser']) && $_SESSION['role'] === 'penulis') {
+						echo '
+						<li><a href="unggah.php">Unggah Buku</a></li>
+						';
+					}
+					
+					?>
+					<?php
+					if(isset($_SESSION['namauser']) && $_SESSION['role'] === 'editor') {
+						echo '
+						<li><a href="unduh.php">Unduh Buku</a></li>
+						';
+					}
+					?>
 					<li class="active"><a href="daftar.php">Daftar Buku</a></li>
 					<li><a href="unggah.php">Unggah Buku</a></li>
 					<li><a href="statistik.php">Statistik</a></li>
-
+					<li>
+					<form class="form-inline navbar-form" action="search.php" method="GET">
+					<div class="form-group">
+    					<input class="form-control type="text" name="query" placeholder="Judul buku/penulis"/>
+					</div>
+					<button class="btn btn-default" type="submit">Cari</button>
+					</form>
+					</li>
+				
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<?php

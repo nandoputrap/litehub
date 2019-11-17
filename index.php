@@ -49,6 +49,10 @@
 			
 			if ($row["role"] === "user"){
 				header("Location: home.php");
+			}else if ($row["role"] === "penulis"){
+				header("Location: unggah.php");
+			}else if ($row["role"] === "editor"){
+				header("Location: unduh.php");
 			}else{
 				header("Location: daftar.php");
 			}
@@ -77,7 +81,7 @@
 			<button type="button" class="btn btn-lg btn-default" data-toggle="modal" data-target="#insertModal">
 				Log in
 			</button>	
-			<a href="daftar.php" class="btn-nologin"><button type="button" class="btn btn-lg btn-default">Masuk tanpa Log in</button></a>
+			<a href="landing.php" class="btn-nologin"><button type="button" class="btn btn-lg btn-default">Masuk tanpa Log in</button></a>
 		</div>
 		<div class="modal fade" id="insertModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 			<div class="modal-dialog" role="document">
@@ -100,7 +104,42 @@
 							<button type="submit" class="btn btn-primary">Login</button>
 						</form>
 						<br />
-						<a href="">Don't have an account?</a>
+						<a data-toggle="modal" data-target="#registerModal" href="#registerModal">Don't have an account?</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title" id="insertModalLabel">Register</h4>
+					</div>
+					<div class="modal-body">
+						<form action="services/register.php" method="post">
+							<div class="form-group">
+								<label for="username">Username</label>
+								<input type="text" class="form-control" id="insert-username" name="username" placeholder="Username" required>
+							</div>
+							<div class="form-group">
+								<label for="password">Password</label>
+								<input type="password" class="form-control" id="insert-password" name="password" placeholder="Password" required>
+							</div>
+							<div class="form-group">
+								<label for="role">Role</label>
+								<select class="form-control" id="insert-role" name="role" placeholder="Role">
+									<option>user</option>
+									<option>admin</option>
+									<option>Penulis</option>
+									<option>Editor</option>
+								</select>
+							</div>
+							<input type="hidden" id="insert-command" name="command" value="insert">
+							<button type="submit" class="btn btn-primary">Register</button>
+						</form>
+						<br />
+						<a onclick="$('#registerModal').modal('hide')">Already have an account?</a>
 					</div>
 				</div>
 			</div>
