@@ -28,20 +28,10 @@
 		mysqli_close($conn);
 		return $result;
 	}
-
-	function selectRowsFromSubmission() {
-		$conn = connectDB();
-
-		$sql = "SELECT * FROM submission WHERE user_id = ".$_SESSION["user_id"]."";
-		if(!$result = mysqli_query($conn, $sql)) {
-			die("Error: $sql");
-		}
-		mysqli_close($conn);
-		return $result;
-	}
 	
 ?>
 
+<!-- start fungsinya -->
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -95,6 +85,7 @@
 					?>
 					<li><a href="daftar.php">Daftar Buku</a></li>
 					<li class="active"><a href="unggah.php">Unggah Buku</a></li>
+					<li><a href="statistik.php">Statistik</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<?php
@@ -196,20 +187,14 @@
 						<thead>
 							<tr>
 								<th>Judul Buku</th>
-								<th>Penulis</th>
+								<th>Kategori</th>
 								<th>Tanggal Unggah</th>
+								<th>Status</th>
 								<th>Detail</th>
 							</tr>
 						</thead>
 						<?php
 							$daftarbuku = daftarBuku("unggah");
-							// if(isset($_SESSION['namauser'])) {
-							// 	$daftardiunggah = selectRowsFromSubmission();
-							//     $arraysubmission = array();
-							//     while ($baris = mysqli_fetch_row($daftardiunggah)) {
-							//     	array_push($arraysubmission, $baris[1]);
-							//     }
-							// }
 							if (mysqli_num_rows($daftarbuku) > 0) {
 								while ($row = mysqli_fetch_assoc($daftarbuku)) {
 									$olddate = $row['upload_date'];
@@ -235,6 +220,7 @@
 											<td>'.$row['title'].'</td>
 											<td>'.$row['category'].'</td>
 											<td>'.$tanggal.'</td>
+											<td>'.$row['status'].'</td>
 											<td><a href="unggah_detail.php?id='.$row['no'].'">Detail</a></td>
 										</tr>
 										</tbody>';
@@ -249,20 +235,14 @@
 						<thead>
 							<tr>
 								<th>Judul Buku</th>
-								<th>Penulis</th>
+								<th>Kategori</th>
 								<th>Tanggal Unggah</th>
+								<th>Status</th>
 								<th>Detail</th>
 							</tr>
 						</thead>
 						<?php
 							$daftarbuku = daftarBuku("unggah");
-							// if(isset($_SESSION['namauser'])) {
-							// 	$daftardiunggah = selectRowsFromSubmission();
-							//     $arraysubmission = array();
-							//     while ($baris = mysqli_fetch_row($daftardiunggah)) {
-							//     	array_push($arraysubmission, $baris[1]);
-							//     }
-							// }
 							if (mysqli_num_rows($daftarbuku) > 0) {
 								while ($row = mysqli_fetch_assoc($daftarbuku)) {
 									$olddate = $row['upload_date'];
@@ -288,6 +268,7 @@
 											<td>'.$row['title'].'</td>
 											<td>'.$row['category'].'</td>
 											<td>'.$tanggal.'</td>
+											<td>'.$row['status'].'</td>
 											<td><a href="unggah_detail.php?id='.$row['no'].'">Detail</a></td>
 										</tr>
 										</tbody>';
@@ -298,63 +279,9 @@
 					</table>
 				</form>
 			</div>
-			<?php
-				// $daftarbuku = daftarBuku("unggah");
-				// if(isset($_SESSION['namauser'])) {
-				// 	$daftardiunggah = selectRowsFromSubmission();
-				//     $arraysubmission = array();
-				//     while ($baris = mysqli_fetch_row($daftardiunggah)) {
-				//     	array_push($arraysubmission, $baris[1]);
-				//     }
-				// }
-				// while ($row = mysqli_fetch_assoc($daftarbuku)) {
-				// 	echo'
-				// 	<div class="modal fade" id="detailUpload" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-				// 		<div class="modal-dialog" role="document">
-				// 			<div class="modal-content">
-				// 				<div class="modal-header">
-				// 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				// 					<h4 class="modal-title black-modal" id="detailModalLabel">Detail Buku</h4>
-				// 				</div>
-				// 				<div class="modal-body">
-				// 					<table class="detail-pengajuan">
-				// 						<tbody>
-				// 							<tr>
-				// 								<td class="field-pengajuan">Judul Buku</td>
-				// 								<td class="isi-pengajuan" id="judulBuku">'.$row['title'].'</td>
-				// 							</tr>
-				// 							<tr>
-				// 								<td class="field-pengajuan">Nama Penulis</td>
-				// 								<td class="isi-pengajuan" id="namaPenulis">'.$row['author'].'</td>
-				// 							</tr>
-				// 							<tr>
-				// 								<td class="field-pengajuan">Kategori</td>
-				// 								<td class="isi-pengajuan" id="kategori">'.$row['category'].'</td>
-				// 							</tr>
-				// 							<tr>
-				// 								<td class="field-pengajuan">Deskripsi</td>
-				// 								<td class="isi-pengajuan" id="deskripsiBuku">'.$row['description'].'</td>
-				// 							</tr>
-				// 							<tr>
-				// 								<td class="field-pengajuan">Tanggal unggah</td>
-				// 								<td class="isi-pengajuan" id="tanggalUpload">'.$row['upload_date'].'</td>
-				// 							</tr>
-				// 							<tr>
-				// 								<td class="field-pengajuan">Status pengajuan</td>
-				// 								<td class="isi-pengajuan" style="font-weight: bold" id="status">'.$row['status'].'</td>
-				// 							</tr>
-				// 						</tbody>
-				// 					</table>
-				// 				</div>
-				// 			</div>
-				// 		</div>
-				// 	</div>';
-				// }
-			?>
         </div>
 		<script src="js/jquery-3.1.0.min.js"> </script>
-		<script src="bootstrap/dist/js/bootstrap.min.js"></script>	
-		<!-- <script type="text/javascript" src="js/unggah.js"></script> -->
+		<script src="bootstrap/dist/js/bootstrap.min.js"></script>
 	</body>
 	<footer>
 		<hr>

@@ -180,7 +180,6 @@
 						';
 					}
 					?>
-					<li class="active"><a href="daftar.php">Daftar Buku</a></li>
 					<?php
 					if(isset($_SESSION['namauser']) && $_SESSION['role'] === 'penulis') {
 						echo '
@@ -196,6 +195,9 @@
 						';
 					}
 					?>
+					<li class="active"><a href="daftar.php">Daftar Buku</a></li>
+					<li><a href="unggah.php">Unggah Buku</a></li>
+					<li><a href="statistik.php">Statistik</a></li>
 					<li>
 					<form class="form-inline navbar-form" action="search.php" method="GET">
 					<div class="form-group">
