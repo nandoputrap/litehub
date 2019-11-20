@@ -27,6 +27,44 @@
 		}
 		mysqli_close($conn);
 		return $result;
+  }
+  
+  function getpenulis() {
+		$conn = connectDB();
+		
+		$sql = "SELECT count(*) FROM user WHERE role = 'penulis'";
+		
+		if(!$result = mysqli_query($conn, $sql)) {
+			die("Error: $sql");
+		}
+
+		mysqli_close($conn);
+		return $result;
+	}
+
+	function getpembaca() {
+		$conn = connectDB();
+		
+		$sql = "SELECT count(*) FROM user WHERE role = 'user'";
+		
+		if(!$result = mysqli_query($conn, $sql)) {
+			die("Error: $sql");
+		}
+
+		mysqli_close($conn);
+		return $result;
+	}
+	function getbook() {
+		$conn = connectDB();
+		
+		$sql = "SELECT count(*) FROM book";
+		
+		if(!$result = mysqli_query($conn, $sql)) {
+			die("Error: $sql");
+		}
+
+		mysqli_close($conn);
+		return $result;
 	}
 
 ?>
@@ -39,8 +77,8 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="bootstrap/dist/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="css/home.css">
-		<link rel="stylesheet" href="css/all.min.css">
-  		<link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  	<link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 	</head>
 	<body>
 		<div class="jumbotron">
@@ -124,6 +162,88 @@
         </div>
       </div>
     </div>
+    
+    <div class='col-lg-3 col-md-6'>
+      <div class='panel panel-primary panel-ebookhub-red'>
+        <div class='panel-heading'>
+          <div class='row'>
+            <div class='col-xs-3'>
+              <i class='fa fa-pencil fa-5x'></i>
+            </div>
+            <div class='col-xs-9 text-right'>
+              <div id="leadmonth"></div>
+              <div>Total Penulis</div>
+              <?php 
+                $countuser = getpenulis();
+                while ($row = mysqli_fetch_row($countuser)) {
+                  echo '<h1>'.$row[0].'</h1>';
+                }
+              ?>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class='col-lg-3 col-md-6'>
+      <div class='panel panel-primary'>
+        <div class='panel-heading'>
+          <div class='row'>
+            <div class='col-xs-3'>
+              <i class='fa fa-user fa-5x'></i>
+            </div>
+            <div class='col-xs-9 text-right'>
+              <div id="leadmonth"></div>
+              <div>Total Pembaca</div>
+							<?php 
+								$countuser = getpembaca();
+								while ($row = mysqli_fetch_row($countuser)) {
+									echo '<h1>'.$row[0].'</h1>';
+								}
+							?>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class='col-lg-3 col-md-6'>
+      <div class='panel panel-primary'>
+        <div class='panel-heading'>
+          <div class='row'>
+            <div class='col-xs-3'>
+              <i class='fa fa-book fa-5x'></i>
+            </div>
+            <div class='col-xs-9 text-right'>
+            <div id="leadmonth"></div>
+            <div>Total Buku Terbit</div>
+							<?php 
+								$countuser = getbook();
+								while ($row = mysqli_fetch_row($countuser)) {
+									echo '<h1>'.$row[0].'</h1>';
+								}
+							?>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class='col-lg-3 col-md-6'>
+      <div class='panel panel-primary'>
+        <div class='panel-heading'>
+          <div class='row'>
+            <div class='col-xs-3'>
+              <i class='fa fa-tasks fa-5x'></i>
+            </div>
+            <div class='col-xs-9 text-right'>
+              <div id="leadmonth"></div>
+              <div>Total Kategori Buku</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>        
 
     <div class="content">
       <div class="container-fluid">
@@ -142,11 +262,11 @@
 
                 <div class="d-flex flex-row justify-content-end">
                   <span class="mr-2">
-                    <i class="fas fa-square text-primary" style="color:#007bff"></i> Non Fiksi
+                    <i class="fa fa-square text-primary" style="color:#007bff"></i> Non Fiksi
                   </span>
 
                   <span>
-                    <i class="fas fa-square text-gray" style="color:#ced4da"></i> Fiksi
+                    <i class="fa fa-square text-gray" style="color:#ced4da"></i> Fiksi
                   </span>
                 </div>
               </div>
@@ -167,11 +287,11 @@
 
                 <div class="d-flex flex-row justify-content-end">
                   <span class="mr-2">
-                    <i class="fa-square text-primary" style="color:#007bff"></i> Dalam proses pengajuan
+                    <i class="fa fa-square text-primary" style="color:#007bff"></i> Dalam proses pengajuan
                   </span>
 
                   <span>
-                    <i class="fa-square text-gray" style="color:#ced4da"></i> Sudah diterima
+                    <i class="fa fa-square text-gray" style="color:#ced4da"></i> Sudah diterima
                   </span>
                 </div>
               </div>
@@ -210,25 +330,25 @@ $(function () {
           backgroundColor: '#007bff',
           borderColor    : '#007bff',
 		  data           : [10,
-							15,
-							10, 
-							5, 
-							<?php 
-							$jumlah_pengajuan = statusPengajuan("Dalam Proses Penyuntingan", "%2019-11%");
-							echo mysqli_num_rows($jumlah_pengajuan);
-							?>]
+                        15,
+                        10, 
+                        5, 
+                        <?php 
+                        $jumlah_pengajuan = statusPengajuan("Dalam Proses Penyuntingan", "%2019-11%");
+                        echo mysqli_num_rows($jumlah_pengajuan);
+                        ?>]
         },
         {
           backgroundColor: '#ced4da',
           borderColor    : '#ced4da',
 		  data           : [6,
-							10,
-							20, 
-							18, 
-							<?php 
-							$jumlah_pengajuan = statusPengajuan("Sudah Diterima", "%2019-11%");
-							echo mysqli_num_rows($jumlah_pengajuan);
-							?>]
+                        10,
+                        20, 
+                        18, 
+                        <?php 
+                        $jumlah_pengajuan = statusPengajuan("Sudah Diterima", "%2019-11%");
+                        echo mysqli_num_rows($jumlah_pengajuan);
+                        ?>]
         }
       ]
     },
@@ -281,19 +401,15 @@ $(function () {
         pointBorderColor    : '#007bff',
         pointBackgroundColor: '#007bff',
         fill                : false
-        // pointHoverBackgroundColor: '#007bff',
-        // pointHoverBorderColor    : '#007bff'
       },
         {
           type                : 'line',
-          data                : [30, 40, 35, 33, 40, 38],
+          data                : [30, 40, 35, 33, 40],
           backgroundColor     : 'tansparent',
           borderColor         : '#ced4da',
           pointBorderColor    : '#ced4da',
           pointBackgroundColor: '#ced4da',
           fill                : false
-          // pointHoverBackgroundColor: '#ced4da',
-          // pointHoverBorderColor    : '#ced4da'
         }]
     },
     options: {
@@ -334,11 +450,9 @@ $(function () {
   })
 })
 </script>
-<!-- <script src="dist/js/dashboard3.js"></script> -->
 	</body>
 	<footer>
 		<hr>
 		<h4>&copy; 2019 Litehub Inc. All rights reserved</h4>
 	</footer>
 </html>							
-
