@@ -35,7 +35,7 @@
 		
 		$username = $_POST['username'];
         $password = $_POST['password']; 
-        $role = $_POST['role']; 
+        $role = strtolower($_POST['role']); 
         
         $daftaruser = daftarUser("user");
 		$sdhAda = false;
@@ -52,23 +52,23 @@
 		$_SESSION["user_id"] = $last + 1;
 		
 		if($sdhAda == true) {
-            echo  "<script type='text/javascript'>alert('Register Gagal');</script>";
+			echo  "<script type='text/javascript'>alert('Register Gagal, username sudah ada');window.location = '../register.php';</script>";
 		} else {
 			$sql = "INSERT INTO user(username, password, role) VALUES('$username', '$password', LOWER('$role'))";
 		}
 
 		if($result = mysqli_query($conn, $sql)) {
 			if ($row["role"] === "user"){
-				header("Location: ../home.php");
+				header("Location: ../shop.php");
 			}else if ($row["role"] === "penulis"){
-				header("Location: ../unggah.php");
+				header("Location: ../upload.php");
 			}else if ($row["role"] === "editor"){
 				header("Location: ../unduh.php");
 			}else if ($row["role"] === "admin"){
 				header("Location: statistik.php");
 			}
 			else{
-				header("Location: ../daftar.php");
+				header("Location: ../landing.php");
 			}
 		} else {
 		    die("Error: $sql");

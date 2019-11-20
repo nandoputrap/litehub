@@ -48,16 +48,16 @@
 			$_SESSION["role"] = $row["role"];
 			
 			if ($row["role"] === "user"){
-				header("Location: home.php");
+				header("Location: shop.php");
 			}else if ($row["role"] === "penulis"){
-				header("Location: unggah.php");
+				header("Location: upload.php");
 			}else if ($row["role"] === "editor"){
 				header("Location: unduh.php");
 			}else if ($row["role"] === "admin"){
 				header("Location: statistik.php");
 			}
 			else{
-				header("Location: daftar.php");
+				header("Location: landing.php");
 			}
 
 		}else {

@@ -2,6 +2,34 @@
   require_once("templates/header.php");
 ?>
 
+<?php
+	session_start();
+	function connectDB() {
+		// require 'config/connect.php';
+		$servername = "sql12.freesqldatabase.com";
+		$username = "sql12310568";
+		$password = "wmiLAF7a6g";
+		$dbname = "sql12310568";
+		
+		// Create connection
+		$conn = mysqli_connect($servername, $username, $password, $dbname);
+		
+		// Check connection
+		if (!$conn) {
+			die("Connection failed: " + mysqli_connect_error());
+		}
+		return $conn;
+  }
+	
+	if (isset($_GET['id'])) {
+		$no = $_GET['id'];
+	  } 
+	  else {
+      echo  "<script type='text/javascript'>alert('Masukkan ke cart gagal');window.location = './shop.php';</script>";
+	  }
+	
+?>
+
 <div class="cart">
   <div class="container">
     <div class="row">
@@ -25,16 +53,28 @@
 
                   <tbody>
                     <tr>
-                      <td class="col-md-3"><img class="card-img-top img-responsive img-cart" src="images/ebook-1.png" alt="card-img"></td>
-                      <td>
-                        <h1 id="ebook-title">Judul Buku</h1>
-                        <h2 class="ebook-author">Nama Penulis</h2>
-                        <p>ISBN : 987654321</p>
-                        <p>SKU : 1234567</p>
-                      </td>
+                    <?php
+                      $conn = connectDB();
+                      $query = "SELECT * FROM book where book_id = '$no'";
+                      $detail_unggah = mysqli_query($conn, $query);
 
-                      <td> <h2>Rp. 100.000</h2> </td>
-                      <td> <a class="btn btn-lg btn-danger btn-beli text-capitalize"><i class="fa fa-trash"> &nbsp; Hapus</i></a> </td>
+                      if (mysqli_num_rows($detail_unggah) > 0) {
+                        $row = mysqli_fetch_assoc($detail_unggah);
+                        echo '
+                        <td class="col-md-3"><img class="card-img-top img-responsive img-cart" src="'.$row['img_path'].'" alt="card-img"></td>
+                        <td>
+                          <h1 id="ebook-title">'.$row['title'].'</h1>
+                          <h2 class="ebook-author">'.$row['author'].'</h2>
+                          <p>Penerbit : '.$row['publisher'].'</p>
+                          <p>SKU : '.$row['book_id'].'</p>
+                        </td>
+  
+                        <td> <h2>'.$row['quantity'].'</h2> </td>
+                        <td> <a class="btn btn-lg btn-danger btn-beli text-capitalize"><i class="fa fa-trash"> &nbsp; Hapus</i></a> </td>
+                        ';
+                      }
+                      ?>
+                      
                     </tr>
 
                     <tr>
