@@ -15,18 +15,21 @@
 		}
 		return $conn;
 	}
-	
-	function statusPengajuan($status, $date) {
-		$conn = connectDB();
-		
-		$sql = "SELECT * FROM unggah
-				WHERE status = '".$status."' AND upload_date LIKE '".$date."'";
-		
-		if(!$result = mysqli_query($conn, $sql)) {
-			die("Error: $sql");
-		}
-		mysqli_close($conn);
-		return $result;
+
+  function getStatus($bulan, $status){
+      $conn = connectDB();
+
+      $sql = "SELECT count(*) as jumlah from unggah where MONTH(upload_date)='$bulan' AND status = '".$status."'";
+
+      if(!$result = mysqli_query($conn, $sql)) {
+        die("Error: $sql");
+      }
+      mysqli_close($conn);
+      
+      $query = $result;
+      $row = $query->fetch_array();
+      $jumlah[] = $row['jumlah'];
+      return $jumlah;
   }
   
   function getpenulis() {
@@ -53,7 +56,21 @@
 
 		mysqli_close($conn);
 		return $result;
-	}
+  }
+  
+  function statusPenjualan() {
+		$conn = connectDB();
+		
+		$sql = "SELECT count(quantity) FROM book";
+		
+		if(!$result = mysqli_query($conn, $sql)) {
+			die("Error: $sql");
+		}
+
+		mysqli_close($conn);
+		return $result;
+  }
+  
 	function getbook() {
 		$conn = connectDB();
 		
@@ -308,6 +325,9 @@
 <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="dist/js/adminlte.js"></script>
 <script src="js/Chart.min.js"></script>
+<?php
+   $label = ['JULI', 'AGUSTUS', 'SEPTEMBER', 'OKTOBER', 'NOVEMBER'];
+?>
 <script>
 $(function () {
   'use strict'
@@ -324,31 +344,25 @@ $(function () {
   var salesChart  = new Chart($salesChart, {
     type   : 'bar',
     data   : {
-      labels  : ['JULI', 'AGUSTUS', 'SEPTEMBER', 'OKTOBER', 'NOVEMBER'],
+      labels  : <?php echo json_encode($label); ?>,
       datasets: [
         {
           backgroundColor: '#007bff',
           borderColor    : '#007bff',
-		  data           : [10,
-                        15,
-                        10, 
-                        5, 
-                        <?php 
-                        $jumlah_pengajuan = statusPengajuan("Dalam Proses Penyuntingan", "%2019-11%");
-                        echo mysqli_num_rows($jumlah_pengajuan);
-                        ?>]
+      data           : <?php 
+                        for($bulan=7;$bulan<12;$bulan++){
+                          $jumlah_proses[] = getStatus($bulan, "Dalam Proses Penyuntingan");
+                        }
+                       echo json_encode($jumlah_proses); ?>
         },
         {
           backgroundColor: '#ced4da',
           borderColor    : '#ced4da',
-		  data           : [6,
-                        10,
-                        20, 
-                        18, 
-                        <?php 
-                        $jumlah_pengajuan = statusPengajuan("Sudah Diterima", "%2019-11%");
-                        echo mysqli_num_rows($jumlah_pengajuan);
-                        ?>]
+		  data           : <?php 
+                        for($bulan=7;$bulan<12;$bulan++){
+                          $jumlah_diterima[] = getStatus($bulan, "Sudah Diterima");
+                        }
+                       echo json_encode($jumlah_diterima); ?>
         }
       ]
     },
@@ -395,7 +409,11 @@ $(function () {
       labels  : ['Juli', 'Agustus', 'September', 'Oktober', 'November'],
       datasets: [{
         type                : 'line',
-        data                : [96, 50, 60, 85, 83],
+        data                : [12, 10, 12, 17,
+                              <?php 
+                                $jumlah_penjualan = statusPenjualan();
+                                echo mysqli_num_rows($jumlah_penjualan);
+                              ?>],
         backgroundColor     : 'transparent',
         borderColor         : '#007bff',
         pointBorderColor    : '#007bff',
@@ -404,7 +422,7 @@ $(function () {
       },
         {
           type                : 'line',
-          data                : [30, 40, 35, 33, 40],
+          data                : [15, 16, 5, 8, 10],
           backgroundColor     : 'tansparent',
           borderColor         : '#ced4da',
           pointBorderColor    : '#ced4da',
