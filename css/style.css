@@ -129,7 +129,7 @@ h4 {
   color: black !important;
 }
 .navbar-nav li a:hover, .navbar-nav li.active a {
-  color: #0A5494 !important;
+  color: #0A5494;
   background-color: #fff !important;
 }
 .navbar-default .navbar-toggle {
@@ -190,7 +190,9 @@ footer .glyphicon {
         box-shadow: 0 0 5px 2px rgba(0, 0, 0, .5);
 }
 
-
+.section-margin{
+  margin: 100px auto;
+}
 
 
 
@@ -203,6 +205,10 @@ footer .glyphicon {
   height: 100%;
   /* padding: 15px; /* firefox bug fix */ */
   width: auto;
+}
+
+.dropdown-menu{
+  padding: 20px;
 }
 /* End navigation */
 
@@ -566,6 +572,14 @@ box-shadow: 5px 5px 20px 0px rgba(0,0,0,0.5);
 .card-product{
   margin: 30px auto;
 }
+
+.active-pagination{
+  background-color: #D72323 !important;
+}
+
+.pagination{
+  /* margin-left: 20px; */
+}
 /* SHOP .PHP */
 
 /* DETAILS.PHP */
@@ -654,7 +668,7 @@ box-shadow: 5px 5px 20px 0px rgba(0,0,0,0.5);
 
 .form-register{
   height: 50px;
-  margin: 30px auto;
+  margin: 10px auto 30px auto;
   /* padding: 0 50px; */
 }
 
@@ -726,3 +740,36 @@ box-shadow: 5px 5px 20px 0px rgba(0,0,0,0.5);
   padding-top: 0 !important;
 }
 /* STATUS-PENGAJUAN.PHP*/
+
+/* GOOGLE MAP */
+.map-container{
+overflow:hidden;
+padding-bottom:56.25%;
+position:relative;
+height:0;
+}
+
+.map-container iframe{
+left:0;
+top:0;
+height:100%;
+width:100%;
+position:absolute;
+}
+/* GOOGLE MAP */
+
+/* FAQ.PHP */
+.faq-group{
+  margin: 50px auto;
+}
+/* FAQ.PHP */
+
+/* EDIT PROFIL.PHP */
+.form-profil{
+  height: 50px;
+}
+
+.active-profil{
+  background-color: #eeeeee !important;
+}
+/* EDIT PROFIL.PHP */

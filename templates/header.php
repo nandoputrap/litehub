@@ -56,7 +56,16 @@
 
         <div class="collapse navbar-collapse" id="myNavbar">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#about">Kategori</a></li>
+          <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Kategori <i class="fa fa-angle-down" aria-hidden="true"></i>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="#">Kategori 1</a>
+                <a class="dropdown-item" href="#">Kategori 2</a>
+                <a class="dropdown-item" href="#">Kategori 3</a>
+              </div>
+            </li>
             <li><a href="shop.php">Shop</a></li>
 
             <li>

@@ -17,7 +17,7 @@
           <input type="password" class="form-control form-register" placeholder="Kata sandi...">
           <input type="password" class="form-control form-register" placeholder="Ulangi kata sandi...">
           <label class="checkbox-inline">
-            <input type="checkbox" value="">Dengan pembuatan akun, Anda menyetujui <a href="#">syarat & ketentuan</a> dari Ebookhub
+          <input type="checkbox" value="">Dengan pembuatan akun, Anda menyetujui <a href="syarat-dan-ketentuan.php">syarat & ketentuan</a> dari Ebookhub
           </label>
 
           <button type="button" class="btn btn-primary btn-block btn-ebookhub btn-register">Daftar</button>

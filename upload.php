@@ -15,13 +15,24 @@
           <input type="text" class="form-control form-register" placeholder="Nama penulis...">
           <div class="form-group">
             <label for="kategori"></label>
-            <select class="form-control form-register form-group-kategori" id="kategori" placeholder="Deskripsi/Sinopsis buku...">
-              <!-- <option>-Pilih kategori-</option> -->
+            <select class="form-control form-register form-group-kategori" id="kategori">
               <option>Kategori 1</option>
               <option>Kategori 2</option>
               <option>Kategori 3</option>
               <option>Kategori 4</option>
               <option>Kategori 5</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="subkategori"></label>
+            <select class="form-control form-register form-group-kategori" id="subkategori">
+              <!-- <option>-Pilih kategori-</option> -->
+              <option>SubKategori 1</option>
+              <option>SubKategori 2</option>
+              <option>SubKategori 3</option>
+              <option>SubKategori 4</option>
+              <option>SubKategori 5</option>
             </select>
           </div>
           <div class="form-group">
@@ -37,11 +48,11 @@
             </div>
           </form>
 
-          <button type="button" class="btn btn-primary btn-block btn-ebookhub btn-register">Daftar</button>
+          <button type="button" class="btn btn-primary btn-block btn-ebookhub btn-register">Unggah</button>
         </form>
       </div>
 
-      
+
     </div>
 
 

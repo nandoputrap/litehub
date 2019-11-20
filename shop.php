@@ -207,6 +207,17 @@
             }
           ?>
 
+			<div class="row text-center">
+              <ul class="pagination pagination-lg">
+                <li class="active active-pagination"><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li> <a href="#"><i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+              </ul>
+            </div>
+
           </div>
         </div>
       </div>

@@ -2,7 +2,7 @@
 require_once("templates/header.php");
 ?>
 
-<div class="status-pengajuan-detail section-margin">
+<div class="daftar-pengajuan section-margin">
   <div class="container">
 
     <div class="row">
@@ -25,7 +25,27 @@ require_once("templates/header.php");
                 <li>
                   <a href="edit-profil.php">Edit Profil</a>
                 </li>
+                <li>
+                  <a href="status-pengajuan.php">Status Pengajuan</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="panel panel-default sidebar-menu">
+          <div class="panel-harga">
+            <div class="panel-heading text-center">
+              <h3 class="panel-title">Editor Area</h3>
+            </div>
+
+            <div class="panel-body">
+              <ul class="nav nav-pills nav-stacked category-menu">
                 <li class="active-profil">
+                  <a href="daftar-pengajuan.php">Daftar Pengajuan</a>
+                </li>
+                <li>
                   <a href="status-pengajuan.php">Status Pengajuan</a>
                 </li>
               </ul>
@@ -44,43 +64,47 @@ require_once("templates/header.php");
             <thead>
               <tr>
                 <th class="text-center">Judul Buku</th>
+                <th class="text-center">Nama Penulis</th>
                 <th class="text-center">Kategori</th>
                 <th class="text-center">Tanggal Unggah</th>
-                <th class="text-center">Status</th>
-                <th class="text-center">Aksi</th>
+                <th colspan="2" class="text-center">Aksi</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td class="text-center">How to Code 101</td>
+                <td class="text-center">Nando P. Pratama</td>
                 <td class="text-center">Komputer</td>
                 <td class="text-center">1 Januari 2019</td>
-                <td class="text-center">Dalam Proses Penyuntingan</td>
-                <td class="text-center"><button type="button" class="btn btn-info" onclick="window.location='status-pengajuan-detail.php'">Detail</button></td>
+                <td class="text-center"><button type="button" class="btn btn-info" onclick="window.location='status-pengajuan-detail-editor.php'"> <i class="fa fa-info"></i> &nbsp;Detail</button></td>
+                <td class="text-center"><button type="button" class="btn btn-primary" onclick="window.location='status-pengajuan-detail.php'"><i class="fa fa-download"></i> &nbsp;Unduh</button></td>
               </tr>
 
               <tr>
                 <td class="text-center">How to Code 101</td>
+                <td class="text-center">Nando P. Pratama</td>
                 <td class="text-center">Komputer</td>
                 <td class="text-center">1 Januari 2019</td>
-                <td class="text-center">Dalam Proses Penyuntingan</td>
-                <td class="text-center"><button type="button" class="btn btn-info" onclick="window.location='status-pengajuan-detail.php'">Detail</button></td>
+                <td class="text-center"><button type="button" class="btn btn-info" onclick="window.location='status-pengajuan-detail-editor.php'"><i class="fa fa-info"></i> &nbsp;Detail</button></td>
+                                <td class="text-center"><button type="button" class="btn btn-primary" onclick="window.location='status-pengajuan-detail.php'"><i class="fa fa-download"></i> &nbsp;Unduh</button></td>
               </tr>
 
               <tr>
                 <td class="text-center">How to Code 101</td>
+                <td class="text-center">Nando P. Pratama</td>
                 <td class="text-center">Komputer</td>
                 <td class="text-center">1 Januari 2019</td>
-                <td class="text-center">Dalam Proses Penyuntingan</td>
-                <td class="text-center"><button type="button" class="btn btn-info" onclick="window.location='status-pengajuan-detail.php'">Detail</button></td>
+                <td class="text-center"><button type="button" class="btn btn-info" onclick="window.location='status-pengajuan-detail-editor.php'"><i class="fa fa-info"></i> &nbsp;Detail</button></td>
+                                <td class="text-center"><button type="button" class="btn btn-primary" onclick="window.location='status-pengajuan-detail.php'"><i class="fa fa-download"></i> &nbsp;Unduh</button></td>
               </tr>
 
               <tr>
                 <td class="text-center">How to Code 101</td>
+                <td class="text-center">Nando P. Pratama</td>
                 <td class="text-center">Komputer</td>
                 <td class="text-center">1 Januari 2019</td>
-                <td class="text-center">Dalam Proses Penyuntingan</td>
-                <td class="text-center"><button type="button" class="btn btn-info" onclick="window.location='status-pengajuan-detail.php'">Detail</button></td>
+                <td class="text-center"><button type="button" class="btn btn-info" onclick="window.location='status-pengajuan-detail-editor.php'"><i class="fa fa-info"></i> &nbsp;Detail</button></td>
+                                <td class="text-center"><button type="button" class="btn btn-primary" onclick="window.location='status-pengajuan-detail.php'"><i class="fa fa-download"></i> &nbsp;Unduh</button></td>
               </tr>
 
             </tbody>

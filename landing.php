@@ -160,10 +160,10 @@
         <h3 id="greetings-3">Ebookhub ingin membantu minat baca di Indonesia, ayo mulai membaca dan menerbitkan sekarang!</h3>
 
         <div class="col-md-6">
-          <button type="button" class="btn btn-primary btn-block btn-ebookhub">Mulai Baca</button>
+        <button type="button" class="btn btn-primary btn-block btn-ebookhub" onclick="window.location='#kategori'">Mulai Baca</button>
         </div>
         <div class="col-md-6">
-          <button type="button" class="btn btn-primary btn-block btn-ebookhub">Mulai Terbitkan</button>
+        <button type="button" class="btn btn-primary btn-block btn-ebookhub" onclick="window.location='upload.php'">Mulai Terbitkan</button>
         </div>
       </div>
 
