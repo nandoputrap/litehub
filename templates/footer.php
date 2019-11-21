@@ -21,7 +21,7 @@
       </div>
       <div class="col-md-4 col-sm-12">
         <h2>Pembayaran</h2>
-        <img src="images/payments.png" alt="payments" class="payments">
+        <img src="https://i.ibb.co/wM8WHBV/payments.png" alt="payments" class="payments">
       </div>
     </div>
 

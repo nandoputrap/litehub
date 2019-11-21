@@ -203,6 +203,7 @@
 								<th>Tanggal Unggah</th>
 								<th>Detail</th>
 								<th>Download</th>
+								<th>Publikasi</th>
 							</tr>
 						</thead>
 						<?php
@@ -215,7 +216,7 @@
 							    }
 							}
 							while ($row = mysqli_fetch_row($daftarbuku)) {
-								 if($row[7] = "Dalam Proses Penyuntingan") {
+								 if($row[7] == "Dalam Proses Penyuntingan") {
 									echo'
 									<tbody>
 									<tr>
@@ -224,6 +225,9 @@
 										<td>'.$row[6].'</td>
 										<td><a data-toggle="modal" data-target="#detailUpload" href="#detailUpload?id='.$row[1].'">Detail</a></td>
 										<td><a href="services/download.php?nama='.$row[5].'">Download</a></td>
+										<td><a href="services/publish.php?id='.$row[0].'"><button type="button" class="btn-addbook btn btn-primary">
+										Publikasi Buku
+									</button></a></td>
 									</tr>
 									</tbody>';
 								 }
