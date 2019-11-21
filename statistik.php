@@ -32,10 +32,10 @@
       return $jumlah;
   }
   
-  function getSold($bulan, $kategori){
+  function getSoldFiksi($bulan){
     $conn = connectDB();
 
-    $sql = "SELECT sum(quantity) as terjual from book where MONTH(publish_date)='$bulan' AND category = '".$kategori."'";
+    $sql = "SELECT sum(quantity) as terjual from book where MONTH(publish_date)='$bulan' AND (category = 'Fiksi' OR category = 'Novel' OR category = 'Cerpen' OR category = 'Puisi' OR category = 'Drama' OR category = 'Komik' OR category = 'Dongeng' OR category = 'Fabel' OR category = 'Mitos')";
 
     if(!$result = mysqli_query($conn, $sql)) {
       die("Error: $sql");
@@ -46,6 +46,22 @@
     $row = $query->fetch_array();
     $jumlah[] = $row['terjual'];
     return $jumlah;
+}
+
+function getSoldNonFiksi($bulan){
+  $conn = connectDB();
+
+  $sql = "SELECT sum(quantity) as terjual from book where MONTH(publish_date)='$bulan' AND (category != 'Fiksi' AND category != 'Novel' AND category != 'Cerpen' AND category != 'Puisi' AND category != 'Drama' AND category != 'Komik' AND category != 'Dongeng' AND category != 'Fabel' AND category != 'Mitos')";
+
+  if(!$result = mysqli_query($conn, $sql)) {
+    die("Error: $sql");
+  }
+  mysqli_close($conn);
+  
+  $query = $result;
+  $row = $query->fetch_array();
+  $jumlah[] = $row['terjual'];
+  return $jumlah;
 }
 
   function getpenulis() {
@@ -431,7 +447,7 @@ $(function () {
                             
         data                : <?php
                                 for($bulan=7;$bulan<12;$bulan++){
-                                  $jumlah_nf[] = getSold($bulan, "Non Fiksi");
+                                  $jumlah_nf[] = getSoldNonFiksi($bulan);
                                 }
                               echo json_encode($jumlah_nf); 
                              ?>,                       
@@ -445,7 +461,7 @@ $(function () {
           type                : 'line',
           data                : <?php 
                                   for($bulan=7;$bulan<12;$bulan++){
-                                    $jumlah_f[] = getSold($bulan, "Fiksi");
+                                    $jumlah_f[] = getSoldFiksi($bulan);
                                   }
                                   echo json_encode($jumlah_f); 
                                 ?>,
