@@ -32,6 +32,22 @@
       return $jumlah;
   }
   
+  function getSold($bulan, $kategori){
+    $conn = connectDB();
+
+    $sql = "SELECT count(*) as terjual from book where MONTH(publish_date)='$bulan' AND category = '".$kategori."'";
+
+    if(!$result = mysqli_query($conn, $sql)) {
+      die("Error: $sql");
+    }
+    mysqli_close($conn);
+    
+    $query = $result;
+    $row = $query->fetch_array();
+    $jumlah[] = $row['terjual'];
+    return $jumlah;
+}
+
   function getpenulis() {
 		$conn = connectDB();
 		
@@ -406,14 +422,19 @@ $(function () {
   var $visitorsChart = $('#visitors-chart')
   var visitorsChart  = new Chart($visitorsChart, {
     data   : {
-      labels  : ['Juli', 'Agustus', 'September', 'Oktober', 'November'],
+      // labels  : ['September', 'Oktober', 'November'],
+      labels  : <?php echo json_encode($label); ?>,
       datasets: [{
         type                : 'line',
-        data                : [12, 10, 12, 17,
-                              <?php 
-                                $jumlah_penjualan = statusPenjualan();
-                                echo mysqli_num_rows($jumlah_penjualan);
-                              ?>],
+        // data                : [12, 10, 12, 17,10],
+                               
+                            
+        data                : <?php
+                                for($bulan=7;$bulan<12;$bulan++){
+                                  $jumlah_nf[] = getSold($bulan, "Non Fiksi");
+                                }
+                              echo json_encode($jumlah_nf); 
+                             ?>,                       
         backgroundColor     : 'transparent',
         borderColor         : '#007bff',
         pointBorderColor    : '#007bff',
@@ -422,7 +443,12 @@ $(function () {
       },
         {
           type                : 'line',
-          data                : [15, 16, 5, 8, 10],
+          data                : <?php 
+                                  for($bulan=7;$bulan<12;$bulan++){
+                                    $jumlah_f[] = getSold($bulan, "Fiksi");
+                                  }
+                                  echo json_encode($jumlah_f); 
+                                ?>,
           backgroundColor     : 'tansparent',
           borderColor         : '#ced4da',
           pointBorderColor    : '#ced4da',
