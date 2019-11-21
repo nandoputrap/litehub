@@ -14,10 +14,10 @@
           <ol>
             <h4>
               <strong>Anda dapat mengunjungi kantor kami di: </strong><br><br>
-              <p>Jl. Salemba Raya No. 4</p>
-              <p>Jakarta Pusat 10430</p>
-              <p>Telp. : (021) 3917279</p>
-              <p>Fax : (021) 3908967</p>
+              <p>Graha BIP</p>
+              <p>Jl. Gatot Subroto No.Kav 23, Jakarta Selatan</p>
+              <p>Telp: (021) 6577897</p>
+              <p>Fax: (021) 5795455</p>
             </h4>
           </ol>
         </div>
@@ -25,7 +25,7 @@
         <div class="col-md-6">
 
           <div id="map-container-google-1" class="z-depth-1-half map-container" style="height: 200px">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d495.8145623436882!2d106.8462946446201!3d-6.195375037149314!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f4429d8065c5%3A0x29fad4f6e9e0da2e!2sJl.%20Salemba%20Raya%2C%20Kec.%20Senen%2C%20Kota%20Jakarta%20Pusat%2C%20Daerah%20Khusus%20Ibukota%20Jakarta!5e0!3m2!1sid!2sid!4v1573962274505!5m2!1sid!2sid" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.2599228083163!2d106.81827621427267!3d-6.229423695490692!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f3e2fb292d13%3A0x51d0e6dfacba8e0f!2sGraha%20Bip%2C%20Jl.%20Gatot%20Subroto%20No.Kav%2023%2C%20RT.2%2FRW.2%2C%20Karet%20Semanggi%2C%20Setiabudi%2C%20South%20Jakarta%20City%2C%20Jakarta%2012930!5e0!3m2!1sid!2sid!4v1574343094310!5m2!1sid!2sid" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
           </div>
 
         </div>

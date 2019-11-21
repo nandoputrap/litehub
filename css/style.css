@@ -194,6 +194,11 @@ footer .glyphicon {
   margin: 100px auto;
 }
 
+.section-mini-margin{
+  margin: 20px auto;
+}
+
+
 
 
 /* Begin navigation */
@@ -351,6 +356,10 @@ box-shadow: 5px 5px 20px 0px rgba(0,0,0,0.5);
 
 .btn-beli{
   margin: 20px auto;
+}
+
+.btn-hapus{
+  margin: 10px auto;
 }
 /* End Baru diterbitkan */
 
@@ -561,7 +570,7 @@ box-shadow: 5px 5px 20px 0px rgba(0,0,0,0.5);
 
 /* SHOP .PHP */
 .shop{
-  margin-top: 100px;
+  /* margin-top: 100px; */
 }
 
 .card-img-top{
@@ -604,7 +613,7 @@ box-shadow: 5px 5px 20px 0px rgba(0,0,0,0.5);
 
 /* CART.PHP */
 .cart{
-  margin-top: 100px;
+  /* margin-top: 100px; */
 }
 
 .img-cart{
@@ -616,6 +625,9 @@ box-shadow: 5px 5px 20px 0px rgba(0,0,0,0.5);
   padding: 50px;
 } */
 
+.cart-footer{
+  margin-top: 
+}
 
 /* CART.PHP */
 
@@ -773,3 +785,13 @@ position:absolute;
   background-color: #eeeeee !important;
 }
 /* EDIT PROFIL.PHP */
+
+/* about.php */
+.visi-ebookhub{
+  margin-bottom: 50px;
+}
+
+.visi-text{
+  font-style: italic;
+}
+/* about.php */
