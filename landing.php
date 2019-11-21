@@ -9,22 +9,22 @@
 		$username = "sql12310568";
 		$password = "wmiLAF7a6g";
 		$dbname = "sql12310568";
-		
+
 		// Create connection
 		$conn = mysqli_connect($servername, $username, $password, $dbname);
-		
+
 		// Check connection
 		if (!$conn) {
 			die("Connection failed: " + mysqli_connect_error());
 		}
 		return $conn;
 	}
-	
+
 	function daftarBuku($table) {
 		$conn = connectDB();
-		
+
 		$sql = "SELECT book_id, img_path, title, author, publisher, quantity FROM $table";
-		
+
 		if(!$result = mysqli_query($conn, $sql)) {
 			die("Error: $sql");
 		}
@@ -75,7 +75,7 @@
 
 	function showActButton($arraysubmission, $bookid, $stocknum) {
 		$flag = false;
-		for ($i=0; $i < count($arraysubmission); $i++) { 
+		for ($i=0; $i < count($arraysubmission); $i++) {
 			if ($arraysubmission[$i] == $bookid) {
 				echo '
 				<form action="daftar.php" method="post">
@@ -102,7 +102,7 @@
 
 	function insertBuku() {
 		$conn = connectDB();
-		
+
 		$displayBuku = $_POST['displayBuku'];
 		$judulBuku = $_POST['judulBuku'];
 		$pengarangBuku = $_POST['pengarangBuku'];
@@ -113,7 +113,7 @@
 		$daftarbuku = daftarBuku("book");
 		$sdhAda = false;
 		$bookid = 0;
-		while ($row = mysqli_fetch_row($daftarbuku)) {	
+		while ($row = mysqli_fetch_row($daftarbuku)) {
 			if($row[2] == $judulBuku) {
 				$sdhAda = true;
 				$bookid = $row[0];
@@ -121,7 +121,7 @@
 			}
 		}
 		$_SESSION["titlebookadded"] = $judulBuku;
-		
+
 		if($sdhAda == true) {
 			$sql = "UPDATE book SET quantity = quantity + $stokBuku where book_id = $bookid";
 		} else {
@@ -146,7 +146,7 @@
 			balikBuku($_POST['book_id'],$_SESSION["user_id"]);
 		}
 	}
-	
+
 ?>
 
 
@@ -157,7 +157,7 @@
       <div class="col-md-6 greetings">
         <h1 id="greetings-1">Hi, kami Ebookhub!</h1>
         <h3 id="greetings-2">Platform untuk menerbitkan e-book, membaca e-book, dan membeli e-book yang tepat untukmu!</h3>
-        <h3 id="greetings-3">Ebookhub ingin membantu minat baca di Indonesia, ayo mulai membaca dan menerbitkan sekarang!</h3>
+        <h3 id="greetings-3">Ebookhub ingin membantu meningkatkan minat baca di Indonesia, ayo mulai sekarang!</h3>
 
         <div class="col-md-6">
         <button type="button" class="btn btn-primary btn-block btn-ebookhub" onclick="window.location='#kategori'">Mulai Baca</button>
@@ -188,7 +188,7 @@
           <div class="box-how-to-use box-shadow text-center">
             <i class="fa fa-upload fa-how-to-use" aria-hidden="true"></i>
             <h2>Unggah</h2>
-            <p>Unggah draft e-book mu dan kami akan segera melakukan pengecekan dan kelayakan terbit.</p>
+            <p>Unggah draft e-book yang kamu miliki dan kami akan segera melakukan pengecekan dan penilaian kelayakan terbit.</p>
 
           </div>
         </div>
@@ -197,7 +197,7 @@
           <div class="box-how-to-use box-shadow text-center">
             <i class="fa fa-edit fa-how-to-use" aria-hidden="true"></i>
             <h2>Proses Edit</h2>
-            <p>Proses pengeditan ± 1 bulan, apabila draft e-book mu layak, maka akan dihubungi oleh tim kami dan melanjutkan ke proses negosiasi harga jual buku.</p>
+            <p>Apabila draft e-book lulus uji kelayakan, maka kami akan mempersiapkan e-book milikmu untuk dipublikasi. </p>
 
           </div>
         </div>
@@ -206,7 +206,7 @@
           <div class="box-how-to-use box-shadow text-center">
             <i class="fa fa-book fa-how-to-use" aria-hidden="true"></i>
             <h2>Terbit</h2>
-            <p>Unggah draft e-book mu dan kami akan segera melakukan pengecekan dan kelayakan terbit.</p>
+            <p>Selamat! E-book milikmu sudah dipublikasi dan siap untuk dibaca oleh seluruh pecinta buku.</p>
 
           </div>
         </div>
@@ -222,7 +222,7 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-12">
-        <h1 class="text-center">Baru Diterbitkan</h1>
+        <h1 class="text-center">Buku Baru Diterbitkan</h1>
       </div>
 
       <div class="col-lg-12 text-center">
@@ -244,8 +244,8 @@
                         <img class="card-img-top img-fluid" style="height:300px;" src="'.$row[1].'" alt="card-img">
                         <div class="card-body">
                           <a href="index.php"><h3 class="card-title ebook-title" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><strong>'.$row[2].'</strong></h3></a>
-                          <p class="card-text ebook-author">Penulis : '.$row[3].'</p>
-                          <p class="card-text ebook-source">Penerbit : '.$row[4].'</p>';
+                          <p class="card-text ebook-author">'.$row[3].'</p>
+                          <p class="card-text ebook-source">'.$row[4].'</p>';
                           if($row[5] > 0) {
                             echo '<h4 class="card-title ebook-price"><strong>Rp. '.$row[5].'</strong></h4>';
                           } else {
@@ -262,12 +262,15 @@
           ?>
         </div>
         <div class="customNavigation">
-          <a class="btn prev">Previous</a>
-          <a class="btn next">Next</a>
+          <a class="btn prev"> <i class="fa fa-angle-left"></i> </a>
+          <a class="btn next"> <i class="fa fa-angle-right"></i> </a>
           <!-- <a class="btn play">Autoplay</a>
           <a class="btn stop">Stop</a> -->
         </div>
       </div>
+    </div>
+  </div>
+</div>
 <!-- End Baru diterbitkan -->
 
 <!-- Begin Buku terpopuler -->
@@ -355,8 +358,8 @@
         </div>
 
         <div class="customNavigation">
-          <a class="btn prev2">Previous</a>
-          <a class="btn next2">Next</a>
+          <a class="btn prev2"><i class="fa fa-angle-left"></i></a>
+          <a class="btn next2"><i class="fa fa-angle-right"></i></a>
           <!-- <a class="btn play">Autoplay</a>
           <a class="btn stop">Stop</a> -->
         </div>
@@ -442,7 +445,7 @@
 
 <!-- Begin Subscribe -->
 <div class="subscribe">
-  <div class="container">
+  <div class="container-fluid">
     <div class="row">
       <div class="col-sm-12 subscribe-box text-center">
         <h2>Jadilah yang pertama tahu berita dan promosi menarik dari kami! (Gratis)</h2>

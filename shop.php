@@ -10,22 +10,22 @@
 		$username = "sql12310568";
 		$password = "wmiLAF7a6g";
 		$dbname = "sql12310568";
-		
+
 		// Create connection
 		$conn = mysqli_connect($servername, $username, $password, $dbname);
-		
+
 		// Check connection
 		if (!$conn) {
 			die("Connection failed: " + mysqli_connect_error());
 		}
 		return $conn;
 	}
-	
+
 	function daftarBuku($table) {
 		$conn = connectDB();
-		
+
 		$sql = "SELECT book_id, img_path, title, author, publisher, quantity FROM $table";
-		
+
 		if(!$result = mysqli_query($conn, $sql)) {
 			die("Error: $sql");
 		}
@@ -76,7 +76,7 @@
 
 	function showActButton($arraysubmission, $bookid, $stocknum) {
 		$flag = false;
-		for ($i=0; $i < count($arraysubmission); $i++) { 
+		for ($i=0; $i < count($arraysubmission); $i++) {
 			if ($arraysubmission[$i] == $bookid) {
 				echo '
 				<form action="daftar.php" method="post">
@@ -103,7 +103,7 @@
 
 	function insertBuku() {
 		$conn = connectDB();
-		
+
 		$displayBuku = $_POST['displayBuku'];
 		$judulBuku = $_POST['judulBuku'];
 		$pengarangBuku = $_POST['pengarangBuku'];
@@ -114,7 +114,7 @@
 		$daftarbuku = daftarBuku("book");
 		$sdhAda = false;
 		$bookid = 0;
-		while ($row = mysqli_fetch_row($daftarbuku)) {	
+		while ($row = mysqli_fetch_row($daftarbuku)) {
 			if($row[2] == $judulBuku) {
 				$sdhAda = true;
 				$bookid = $row[0];
@@ -122,7 +122,7 @@
 			}
 		}
 		$_SESSION["titlebookadded"] = $judulBuku;
-		
+
 		if($sdhAda == true) {
 			$sql = "UPDATE book SET quantity = quantity + $stokBuku where book_id = $bookid";
 		} else {
@@ -147,7 +147,7 @@
 			balikBuku($_POST['book_id'],$_SESSION["user_id"]);
 		}
 	}
-	
+
 ?>
 
 <div class="shop">
@@ -189,8 +189,8 @@
                           <img class="card-img-top img-fluid" style="height:300px;" src="'.$row[1].'" alt="card-img">
                           <div class="card-body">
                           <a href="details.php?id='.$row[0].'"><h3 class="card-title ebook-title" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><strong>'.$row[2].'</strong></h3></a>
-                            <p class="card-text ebook-author" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Penulis : '.$row[3].'</p>
-                            <p class="card-text ebook-author" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Penerbit : '.$row[4].'</p>';
+                            <p class="card-text ebook-author" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">'.$row[3].'</p>
+                            <p class="card-text ebook-author" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">'.$row[4].'</p>';
                             if($row[5] > 0) {
                               echo '<h4 class="card-title ebook-price"><strong>Rp. '.$row[5].'</strong></h4>';
                             } else {
@@ -207,18 +207,23 @@
             }
           ?>
 
-			<div class="row text-center">
-              <ul class="pagination pagination-lg">
-                <li class="active active-pagination"><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
-                <li> <a href="#"><i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
-              </ul>
-            </div>
+
 
           </div>
+        </div>
+
+        <div class="row">
+          <div class="row text-center">
+                  <ul class="pagination pagination-lg">
+                    <li class="active active-pagination"><a href="#">1</a></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">4</a></li>
+                    <li><a href="#">5</a></li>
+                    <li> <a href="#"><i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+                  </ul>
+                </div>
+
         </div>
       </div>
     </div>

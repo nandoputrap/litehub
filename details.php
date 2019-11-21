@@ -10,10 +10,10 @@
 		$username = "sql12310568";
 		$password = "wmiLAF7a6g";
 		$dbname = "sql12310568";
-		
+
 		// Create connection
 		$conn = mysqli_connect($servername, $username, $password, $dbname);
-		
+
 		// Check connection
 		if (!$conn) {
 			die("Connection failed: " + mysqli_connect_error());
@@ -45,17 +45,17 @@
       $jumlah_halaman = $row_ebooks['jumlah_halaman'];
     }
   }
-	
+
 	if (isset($_GET['id'])) {
 		$no = $_GET['id'];
-	  } 
+	  }
 	  else {
 		header('Location:shop.php');
 	  }
-	
+
 ?>
 
-<div class="shop">
+<div class="shop section-mini-margin">
   <div class="container">
     <div class="row">
       <div class="col-lg-12">
@@ -68,7 +68,7 @@
       </div>
     </div>
 
-    <div class="row">
+    <div class="row" style="margin-top: 30px;">
 
       <div class="col-md-3">
         <div class="item">
@@ -149,13 +149,13 @@
       <a class="btn btn-lg btn-danger btn-beli text-capitalize"><i class="fa fa-shopping-cart"></i>&nbsp; Beli</a>
       <a href="cart.php?id='.$row['book_id'].'" class="btn btn-lg btn-info btn-beli text-capitalize"><i class="fa fa-plus"> </i>&nbsp; Tambah ke Keranjang</a>
       ';
-		?>	
+		?>
 
         </div>
       </div>
     </div>
 
-    <div class="row">
+    <div class="row section-mini-margin">
       <div class="col-md-12">
         <h2>Buku-buku karya <strong>Nando P. Pratama Lainnya</strong> </h2>
 
@@ -191,7 +191,7 @@
       </div>
     </div>
 
-    <div class="row section-margin">
+    <div class="row section-mini-margin">
       <div class="col-md-12">
         <h2>Buku-buku Terkait</h2>
 
