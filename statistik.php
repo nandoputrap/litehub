@@ -35,7 +35,7 @@
   function getSold($bulan, $kategori){
     $conn = connectDB();
 
-    $sql = "SELECT count(*) as terjual from book where MONTH(publish_date)='$bulan' AND category = '".$kategori."'";
+    $sql = "SELECT sum(quantity) as terjual from book where MONTH(publish_date)='$bulan' AND category = '".$kategori."'";
 
     if(!$result = mysqli_query($conn, $sql)) {
       die("Error: $sql");
