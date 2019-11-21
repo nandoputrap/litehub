@@ -213,7 +213,7 @@
 													);
 									$split = explode('-', $olddate);
 									$tanggal = $split[2] . ' ' . $bulan[(int)$split[1]] . ' ' . $split[0];
-									 if($row['status'] = "Dalam Proses Penyuntingan") {
+									 if($row['status'] == "Dalam Proses Penyuntingan") {
 										echo'
 										<tbody>
 										<tr>

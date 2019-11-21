@@ -15,20 +15,55 @@
 		}
 		return $conn;
 	}
-	
-	function statusPengajuan($status, $date) {
-		$conn = connectDB();
-		
-		$sql = "SELECT * FROM unggah
-				WHERE status = '".$status."' AND upload_date LIKE '".$date."'";
-		
-		if(!$result = mysqli_query($conn, $sql)) {
-			die("Error: $sql");
-		}
-		mysqli_close($conn);
-		return $result;
+
+  function getStatus($bulan, $status){
+      $conn = connectDB();
+
+      $sql = "SELECT count(*) as jumlah from unggah where MONTH(upload_date)='$bulan' AND status = '".$status."'";
+
+      if(!$result = mysqli_query($conn, $sql)) {
+        die("Error: $sql");
+      }
+      mysqli_close($conn);
+      
+      $query = $result;
+      $row = $query->fetch_array();
+      $jumlah[] = $row['jumlah'];
+      return $jumlah;
   }
   
+  function getSoldFiksi($bulan){
+    $conn = connectDB();
+
+    $sql = "SELECT sum(quantity) as terjual from book where MONTH(publish_date)='$bulan' AND (category = 'Fiksi' OR category = 'Novel' OR category = 'Cerpen' OR category = 'Puisi' OR category = 'Drama' OR category = 'Komik' OR category = 'Dongeng' OR category = 'Fabel' OR category = 'Mitos')";
+
+    if(!$result = mysqli_query($conn, $sql)) {
+      die("Error: $sql");
+    }
+    mysqli_close($conn);
+    
+    $query = $result;
+    $row = $query->fetch_array();
+    $jumlah[] = $row['terjual'];
+    return $jumlah;
+}
+
+function getSoldNonFiksi($bulan){
+  $conn = connectDB();
+
+  $sql = "SELECT sum(quantity) as terjual from book where MONTH(publish_date)='$bulan' AND (category != 'Fiksi' AND category != 'Novel' AND category != 'Cerpen' AND category != 'Puisi' AND category != 'Drama' AND category != 'Komik' AND category != 'Dongeng' AND category != 'Fabel' AND category != 'Mitos')";
+
+  if(!$result = mysqli_query($conn, $sql)) {
+    die("Error: $sql");
+  }
+  mysqli_close($conn);
+  
+  $query = $result;
+  $row = $query->fetch_array();
+  $jumlah[] = $row['terjual'];
+  return $jumlah;
+}
+
   function getpenulis() {
 		$conn = connectDB();
 		
@@ -53,7 +88,21 @@
 
 		mysqli_close($conn);
 		return $result;
-	}
+  }
+  
+  function statusPenjualan() {
+		$conn = connectDB();
+		
+		$sql = "SELECT count(quantity) FROM book";
+		
+		if(!$result = mysqli_query($conn, $sql)) {
+			die("Error: $sql");
+		}
+
+		mysqli_close($conn);
+		return $result;
+  }
+  
 	function getbook() {
 		$conn = connectDB();
 		
@@ -308,6 +357,9 @@
 <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="dist/js/adminlte.js"></script>
 <script src="js/Chart.min.js"></script>
+<?php
+   $label = ['JULI', 'AGUSTUS', 'SEPTEMBER', 'OKTOBER', 'NOVEMBER'];
+?>
 <script>
 $(function () {
   'use strict'
@@ -324,31 +376,25 @@ $(function () {
   var salesChart  = new Chart($salesChart, {
     type   : 'bar',
     data   : {
-      labels  : ['JULI', 'AGUSTUS', 'SEPTEMBER', 'OKTOBER', 'NOVEMBER'],
+      labels  : <?php echo json_encode($label); ?>,
       datasets: [
         {
           backgroundColor: '#007bff',
           borderColor    : '#007bff',
-		  data           : [10,
-                        15,
-                        10, 
-                        5, 
-                        <?php 
-                        $jumlah_pengajuan = statusPengajuan("Dalam Proses Penyuntingan", "%2019-11%");
-                        echo mysqli_num_rows($jumlah_pengajuan);
-                        ?>]
+      data           : <?php 
+                        for($bulan=7;$bulan<12;$bulan++){
+                          $jumlah_proses[] = getStatus($bulan, "Dalam Proses Penyuntingan");
+                        }
+                       echo json_encode($jumlah_proses); ?>
         },
         {
           backgroundColor: '#ced4da',
           borderColor    : '#ced4da',
-		  data           : [6,
-                        10,
-                        20, 
-                        18, 
-                        <?php 
-                        $jumlah_pengajuan = statusPengajuan("Sudah Diterima", "%2019-11%");
-                        echo mysqli_num_rows($jumlah_pengajuan);
-                        ?>]
+		  data           : <?php 
+                        for($bulan=7;$bulan<12;$bulan++){
+                          $jumlah_diterima[] = getStatus($bulan, "Sudah Diterima");
+                        }
+                       echo json_encode($jumlah_diterima); ?>
         }
       ]
     },
@@ -392,10 +438,19 @@ $(function () {
   var $visitorsChart = $('#visitors-chart')
   var visitorsChart  = new Chart($visitorsChart, {
     data   : {
-      labels  : ['Juli', 'Agustus', 'September', 'Oktober', 'November'],
+      // labels  : ['September', 'Oktober', 'November'],
+      labels  : <?php echo json_encode($label); ?>,
       datasets: [{
         type                : 'line',
-        data                : [96, 50, 60, 85, 83],
+        // data                : [12, 10, 12, 17,10],
+                               
+                            
+        data                : <?php
+                                for($bulan=7;$bulan<12;$bulan++){
+                                  $jumlah_nf[] = getSoldNonFiksi($bulan);
+                                }
+                              echo json_encode($jumlah_nf); 
+                             ?>,                       
         backgroundColor     : 'transparent',
         borderColor         : '#007bff',
         pointBorderColor    : '#007bff',
@@ -404,7 +459,12 @@ $(function () {
       },
         {
           type                : 'line',
-          data                : [30, 40, 35, 33, 40],
+          data                : <?php 
+                                  for($bulan=7;$bulan<12;$bulan++){
+                                    $jumlah_f[] = getSoldFiksi($bulan);
+                                  }
+                                  echo json_encode($jumlah_f); 
+                                ?>,
           backgroundColor     : 'tansparent',
           borderColor         : '#ced4da',
           pointBorderColor    : '#ced4da',
