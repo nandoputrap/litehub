@@ -102,6 +102,19 @@ function getSoldNonFiksi($bulan){
 		mysqli_close($conn);
 		return $result;
   }
+
+  function getKategori() {
+		$conn = connectDB();
+		
+		$sql = "SELECT count(*) FROM category";
+		
+		if(!$result = mysqli_query($conn, $sql)) {
+			die("Error: $sql");
+		}
+
+		mysqli_close($conn);
+		return $result;
+  }
   
 	function getbook() {
 		$conn = connectDB();
@@ -288,6 +301,12 @@ function getSoldNonFiksi($bulan){
             <div class='col-xs-9 text-right'>
               <div id="leadmonth"></div>
               <div>Total Kategori Buku</div>
+              <?php 
+								$countuser = getKategori();
+								while ($row = mysqli_fetch_row($countuser)) {
+									echo '<h1>'.$row[0].'</h1>';
+								}
+							?>
             </div>
           </div>
         </div>
