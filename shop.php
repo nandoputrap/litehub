@@ -23,8 +23,12 @@
 
 	function daftarBuku($table) {
 		$conn = connectDB();
-
-		$sql = "SELECT book_id, img_path, title, author, publisher, quantity FROM $table";
+		if (isset($_GET['offset'])) {
+			$no = $_GET['offset'];
+			$sql = "SELECT book_id, img_path, title, author, publisher, quantity FROM $table LIMIT 6 OFFSET $no";
+		}else{
+			$sql = "SELECT book_id, img_path, title, author, publisher, quantity FROM $table LIMIT 6 OFFSET 0";
+		}
 
 		if(!$result = mysqli_query($conn, $sql)) {
 			die("Error: $sql");
@@ -215,12 +219,12 @@
         <div class="row">
           <div class="row text-center">
                   <ul class="pagination pagination-lg">
-                    <li class="active active-pagination"><a href="#">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">4</a></li>
-                    <li><a href="#">5</a></li>
-                    <li> <a href="#"><i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+                    <li><a href="shop.php?offset=0">1</a></li>
+                    <li><a href="shop.php?offset=6">2</a></li>
+                    <li><a href="shop.php?offset=12"">3</a></li>
+                    <li><a href="shop.php?offset=18"">4</a></li>
+                    <li><a href="shop.php?offset=24"">5</a></li>
+                    <li> <a href="shop.php?offset=30""><i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
                   </ul>
                 </div>
 

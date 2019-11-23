@@ -21,11 +21,35 @@ function connectDB() {
   return $conn;
 }
 
-if (isset($_GET['id'])) {
-  $no = $_GET['id'];
+function selectRowsFromSubmission() {
+  $conn = connectDB();
+
+  $sql = "SELECT * FROM submission WHERE user_id = ".$_SESSION["user_id"]."";
+  if(!$result = mysqli_query($conn, $sql)) {
+    die("Error: $sql");
+  }
+  mysqli_close($conn);
+  return $result;
+} 
+
+function selectBooks() {
+  $pinjam = selectRowsFromSubmission();
+  $arraysubmission = array();
+  while ($baris = mysqli_fetch_row($pinjam)) {
+    array_push($arraysubmission, $baris[1]);
+  }
+  return $arraysubmission;
 }
-else {
-  echo  "<script type='text/javascript'>alert('Masukkan ke cart gagal');window.location = './shop.php';</script>";
+
+function selectAllFromBook($book_id) {
+  $conn = connectDB();
+
+  $sql = "SELECT * FROM book WHERE book_id = $book_id";
+  if(!$result = mysqli_query($conn, $sql)) {
+    die("Error: $sql");
+  }
+  mysqli_close($conn);
+  return $result;
 }
 
 ?>
@@ -52,30 +76,53 @@ else {
                   </thead>
 
                   <tbody>
-                    <tr>
                       <?php
                       $conn = connectDB();
-                      $query = "SELECT * FROM book where book_id = '$no'";
-                      $detail_unggah = mysqli_query($conn, $query);
+                      if (isset($_GET['id'])) {
+                        $no = $_GET['id'];
+                        $query = "SELECT * FROM book where book_id = '$no'";
+                        $detail_unggah = mysqli_query($conn, $query);
 
-                      if (mysqli_num_rows($detail_unggah) > 0) {
-                        $row = mysqli_fetch_assoc($detail_unggah);
-                        echo '
-                        <td class="col-md-2"><img class="card-img-top img-responsive img-cart" src="'.$row['img_path'].'" alt="card-img"></td>
-                        <td>
-                        <h2 id="ebook-title">'.$row['title'].'</h2>
-                        <h4 class="ebook-author">'.$row['author'].'</h4>
-                        <p>Penerbit : '.$row['publisher'].'</p>
-                        <p>SKU : '.$row['book_id'].'</p>
-                        </td>
+                        if (mysqli_num_rows($detail_unggah) > 0) {
+                          $row = mysqli_fetch_assoc($detail_unggah);
+                          echo '
+                          <tr>
+                          <td class="col-md-2"><img class="card-img-top img-responsive img-cart" src="'.$row['img_path'].'" alt="card-img"></td>
+                          <td>
+                          <h2 id="ebook-title">'.$row['title'].'</h2>
+                          <h4 class="ebook-author">'.$row['author'].'</h4>
+                          <p>Penerbit : '.$row['publisher'].'</p>
+                          <p>SKU : '.$row['book_id'].'</p>
+                          </td>
 
-                        <td> <h4> Rp. '.$row['quantity'].'</h4> </td>
-                        <td> <a class="btn btn-danger btn-hapus text-capitalize"><i class="fa fa-trash"> &nbsp; Hapus</i></a> </td>
-                        ';
+                          <td> <h4> Rp. '.$row['quantity'].'</h4> </td>
+                          <td> <a href="details.php?id='.$no.'" class="btn btn-danger btn-hapus text-capitalize"><i class="fa fa-trash"> &nbsp; Hapus</i></a> </td>
+                          </tr>
+                          ';
+                        }
+                      }else{
+                        $arraybook = selectBooks();
+                      for ($i=0; $i < count($arraybook); $i++) { 
+                        $buku = selectAllFromBook($arraybook[$i]);
+                        while ($row = mysqli_fetch_row($buku)) {
+                          echo '
+                          <tr>
+                          <td class="col-md-2"><img class="card-img-top img-responsive img-cart" src="'.$row[1].'" alt="card-img"></td>
+                          <td>
+                          <h2 id="ebook-title">'.$row[2].'</h2>
+                          <h4 class="ebook-author">'.$row[3].'</h4>
+                          <p>Penerbit : '.$row[4].'</p>
+                          <p>SKU : '.$row[0].'</p>
+                          </td>
+
+                          <td> <h4> Rp. '.$row[6].'</h4> </td>
+                          <td> <a href="services/cancel.php?id='.$row[0].'" class="btn btn-danger btn-hapus text-capitalize"><i class="fa fa-trash"> &nbsp; Hapus</i></a> </td>
+                          </tr>
+                          ';
+                        }
+                      }
                       }
                       ?>
-
-                    </tr>
 
                     <tr>
                       <th> <a href="#">Lanjutkan belanja</a> </th>

@@ -131,67 +131,6 @@
 			</div>
 		</nav>
 		<div class="container">
-            <div class="modal fade" id="insertModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title black-modal" id="insertModalLabel">Unggah Buku</h4>
-                        </div>
-                        <div class="modal-body">
-                            <form action="services/upload.php" method="post" enctype="multipart/form-data">
-								<div class="form-group">
-                                    <label for="judulBuku">Judul Buku</label>
-                                    <input type="text" class="form-control" id="insert-judulBuku" name="judulBuku" placeholder="Masukkan Judul Buku" required>
-                                </div>
-								<div class="form-group">
-                                    <label for="namaPenulis">Nama Penulis</label>
-                                    <input type="text" class="form-control" id="insert-namaPenulis" name="namaPenulis" placeholder="Masukkan Nama Penulis">
-                                </div>
-                                <div class="form-group">
-                                    <label for="kategori">Kategori</label>
-									<select class="form-control" id="insert-kategori" name="kategori" placeholder="Pilih Kategori">
-										<option>Umum</option>
-										<option>Filsafat</option>
-										<option>Psikologi</option>
-										<option>Agama</option>
-										<option>Sejarah</option>
-										<option>Sosial</option>
-										<option>Bahasa</option>
-										<option>Sains</option>
-										<option>Geografi</option>
-										<option>Teknologi</option>
-										<option>Seni</option>
-										<option>Literatur</option>
-										<option>Sastra</option>
-										<option>Biografi</option>
-										<option>Matematika</option>
-										<option>Novel</option>
-										<option>Cerpen</option>
-										<option>Puisi</option>
-										<option>Drama</option>
-										<option>Komik</option>
-										<option>Dongeng</option>
-										<option>Fabel</option>
-										<option>Mitos</option>
-									</select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="deskripsiBuku">Deskripsi Buku</label>
-                                    <textarea class="form-control" id="insert-deskripsiBuku" name="deskripsiBuku" placeholder="Deskripsi Buku" rows="3"></textarea>
-                                </div>
-                                <div class="form-group">
-									<input type="file" name="fileToUpload" id="fileToUpload">
-									<!-- <button class="btn btn-secondary" method="post" action="upload.php" enctype="multipart/form-data">Upload Buku</button> -->
-                					<h6>Format buku dalam bentuk .doc atau .docx. Format penulisan dan layout dapat dilihat pada halaman <a href="#">ini</a>. Ukuran file maksimal 50 MB.</h6>
-                                </div>
-                                <input type="hidden" id="insert-command" name="command" value="insert">
-                                <button type="submit" class="btn btn-primary" name="submit">Submit</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
 			<div class="uploadpage">
 				<form action="#" method="post">
 					<label class="labelunggah">Daftar Pengajuan</label>
@@ -203,7 +142,6 @@
 								<th>Tanggal Unggah</th>
 								<th>Detail</th>
 								<th>Download</th>
-								<th>Publikasi</th>
 							</tr>
 						</thead>
 						<?php
@@ -226,7 +164,7 @@
 										<td><a data-toggle="modal" data-target="#detailUpload" href="#detailUpload?id='.$row[1].'">Detail</a></td>
 										<td><a href="services/download.php?nama='.$row[5].'">Download</a></td>
 										<td><a href="services/publish.php?id='.$row[0].'"><button type="button" class="btn-addbook btn btn-primary">
-										Publikasi Buku
+										Ubah Status Buku
 									</button></a></td>
 									</tr>
 									</tbody>';
@@ -242,6 +180,7 @@
 								<th>Penulis</th>
 								<th>Tanggal Unggah</th>
 								<th>Detail</th>
+								<th>Publikasi</th>
 							</tr>
 						</thead>
 						<?php
@@ -262,6 +201,9 @@
 										<td>'.$row[2].'</td>
 										<td>'.$row[6].'</td>
 										<td><a data-toggle="modal" data-target="#detailUpload">Detail</a></td>
+										<td><button type="button" class="btn-addbook btn btn-primary" data-toggle="modal" data-target="#insertModal">
+										Publikasi Buku
+									</button></td>
 									</tr>
 									</tbody>';
 								 }
@@ -323,6 +265,46 @@
 					</div>';
 				}
 			?>
+			 <div class="modal fade" id="insertModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title black-modal" id="insertModalLabel">Add Book</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form action="services/sell.php" method="post">
+                                <div class="form-group">
+                                    <label for="displayBuku">Display Buku</label>
+                                    <input type="url" class="form-control" id="insert-displayBuku" name="displayBuku" placeholder="Link Buku">
+                                </div>
+                                <div class="form-group">
+                                    <label for="judulBuku">Judul Buku</label>
+                                    <input type="text" class="form-control" id="insert-judulBuku" name="judulBuku" placeholder="Judul Buku" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pengarangBuku">Pengarang Buku</label>
+                                    <input type="text" class="form-control" id="insert-pengarangBuku" name="pengarangBuku" placeholder="Pengarang Buku">
+                                </div>
+                                <div class="form-group">
+                                    <label for="penerbitBuku">Penerbit Buku</label>
+                                    <input type="text" class="form-control" id="insert-penerbitBuku" name="penerbitBuku" placeholder="Penerbit Buku">
+                                </div>
+                                <div class="form-group">
+                                    <label for="deskripsiBuku">Deskripsi Buku</label>
+                                    <input type="text" class="form-control" id="insert-deskripsiBuku" name="deskripsiBuku" placeholder="Deskripsi Buku">
+                                </div>
+                                <div class="form-group">
+                                    <label for="stokBuku">Harga Buku</label>
+                                    <input type="number" class="form-control" id="insert-stokBuku" name="stokBuku" placeholder="Stok Buku" required>
+                                </div>
+                                <input type="hidden" id="insert-command" name="command" value="insert">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 		<script src="js/jquery-3.1.0.min.js"> </script>
 		<script src="bootstrap/dist/js/bootstrap.min.js"></script>	

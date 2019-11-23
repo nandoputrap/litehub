@@ -82,7 +82,16 @@
             <?php
 						if (isset($_SESSION["namauser"])){
               echo '
-              <li> <a data-toggle="modal" href="services/logout.php">Keluar</a> </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  '.$_SESSION["namauser"].' <i class="fa fa-angle-down" aria-hidden="true"></i>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" href="#">Kategori 1</a>
+                  <a class="dropdown-item" href="#">Kategori 2</a>
+                  <a href="services/logout.php" class="dropdown-item" href="#">Keluar</a>
+                </div>
+              </li>
 							';
 						}else if(!isset($_SESSION['namauser'])) {
 							echo '

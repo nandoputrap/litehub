@@ -18,9 +18,7 @@
           <input type="password" class="form-control form-register" placeholder="Ulangi kata sandi...">
           <select class="form-control form-register" id="insert-role" name="role" placeholder="Role">
             <option>User</option>
-            <option>Admin</option>
             <option>Penulis</option>
-            <option>Editor</option>
           </select>
           <label class="checkbox-inline">
           <input type="checkbox" value="">Dengan pembuatan akun, Anda menyetujui <a href="syarat-dan-ketentuan.php">syarat & ketentuan</a> dari Ebookhub

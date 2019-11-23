@@ -8,9 +8,9 @@
       <div class="col-md-12 text-center">
         <h1>Panduan Penggunaan</h1>
 
-        <img src="images/panduan-publikasi.png" alt="">
+        <img src="https://i.ibb.co/St1dWxg/panduan-publikasi.png" alt="">
 
-        <img src="images/panduan-unduh.png" alt="">
+        <img src="https://i.ibb.co/DkdcrR7/panduan-unduh.png" alt="">
       </div>
     </div>
   </div>

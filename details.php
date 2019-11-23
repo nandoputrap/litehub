@@ -134,7 +134,7 @@
         <p class="ebook-description text-justify">'.$row['description'].'</p>
         <p class="ebook-author">Format yang tersedia:</p>
         <ul class="list-inline">
-          <li>.pdf</li>
+          <li><a href="services/read.php?name='.$row['title'].'">.pdf</a></li>
           <li>.epub</li>
           <li>.mobi</li>
         </ul>
@@ -146,8 +146,8 @@
         }
       }
       echo '
-      <a class="btn btn-lg btn-danger btn-beli text-capitalize"><i class="fa fa-shopping-cart"></i>&nbsp; Beli</a>
-      <a href="cart.php?id='.$row['book_id'].'" class="btn btn-lg btn-info btn-beli text-capitalize"><i class="fa fa-plus"> </i>&nbsp; Tambah ke Keranjang</a>
+      <a href="cart.php?id='.$row['book_id'].'" class="btn btn-lg btn-danger btn-beli text-capitalize"><i class="fa fa-shopping-cart"></i>&nbsp; Beli</a>
+      <a href="services/buy.php?id='.$row['book_id'].'" class="btn btn-lg btn-info btn-beli text-capitalize"><i class="fa fa-plus"> </i>&nbsp; Tambah ke Keranjang</a>
       ';
 		?>
 
