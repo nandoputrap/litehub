@@ -24,7 +24,7 @@ session_start();
 	function daftarBuku($table) {
 		$conn = connectDB();
 
-		$sql = "SELECT no, title, author, category, description, file, upload_date, status FROM $table where author = '".$_SESSION["namauser"]."'";
+		$sql = "SELECT no, title, author, category, description, file, upload_date, status FROM $table where user_id = '".$_SESSION["namauser"]."'";
 
 		if(!$result = mysqli_query($conn, $sql)) {
 			die("Error: $sql");
@@ -52,7 +52,7 @@ session_start();
               <h3 class="panel-title">
 			  <?php
 			  	if (isset($_SESSION["namauser"])){
-					echo$_SESSION["namauser"];
+          echo$_SESSION["namauser"];
 				}
 			  ?>
 			  </h3>

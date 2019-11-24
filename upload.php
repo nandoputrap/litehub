@@ -21,7 +21,7 @@
 			die("Connection failed: " + mysqli_connect_error());
 		}
 		return $conn;
-	}
+  }
 ?>
 
 <div class="register">
@@ -30,7 +30,6 @@
       <div class="col-md-12">
         <h1 class="register-title">Unggah Buku</h1>
       </div>
-
       <div class="col-md-9 form-register-group">
         <form action="services/upload.php" method="post" enctype="multipart/form-data">
           <input type="text" class="form-control form-register" id="insert-judulBuku" name="judulBuku" placeholder="Judul buku...">
