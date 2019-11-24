@@ -1,25 +1,6 @@
 <?php
   require_once("templates/header.php");
-
 ?>
-
-<?php
-function connectDB() {
-  $servername = "sql12.freesqldatabase.com";
-  $username = "sql12310568";
-  $password = "wmiLAF7a6g";
-  $dbname = "sql12310568";
-
-  // Create connection
-  $conn = mysqli_connect($servername, $username, $password, $dbname);
-
-  // Check connection
-  if (!$conn) {
-    die("Connection failed: " + mysqli_connect_error());
-  }
-  return $conn;
-}
- ?>
 
 <div class="status-pengajuan-detail section-margin">
   <div class="container">
@@ -47,10 +28,10 @@ function connectDB() {
                 <li>
                   <a href="edit-password.php">Edit Password</a>
                 </li>
-                <li class="active-profil">
+                <li>
                   <a href="status-pengajuan.php">Status Pengajuan</a>
                 </li>
-                <li>
+                <li class="active-profil">
                   <a href="buku-saya.php">Buku Saya</a>
                 </li>
               </ul>
@@ -60,7 +41,7 @@ function connectDB() {
       </div>
 
       <div class="col-md-9">
-        <h1 class="register-title">Status Pengajuan</h1>
+        <h1 class="register-title">Detail Buku</h1>
 
         <div class="table-details">
           <table class="table table-hover table-bordered table-responsive">
@@ -82,13 +63,22 @@ function connectDB() {
                 <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</td>
               </tr>
               <tr>
-                <td><strong>Tanggal Unggah</strong></td>
+                <td><strong>Tanggal Beli</strong></td>
                 <td>1 Januari 2019</td>
               </tr>
               <tr>
-                <td><strong>Status Pengajuan</strong></td>
-                <td> <h4 class="status">Dalam proses penyuntingan</h4></td>
+                <td><strong>Jumlah Halaman</strong></td>
+                <td>509</td>
               </tr>
+              <tr>
+                <td><strong>ISBN</strong></td>
+                <td>123456789</td>
+              </tr>
+              <tr>
+                <td><strong>SKU</strong></td>
+                <td>32143</td>
+              </tr>
+
             </tbody>
           </table>
         </div>

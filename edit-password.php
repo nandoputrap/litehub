@@ -10,9 +10,6 @@ require_once("templates/header.php");
         <div class="item">
           <div class="card  text-center card-product-details">
             <img class='card-img-top img-circle img-fluid' src='images/avatar.png' alt='card-img'>
-            <div class="form-group">
-              <input type="file" class="form-control-file" name="fileToUpload" id="exampleFormControlFile1">
-            </div>
             <!-- <h2>Nando Putra Pratama</h2> -->
           </div>
         </div>
@@ -25,10 +22,10 @@ require_once("templates/header.php");
 
             <div class="panel-body">
               <ul class="nav nav-pills nav-stacked category-menu">
-                <li class="active-profil">
+                <li>
                   <a href="lihat-profil.php">Profil</a>
                 </li>
-                <li>
+                <li class="active-profil">
                   <a href="edit-password.php">Edit Password</a>
                 </li>
                 <li>
@@ -45,26 +42,23 @@ require_once("templates/header.php");
       </div>
 
       <div class="col-md-9">
-        <h1 class="register-title">Edit Profil</h1>
+        <h1 class="register-title">Edit Password</h1>
 
 
-        <form class="" action="" method="post">
+        <div class="form-group">
+          <label for="">Password Lama:</label>
+          <input type="password" class="form-control form-register">
+        </div>
+
           <div class="form-group">
-            <label for="">Nama Lengkap:</label>
-            <input type="text" class="form-control form-register" value="Nando Putra Pratama">
+            <label for="">Password Baru:</label>
+            <input type="password" class="form-control form-register">
           </div>
 
           <div class="form-group">
-            <label for="">Nama Pengguna:</label>
-            <input type="text" class="form-control form-register" value="nandoputrap">
+            <label for="">Konfirmasi Password Baru:</label>
+            <input type="password" class="form-control form-register">
           </div>
-
-          <div class="form-group">
-            <label for="">E-mail:</label>
-            <input type="email" class="form-control form-register" value="nandoputrap@gmail.com">
-          </div>
-
-
 
 
 

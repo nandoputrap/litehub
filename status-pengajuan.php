@@ -2,6 +2,24 @@
 require_once("templates/header.php");
 ?>
 
+<?php
+function connectDB() {
+  $servername = "sql12.freesqldatabase.com";
+  $username = "sql12310568";
+  $password = "wmiLAF7a6g";
+  $dbname = "sql12310568";
+
+  // Create connection
+  $conn = mysqli_connect($servername, $username, $password, $dbname);
+
+  // Check connection
+  if (!$conn) {
+    die("Connection failed: " + mysqli_connect_error());
+  }
+  return $conn;
+}
+?>
+
 <div class="status-pengajuan-detail section-margin">
   <div class="container">
 
@@ -23,10 +41,16 @@ require_once("templates/header.php");
             <div class="panel-body">
               <ul class="nav nav-pills nav-stacked category-menu">
                 <li>
-                  <a href="edit-profil.php">Edit Profil</a>
+                  <a href="lihat-profil.php">Profil</a>
+                </li>
+                <li>
+                  <a href="edit-password.php">Edit Password</a>
                 </li>
                 <li class="active-profil">
                   <a href="status-pengajuan.php">Status Pengajuan</a>
+                </li>
+                <li>
+                  <a href="buku-saya.php">Buku Saya</a>
                 </li>
               </ul>
             </div>
@@ -109,7 +133,7 @@ require_once("templates/header.php");
                 <td class="text-center">1 Juni 2019</td>
                 <td class="text-center">Sudah Diterbitkan</td>
                 <td class="text-center">509</td>
-                <td class="text-center"><button type="button" class="btn btn-info" onclick="window.location='status-pengajuan-detail.php'">Detail</button></td>
+                <td class="text-center"><button type="button" class="btn btn-info" onclick="window.location='status-terbit-detail.php'">Detail</button></td>
               </tr>
 
               <tr>
@@ -118,7 +142,7 @@ require_once("templates/header.php");
                 <td class="text-center">12 Oktober 2019</td>
                 <td class="text-center">Sudah Diterbitkan</td>
                 <td class="text-center">159</td>
-                <td class="text-center"><button type="button" class="btn btn-info" onclick="window.location='status-pengajuan-detail.php'">Detail</button></td>
+                <td class="text-center"><button type="button" class="btn btn-info" onclick="window.location='status-terbit-detail.php'">Detail</button></td>
               </tr>
 
             </tbody>
