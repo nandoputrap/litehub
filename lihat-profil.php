@@ -18,6 +18,9 @@ function connectDB() {
   }
   return $conn;
 }
+if(!isset($_SESSION['namauser'])) {
+  echo  "<script type='text/javascript'>alert('Silahkan Login/Register terlebih dahulu');window.location = './landing.php';</script>";
+}
 ?>
 
 <div class="status-pengajuan-detail section-margin">
@@ -36,7 +39,12 @@ function connectDB() {
         <div class="panel panel-default sidebar-menu">
           <div class="panel-harga">
             <div class="panel-heading text-center">
-              <h3 class="panel-title">Nando Putra Pratama</h3>
+            
+              <?php
+                echo '
+                <h3 class="panel-title">'.$_SESSION['namauser'].'</h3>
+                ';
+              ?>
             </div>
 
             <div class="panel-body">
