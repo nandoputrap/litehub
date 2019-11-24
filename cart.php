@@ -102,33 +102,59 @@ function selectAllFromBook($book_id) {
                         }
                       }else{
                         $arraybook = selectBooks();
-                      for ($i=0; $i < count($arraybook); $i++) { 
-                        $buku = selectAllFromBook($arraybook[$i]);
-                        while ($row = mysqli_fetch_row($buku)) {
-                          echo '
-                          <tr>
-                          <td class="col-md-2"><img class="card-img-top img-responsive img-cart" src="'.$row[1].'" alt="card-img"></td>
-                          <td>
-                          <h2 id="ebook-title">'.$row[2].'</h2>
-                          <h4 class="ebook-author">'.$row[3].'</h4>
-                          <p>Penerbit : '.$row[4].'</p>
-                          <p>SKU : '.$row[0].'</p>
-                          </td>
+                        for ($i=0; $i < count($arraybook); $i++) { 
+                          $buku = selectAllFromBook($arraybook[$i]);
+                          while ($row = mysqli_fetch_row($buku)) {
+                            echo '
+                            <tr>
+                            <td class="col-md-2"><img class="card-img-top img-responsive img-cart" src="'.$row[1].'" alt="card-img"></td>
+                            <td>
+                            <h2 id="ebook-title">'.$row[2].'</h2>
+                            <h4 class="ebook-author">'.$row[3].'</h4>
+                            <p>Penerbit : '.$row[4].'</p>
+                            <p>SKU : '.$row[0].'</p>
+                            </td>
 
-                          <td> <h4> Rp. '.$row[6].'</h4> </td>
-                          <td> <a href="services/cancel.php?id='.$row[0].'" class="btn btn-danger btn-hapus text-capitalize"><i class="fa fa-trash"> &nbsp; Hapus</i></a> </td>
-                          </tr>
-                          ';
+                            <td> <h4> Rp. '.$row[6].'</h4> </td>
+                            <td> <a href="services/cancel.php?id='.$row[0].'" class="btn btn-danger btn-hapus text-capitalize"><i class="fa fa-trash"> &nbsp; Hapus</i></a> </td>
+                            </tr>
+                            ';
+                          }
                         }
-                      }
                       }
                       ?>
 
                     <tr>
-                      <th> <a href="#">Lanjutkan belanja</a> </th>
+                      <th> <a href="shop.php">Lanjutkan belanja</a> </th>
                       <th class="pull-right">Total</th>
-                      <th>Rp. 100.000</th>
-                      <th> <a href="#">Lanjut ke pembayaran</a> </th>
+                      <?php
+                      $conn = connectDB();
+                      if (isset($_GET['id'])) {
+                        $no = $_GET['id'];
+                        $query = "SELECT * FROM book where book_id = '$no'";
+                        $detail_unggah = mysqli_query($conn, $query);
+
+                        if (mysqli_num_rows($detail_unggah) > 0) {
+                          $row = mysqli_fetch_assoc($detail_unggah);
+                          echo '
+                          <th>'.$row['quantity'].'</th>
+                          ';
+                        }
+                      }else{
+                        $arraybook = selectBooks();
+                        $sum = 0;
+                        for ($i=0; $i < count($arraybook); $i++) { 
+                          $buku = selectAllFromBook($arraybook[$i]);
+                          while ($row = mysqli_fetch_row($buku)) {
+                            $sum = $sum + $row[6];
+                          }
+                        }
+                        echo '
+                          <th>'.$sum.'</th>
+                        ';
+                      }
+                      ?>
+                      <th> <a href="metode-pembayaran.php">Lanjut ke pembayaran</a> </th>
                     </tr>
                   </tbody>
                 </table>

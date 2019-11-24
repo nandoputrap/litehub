@@ -3,6 +3,20 @@
 	session_start();
 ?>
 
+<?php
+	function daftarKategori($table) {
+		$conn = connectDB();
+		
+		$sql = "SELECT * FROM $table";
+		
+		if(!$result = mysqli_query($conn, $sql)) {
+			die("Error: $sql");
+		}
+		mysqli_close($conn);
+		return $result;
+	}
+?>
+
 
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -61,9 +75,14 @@
                 Kategori <i class="fa fa-angle-down" aria-hidden="true"></i>
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Kategori 1</a>
-                <a class="dropdown-item" href="#">Kategori 2</a>
-                <a class="dropdown-item" href="#">Kategori 3</a>
+                <?php
+                  $daftarkategori = daftarKategori("category");
+                  while ($row = mysqli_fetch_row($daftarkategori)) {
+                    echo '
+                    <a class="dropdown-item" href="#">'.$row[1].'</a>
+                    ';
+                  }
+                ?>
               </div>
             </li>
             <li><a href="shop.php">Shop</a></li>
@@ -87,8 +106,7 @@
                   '.$_SESSION["namauser"].' <i class="fa fa-angle-down" aria-hidden="true"></i>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="#">Kategori 1</a>
-                  <a class="dropdown-item" href="#">Kategori 2</a>
+                  <a class="dropdown-item" href="profil.php">Profil</a>
                   <a href="services/logout.php" class="dropdown-item" href="#">Keluar</a>
                 </div>
               </li>

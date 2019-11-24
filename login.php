@@ -34,11 +34,12 @@
 			$_SESSION["namauser"] = $row["username"];
 			$_SESSION["role"] = $row["role"];
 			
-			if ($row["role"] === "user"){
-				header("Location: shop.php");
-			}else if ($row["role"] === "penulis"){
-				header("Location: upload.php");
-			}else if ($row["role"] === "editor"){
+			// if ($row["role"] === "user"){
+			// 	header("Location: shop.php");
+			// }else if ($row["role"] === "penulis"){
+			// 	header("Location: upload.php");
+      // }else 
+      if ($row["role"] === "editor"){
 				header("Location: unduh.php");
 			}else if ($row["role"] === "admin"){
 				header("Location: statistik.php");
@@ -48,7 +49,7 @@
 			}
 
 		}else {
-			echo  "<script type='text/javascript'>alert('Login Gagal');</script>";
+      echo  "<script type='text/javascript'>alert('Login Gagal');window.location = './landing.php';</script>";
 		}
 		
 	}

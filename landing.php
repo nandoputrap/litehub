@@ -41,7 +41,47 @@
 		}
 		mysqli_close($conn);
 		return $result;
-	}
+  }
+
+  function selectAllRowsFromSubmission() {
+		$conn = connectDB();
+
+		$sql = "SELECT DISTINCT book_id FROM submission";
+		if(!$result = mysqli_query($conn, $sql)) {
+			die("Error: $sql");
+		}
+		mysqli_close($conn);
+		return $result;
+  }
+  
+  function selectBooks() {
+    $pinjam = selectRowsFromSubmission();
+    $arraysubmission = array();
+    while ($baris = mysqli_fetch_row($pinjam)) {
+      array_push($arraysubmission, $baris[1]);
+    }
+    return $arraysubmission;
+  }
+
+  function selectAllBooks() {
+    $pinjam = selectAllRowsFromSubmission();
+    $arraysubmission = array();
+    while ($baris = mysqli_fetch_row($pinjam)) {
+      array_push($arraysubmission, $baris[0]);
+    }
+    return $arraysubmission;
+  }
+  
+  function selectAllFromBook($book_id) {
+    $conn = connectDB();
+  
+    $sql = "SELECT * FROM book WHERE book_id = $book_id";
+    if(!$result = mysqli_query($conn, $sql)) {
+      die("Error: $sql");
+    }
+    mysqli_close($conn);
+    return $result;
+  }
 
 	function pinjamBuku($book_id, $user_id) {
 		$conn = connectDB();
@@ -283,78 +323,34 @@
 
       <div class="col-lg-12 text-center">
         <div id="owl-buku-terpopuler" class="owl-carousel owl-theme">
-
-          <div class="item">
-            <div class="card box-shadow">
-              <img class="card-img-top img-fluid" src="images/ebook-1.png" alt="card-img">
-              <div class="card-body">
-                <a href="index.php"><h3 class="card-title ebook-title"><strong>Judul buku</strong></h3></a>
-                <p class="card-text ebook-author">Nama Penulis</p>
-                <h4 class="card-title ebook-price"><strong>Rp. 100.000</strong></h4>
-                <a class="btn btn-lg btn-danger btn-beli text-capitalize"><i class="fa fa-shopping-cart"> </i>&nbsp; Beli</a>
-              </div>
-            </div>
-          </div>
-
-          <div class="item">
-            <div class="card box-shadow">
-              <img class="card-img-top img-fluid" src="images/ebook-2.png" alt="card-img">
-              <div class="card-body">
-                <a href="index.php"><h3 class="card-title ebook-title"><strong>Judul buku</strong></h3></a>
-                <p class="card-text ebook-author">Nama Penulis</p>
-                <h4 class="card-title ebook-price"><strong>Rp. 100.000</strong></h4>
-                <a class="btn btn-lg btn-danger btn-beli text-capitalize"><i class="fa fa-shopping-cart"> </i>&nbsp; Beli</a>
-              </div>
-            </div>
-          </div>
-
-          <div class="item">
-            <div class="card box-shadow">
-              <img class="card-img-top img-fluid" src="images/ebook-1.png" alt="card-img">
-              <div class="card-body">
-                <a href="index.php"><h3 class="card-title ebook-title"><strong>Judul buku</strong></h3></a>
-                <p class="card-text ebook-author">Nama Penulis</p>
-                <h4 class="card-title ebook-price"><strong>Rp. 100.000</strong></h4>
-                <a class="btn btn-lg btn-danger btn-beli text-capitalize"><i class="fa fa-shopping-cart"> </i>&nbsp; Beli</a>
-              </div>
-            </div>
-          </div>
-
-          <div class="item">
-            <div class="card box-shadow">
-              <img class="card-img-top img-fluid" src="images/ebook-2.png" alt="card-img">
-              <div class="card-body">
-                <a href="index.php"><h3 class="card-title ebook-title"><strong>Judul buku</strong></h3></a>
-                <p class="card-text ebook-author">Nama Penulis</p>
-                <h4 class="card-title ebook-price"><strong>Rp. 100.000</strong></h4>
-                <a class="btn btn-lg btn-danger btn-beli text-capitalize"><i class="fa fa-shopping-cart"> </i>&nbsp; Beli</a>
-              </div>
-            </div>
-          </div>
-
-          <div class="item">
-            <div class="card box-shadow">
-              <img class="card-img-top img-fluid" src="images/ebook-1.png" alt="card-img">
-              <div class="card-body">
-                <a href="index.php"><h3 class="card-title ebook-title"><strong>Judul buku</strong></h3></a>
-                <p class="card-text ebook-author">Nama Penulis</p>
-                <h4 class="card-title ebook-price"><strong>Rp. 100.000</strong></h4>
-                <a class="btn btn-lg btn-danger btn-beli text-capitalize"><i class="fa fa-shopping-cart"> </i>&nbsp; Beli</a>
-              </div>
-            </div>
-          </div>
-
-          <div class="item">
-            <div class="card box-shadow">
-              <img class="card-img-top img-fluid" src="images/ebook-2.png" alt="card-img">
-              <div class="card-body">
-                <a href="index.php"><h3 class="card-title ebook-title"><strong>Judul buku</strong></h3></a>
-                <p class="card-text ebook-author">Nama Penulis</p>
-                <h4 class="card-title ebook-price"><strong>Rp. 100.000</strong></h4>
-                <a class="btn btn-lg btn-danger btn-beli text-capitalize"><i class="fa fa-shopping-cart"></i>&nbsp; Beli</a>
-              </div>
-            </div>
-          </div>
+        <?php
+              $arraybook = selectAllBooks();
+              for ($i=0; $i < count($arraybook); $i++) { 
+                $buku = selectAllFromBook($arraybook[$i]);
+                while ($row = mysqli_fetch_row($buku)) {
+                  echo '
+                  <div class="item">
+                    <div class="card box-shadow">
+                      <img class="card-img-top img-fluid" style="height:300px;" src="'.$row[1].'" alt="card-img">
+                      <div class="card-body">
+                        <a href="details.php?id='.$row[0].'"><h3 class="card-title ebook-title" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><strong>'.$row[2].'</strong></h3></a>
+                        <p class="card-text ebook-author">'.$row[3].'</p>
+                        <p class="card-text ebook-source">'.$row[4].'</p>';
+                        if($row[6] > 0) {
+                          echo '<h4 class="card-title ebook-price"><strong>Rp. '.$row[6].'</strong></h4>';
+                        } else {
+                          echo '<h4 class="card-title ebook-price"><strong>Stok Kosong</strong></h4>';
+                        }
+                        echo '
+                        <a href="cart.php?id='.$row[0].'" class="btn btn-lg btn-danger btn-beli text-capitalize"><i class="fa fa-shopping-cart"> </i>&nbsp; Beli</a>
+                        ';
+                      echo '
+                      </div>
+                    </div>
+                  </div>';
+                }
+              }
+          ?>
         </div>
 
         <div class="customNavigation">
