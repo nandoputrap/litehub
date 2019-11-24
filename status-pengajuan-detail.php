@@ -41,7 +41,13 @@
         <div class="panel panel-default sidebar-menu">
           <div class="panel-harga">
             <div class="panel-heading text-center">
-              <h3 class="panel-title">Nando Putra Pratama</h3>
+              <h3 class="panel-title">
+              <?php
+                if (isset($_SESSION["namauser"])){
+                  echo$_SESSION["namauser"];
+                }
+              ?>
+              </h3>
             </div>
 
             <div class="panel-body">
@@ -64,40 +70,67 @@
         </div>
       </div>
 
-      <div class="col-md-9">
-        <h1 class="register-title">Status Pengajuan</h1>
+      <?php
+			$conn = connectDB();
+			$query = "SELECT * FROM unggah where no = '$no'";
+			$detail_unggah = mysqli_query($conn, $query);
 
-        <div class="table-details">
-          <table class="table table-hover table-bordered table-responsive">
-            <tbody>
-              <tr>
-                <td><strong>Judul Buku</strong></td>
-                <td>How to Code 101</td>
-              </tr>
-              <tr>
-                <td><strong>Nama Penulis</strong></td>
-                <td>Nando P. Pratama</td>
-              </tr>
-              <tr>
-                <td><strong>Kategori</strong></td>
-                <td>Teknologi</td>
-              </tr>
-              <tr>
-                <td><strong>Deskripsi/Sinopsis Buku</strong></td>
-                <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</td>
-              </tr>
-              <tr>
-                <td><strong>Tanggal Unggah</strong></td>
-                <td>1 Januari 2019</td>
-              </tr>
-              <tr>
-                <td><strong>Status Pengajuan</strong></td>
-                <td> <h4 class="status">Dalam proses penyuntingan</h4></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+			if (mysqli_num_rows($detail_unggah) > 0) {
+				$row = mysqli_fetch_assoc($detail_unggah);
+				$olddate = $row['upload_date'];
+				$bulan = array (1 =>   	'Januari',
+				          							'Februari',
+									          		'Maret',
+											          'April',
+											          'Mei',
+											          'Juni',
+											          'Juli',
+											          'Agustus',
+                                'September',
+                                'Oktober',
+                                'November',
+                                'Desember'
+									      );
+				$split = explode('-', $olddate);
+				$tanggal = $split[2] . ' ' . $bulan[(int)$split[1]] . ' ' . $split[0];
+        echo'
+        
+        <div class="col-md-9">
+          <h1 class="register-title">Status Pengajuan</h1>
+
+          <div class="table-details">
+            <table class="table detail-pengajuan table-hover table-bordered table-responsive">
+              <tbody>
+                <tr>
+                  <td><strong>Judul Buku</strong></td>
+                  <td id="judulBuku">'.$row['title'].'</td>
+                </tr>
+                <tr>
+                  <td><strong>Nama Penulis</strong></td>
+                  <td id="namaPenulis">'.$row['author'].'</td>
+                </tr>
+                <tr>
+                  <td><strong>Kategori</strong></td>
+                  <td id="kategori">'.$row['category'].'</td>
+                </tr>
+                <tr>
+                  <td><strong>Deskripsi/Sinopsis Buku</strong></td>
+                  <td id="deskripsiBuku">'.$row['description'].'</td>
+                </tr>
+                <tr>
+                  <td><strong>Tanggal Unggah</strong></td>
+                  <td id="tanggalUpload">'.$tanggal.'</td>
+                </tr>
+                <tr>
+                  <td><strong>Status Pengajuan</strong></td>
+                  <td id="status"><h4 class="status">'.$row['status'].'</h4></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>';
+			}
+		  ?>
 
 
     </div>

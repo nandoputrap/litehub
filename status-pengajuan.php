@@ -24,7 +24,7 @@ session_start();
 	function daftarBuku($table) {
 		$conn = connectDB();
 
-		$sql = "SELECT no, title, author, category, description, file, upload_date, status FROM $table";
+		$sql = "SELECT no, title, author, category, description, file, upload_date, status FROM $table where author = '".$_SESSION["namauser"]."'";
 
 		if(!$result = mysqli_query($conn, $sql)) {
 			die("Error: $sql");
@@ -49,7 +49,13 @@ session_start();
         <div class="panel panel-default sidebar-menu">
           <div class="panel-harga">
             <div class="panel-heading text-center">
-              <h3 class="panel-title">Nando Putra Pratama</h3>
+              <h3 class="panel-title">
+			  <?php
+			  	if (isset($_SESSION["namauser"])){
+					echo$_SESSION["namauser"];
+				}
+			  ?>
+			  </h3>
             </div>
 
             <div class="panel-body">
@@ -116,7 +122,7 @@ session_start();
   										<td class="text-center">'.$row['category'].'</td>
   										<td class="text-center">'.$tanggal.'</td>
   										<td class="text-center">'.$row['status'].'</td>
-  										<td class="text-center"><a class="btn btn-info" href="unggah_detail.php?id='.$row['no'].'">Detail</a></td>
+  										<td class="text-center"><a class="btn btn-info" href="status-pengajuan-detail.php?id='.$row['no'].'">Detail</a></td>
 
   									</tr>
   									</tbody>';
@@ -172,7 +178,7 @@ session_start();
   											<td class="text-center">'.$tanggal.'</td>
   											<td class="text-center">'.$row['status'].'</td>
   											<td class="text-center">'.$row['status'].'</td>
-  											<td class="text-center"><a class="btn btn-info" href="unggah_detail.php?id='.$row['no'].'">Detail</a></td>
+  											<td class="text-center"><a class="btn btn-info" href="status-pengajuan-detail.php?id='.$row['no'].'">Detail</a></td>
   										</tr>
   										</tbody>';
   								}
