@@ -114,7 +114,13 @@
                   <a class="dropdown-item" href="lihat-profil.php">Profil</a>
                   <a class="dropdown-item" href="status-pengajuan.php">Status Pengajuan</a>
                   <a class="dropdown-item" href="buku-saya.php">Buku Saya</a>
-									<a class="dropdown-item" href="daftar-pengajuan.php">Editor Area</a>
+                  ';
+                  if ($_SESSION["role"] === "editor"){
+                    echo '
+                    <a class="dropdown-item" href="daftar-pengajuan.php">Editor Area</a>
+                    ';
+                  }
+                  echo '
                   <a href="services/logout.php" class="dropdown-item" href="#">Keluar</a>
                 </div>
               </li>

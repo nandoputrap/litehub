@@ -51,6 +51,9 @@ function selectAllFromBook($book_id) {
   mysqli_close($conn);
   return $result;
 }
+if(!isset($_SESSION['namauser'])) {
+  echo  "<script type='text/javascript'>alert('Silahkan Login/Register terlebih dahulu');window.location = './landing.php';</script>";
+}
 
 ?>
 

@@ -3,10 +3,25 @@
   if(!isset($_SESSION['namauser'])) {
     echo  "<script type='text/javascript'>alert('Silahkan Login/Register terlebih dahulu');window.location = './landing.php';</script>";
   }
-  if(isset($_SESSION['namauser']) && $_SESSION['role'] != 'penulis') {
-    echo  "<script type='text/javascript'>alert('Silahkan Masuk kembali sebagai penulis');window.location = './landing.php';</script>";
-  }
   require_once("templates/header.php");
+?>
+
+<?php
+  function connectDB() {
+		$servername = "sql12.freesqldatabase.com";
+		$username = "sql12310568";
+		$password = "wmiLAF7a6g";
+		$dbname = "sql12310568";
+
+		// Create connection
+		$conn = mysqli_connect($servername, $username, $password, $dbname);
+
+		// Check connection
+		if (!$conn) {
+			die("Connection failed: " + mysqli_connect_error());
+		}
+		return $conn;
+	}
 ?>
 
 <div class="register">
