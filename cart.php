@@ -138,6 +138,7 @@ function selectAllFromBook($book_id) {
                           $row = mysqli_fetch_assoc($detail_unggah);
                           echo '
                           <th>'.$row['quantity'].'</th>
+                          <th> <a href="metode-pembayaran.php?id='.$no.'">Lanjut ke pembayaran</a> </th>
                           ';
                         }
                       }else{
@@ -151,10 +152,10 @@ function selectAllFromBook($book_id) {
                         }
                         echo '
                           <th>'.$sum.'</th>
+                          <th> <a href="metode-pembayaran.php">Lanjut ke pembayaran</a> </th>
                         ';
                       }
                       ?>
-                      <th> <a href="metode-pembayaran.php">Lanjut ke pembayaran</a> </th>
                     </tr>
                   </tbody>
                 </table>

@@ -30,6 +30,30 @@
 		}
 		mysqli_close($conn);
 		return $result;
+  }
+  
+  function daftarNon($table) {
+		$conn = connectDB();
+		
+		$sql = "SELECT * FROM $table WHERE category = 'Non Fiksi'";
+		
+		if(!$result = mysqli_query($conn, $sql)) {
+			die("Error: $sql");
+		}
+		mysqli_close($conn);
+		return $result;
+  }
+  
+  function daftarFiksi($table) {
+		$conn = connectDB();
+		
+		$sql = "SELECT * FROM $table WHERE category = 'Fiksi'";
+		
+		if(!$result = mysqli_query($conn, $sql)) {
+			die("Error: $sql");
+		}
+		mysqli_close($conn);
+		return $result;
 	}
 
 	function selectRowsFromSubmission() {
@@ -383,10 +407,14 @@
 			    <div class="hvrbox-layer_top hvrbox-layer_slideup hvr-non-fiction">
 				    <div class="hvrbox-text">
               <ul>
-                <li><a href="#">Nama kategori</a></li>
-                <li><a href="#">Nama kategori</a></li>
-                <li><a href="#">Nama kategori</a></li>
-                <li><a href="#">Nama kategori</a></li>
+              <?php
+                  $daftarnon = daftarNon("category");
+                  while ($rownon = mysqli_fetch_row($daftarnon)) {
+                    echo '
+                    <li><a href="#">'.$rownon[1].'</a></li>
+                    ';
+                  }
+                ?>
               </ul>
             </div>
 			    </div>
@@ -400,10 +428,14 @@
 			    <div class="hvrbox-layer_top hvrbox-layer_slideup hvr-fiction">
 				    <div class="hvrbox-text">
               <ul>
-                <li><a href="#">Nama kategori</a></li>
-                <li><a href="#">Nama kategori</a></li>
-                <li><a href="#">Nama kategori</a></li>
-                <li><a href="#">Nama kategori</a></li>
+              <?php
+                  $daftarfiks = daftarFiksi("category");
+                  while ($rowfiks = mysqli_fetch_row($daftarfiks)) {
+                    echo '
+                    <li><a href="#">'.$rowfiks[1].'</a></li>
+                    ';
+                  }
+                ?>
               </ul>
             </div>
 			    </div>

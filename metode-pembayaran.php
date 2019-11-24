@@ -2,6 +2,55 @@
   require_once("templates/header.php");
 ?>
 
+<?php
+function connectDB() {
+  $servername = "sql12.freesqldatabase.com";
+  $username = "sql12310568";
+  $password = "wmiLAF7a6g";
+  $dbname = "sql12310568";
+
+  // Create connection
+  $conn = mysqli_connect($servername, $username, $password, $dbname);
+
+  // Check connection
+  if (!$conn) {
+    die("Connection failed: " + mysqli_connect_error());
+  }
+  return $conn;
+}
+
+function selectRowsFromSubmission() {
+  $conn = connectDB();
+
+  $sql = "SELECT * FROM submission WHERE user_id = ".$_SESSION["user_id"]."";
+  if(!$result = mysqli_query($conn, $sql)) {
+    die("Error: $sql");
+  }
+  mysqli_close($conn);
+  return $result;
+} 
+
+function selectBooks() {
+  $pinjam = selectRowsFromSubmission();
+  $arraysubmission = array();
+  while ($baris = mysqli_fetch_row($pinjam)) {
+    array_push($arraysubmission, $baris[1]);
+  }
+  return $arraysubmission;
+}
+
+function selectAllFromBook($book_id) {
+  $conn = connectDB();
+
+  $sql = "SELECT * FROM book WHERE book_id = $book_id";
+  if(!$result = mysqli_query($conn, $sql)) {
+    die("Error: $sql");
+  }
+  mysqli_close($conn);
+  return $result;
+}
+?>
+
 <div class="metode-pembayaran">
   <div class="container">
     <div class="row">
@@ -49,8 +98,37 @@
           <div class="panel-body">
             <ul class="nav nav-pills nav-stacked category-menu">
               <a href="#"></a>
-              <li><p href="#">Jumlah</p></li>
-              <li><p href="#">Total</p></li>
+              <?php
+                $conn = connectDB();
+                if (isset($_GET['id'])) {
+                  $no = $_GET['id'];
+                  $query = "SELECT * FROM book where book_id = '$no'";
+                  $detail_unggah = mysqli_query($conn, $query);
+
+                  if (mysqli_num_rows($detail_unggah) > 0) {
+                    $row = mysqli_fetch_assoc($detail_unggah);
+                    echo '
+                    <li><p href="#">Jumlah '.$row['quantity'].'</p></li>
+                    <li><p href="#">Total 1</p></li>
+                    ';
+                  }
+                }else{
+                  $arraybook = selectBooks();
+                  $sum = 0;
+                  $qty = 0;
+                  for ($i=0; $i < count($arraybook); $i++) { 
+                    $buku = selectAllFromBook($arraybook[$i]);
+                    while ($row = mysqli_fetch_row($buku)) {
+                      $sum = $sum + $row[6];
+                      $qty++;
+                    }
+                  }
+                  echo '
+                  <li><p href="#">Jumlah '.$sum.'</p></li>
+                  <li><p href="#">Total '.$qty.'</p></li>
+                  ';
+                }
+                ?>
 
               <button type="button" class="btn btn-primary btn-block btn-ebookhub btn-register">Bayar sekarang</button>
             </ul>
