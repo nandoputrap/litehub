@@ -1,6 +1,6 @@
 <?php
   require_once("templates/header.php");
-  session_start();
+
 ?>
 
 <?php
@@ -39,9 +39,9 @@
 
 	function getbook() {
 		$conn = connectDB();
-		
+
 		$sql = "SELECT count(*) FROM book";
-		
+
 		if(!$result = mysqli_query($conn, $sql)) {
 			die("Error: $sql");
 		}
@@ -167,7 +167,7 @@
 
 ?>
 
-<div class="shop">
+<div class="shop section-margin">
   <div class="container">
     <div class="row">
       <div class="col-lg-12">
@@ -243,11 +243,11 @@
 					$count = getbook();
 					while ($row = mysqli_fetch_row($count)) {
 						$sum = 1;
-						for ($i=0; $i < $row[0]; $i+=6) { 
+						for ($i=0; $i < $row[0]; $i+=6) {
 							echo '
 							<li><a href="shop.php?offset='.$i.'">'.$sum.'</a></li>
 						';
-						$sum+=1;	
+						$sum+=1;
 						}
 					}
 				?>
