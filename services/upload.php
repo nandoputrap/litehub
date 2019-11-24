@@ -65,7 +65,7 @@ if ($uploadOk == 0) {
         $deskripsiBuku = $_POST['deskripsiBuku'];
         $file = $_POST['fileBuku'];
         $tanggalUpload = date("Y-m-d");
-        $status = 'Dalam proses penyuntingan';
+        $status = 'Dalam Proses Penyuntingan';
         $_SESSION["titlebookadded"] = $judulBuku;
 		
         $sql = "INSERT into unggah (title, author, category, description, file, upload_date, status) values('$judulBuku', '$namaPenulis', '$kategori', '$deskripsiBuku', '$filename', '$tanggalUpload', '$status')";

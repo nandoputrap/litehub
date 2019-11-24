@@ -15,16 +15,116 @@
 		}
 		return $conn;
 	}
-	
-	function statusPengajuan($status, $date) {
+
+  function getStatus($bulan, $status){
+      $conn = connectDB();
+
+      $sql = "SELECT count(*) as jumlah from unggah where MONTH(upload_date)='$bulan' AND status = '".$status."'";
+
+      if(!$result = mysqli_query($conn, $sql)) {
+        die("Error: $sql");
+      }
+      mysqli_close($conn);
+      
+      $query = $result;
+      $row = $query->fetch_array();
+      $jumlah[] = $row['jumlah'];
+      return $jumlah;
+  }
+  
+  function getSoldFiksi($bulan){
+    $conn = connectDB();
+
+    $sql = "SELECT sum(quantity) as terjual from book where MONTH(publish_date)='$bulan' AND (category = 'Fiksi' OR category = 'Novel' OR category = 'Cerpen' OR category = 'Puisi' OR category = 'Drama' OR category = 'Komik' OR category = 'Dongeng' OR category = 'Fabel' OR category = 'Mitos')";
+
+    if(!$result = mysqli_query($conn, $sql)) {
+      die("Error: $sql");
+    }
+    mysqli_close($conn);
+    
+    $query = $result;
+    $row = $query->fetch_array();
+    $jumlah[] = $row['terjual'];
+    return $jumlah;
+}
+
+function getSoldNonFiksi($bulan){
+  $conn = connectDB();
+
+  $sql = "SELECT sum(quantity) as terjual from book where MONTH(publish_date)='$bulan' AND (category != 'Fiksi' AND category != 'Novel' AND category != 'Cerpen' AND category != 'Puisi' AND category != 'Drama' AND category != 'Komik' AND category != 'Dongeng' AND category != 'Fabel' AND category != 'Mitos')";
+
+  if(!$result = mysqli_query($conn, $sql)) {
+    die("Error: $sql");
+  }
+  mysqli_close($conn);
+  
+  $query = $result;
+  $row = $query->fetch_array();
+  $jumlah[] = $row['terjual'];
+  return $jumlah;
+}
+
+  function getpenulis() {
 		$conn = connectDB();
 		
-		$sql = "SELECT * FROM unggah
-				WHERE status = '".$status."' AND upload_date LIKE '".$date."'";
+		$sql = "SELECT count(*) FROM user WHERE role = 'penulis'";
 		
 		if(!$result = mysqli_query($conn, $sql)) {
 			die("Error: $sql");
 		}
+
+		mysqli_close($conn);
+		return $result;
+	}
+
+	function getpembaca() {
+		$conn = connectDB();
+		
+		$sql = "SELECT count(*) FROM user WHERE role = 'user'";
+		
+		if(!$result = mysqli_query($conn, $sql)) {
+			die("Error: $sql");
+		}
+
+		mysqli_close($conn);
+		return $result;
+  }
+  
+  function statusPenjualan() {
+		$conn = connectDB();
+		
+		$sql = "SELECT count(quantity) FROM book";
+		
+		if(!$result = mysqli_query($conn, $sql)) {
+			die("Error: $sql");
+		}
+
+		mysqli_close($conn);
+		return $result;
+  }
+
+  function getKategori() {
+		$conn = connectDB();
+		
+		$sql = "SELECT count(*) FROM category";
+		
+		if(!$result = mysqli_query($conn, $sql)) {
+			die("Error: $sql");
+		}
+
+		mysqli_close($conn);
+		return $result;
+  }
+  
+	function getbook() {
+		$conn = connectDB();
+		
+		$sql = "SELECT count(*) FROM book";
+		
+		if(!$result = mysqli_query($conn, $sql)) {
+			die("Error: $sql");
+		}
+
 		mysqli_close($conn);
 		return $result;
 	}
@@ -39,8 +139,8 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="bootstrap/dist/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="css/home.css">
-		<link rel="stylesheet" href="css/all.min.css">
-  		<link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  	<link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 	</head>
 	<body>
 		<div class="jumbotron">
@@ -124,6 +224,94 @@
         </div>
       </div>
     </div>
+    
+    <div class='col-lg-3 col-md-6'>
+      <div class='panel panel-primary panel-ebookhub-red'>
+        <div class='panel-heading'>
+          <div class='row'>
+            <div class='col-xs-3'>
+              <i class='fa fa-pencil fa-5x'></i>
+            </div>
+            <div class='col-xs-9 text-right'>
+              <div id="leadmonth"></div>
+              <div>Total Penulis</div>
+              <?php 
+                $countuser = getpenulis();
+                while ($row = mysqli_fetch_row($countuser)) {
+                  echo '<h1>'.$row[0].'</h1>';
+                }
+              ?>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class='col-lg-3 col-md-6'>
+      <div class='panel panel-primary'>
+        <div class='panel-heading'>
+          <div class='row'>
+            <div class='col-xs-3'>
+              <i class='fa fa-user fa-5x'></i>
+            </div>
+            <div class='col-xs-9 text-right'>
+              <div id="leadmonth"></div>
+              <div>Total Pembaca</div>
+							<?php 
+								$countuser = getpembaca();
+								while ($row = mysqli_fetch_row($countuser)) {
+									echo '<h1>'.$row[0].'</h1>';
+								}
+							?>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class='col-lg-3 col-md-6'>
+      <div class='panel panel-primary'>
+        <div class='panel-heading'>
+          <div class='row'>
+            <div class='col-xs-3'>
+              <i class='fa fa-book fa-5x'></i>
+            </div>
+            <div class='col-xs-9 text-right'>
+            <div id="leadmonth"></div>
+            <div>Total Buku Terbit</div>
+							<?php 
+								$countuser = getbook();
+								while ($row = mysqli_fetch_row($countuser)) {
+									echo '<h1>'.$row[0].'</h1>';
+								}
+							?>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class='col-lg-3 col-md-6'>
+      <div class='panel panel-primary'>
+        <div class='panel-heading'>
+          <div class='row'>
+            <div class='col-xs-3'>
+              <i class='fa fa-tasks fa-5x'></i>
+            </div>
+            <div class='col-xs-9 text-right'>
+              <div id="leadmonth"></div>
+              <div>Total Kategori Buku</div>
+              <?php 
+								$countuser = getKategori();
+								while ($row = mysqli_fetch_row($countuser)) {
+									echo '<h1>'.$row[0].'</h1>';
+								}
+							?>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>        
 
     <div class="content">
       <div class="container-fluid">
@@ -142,11 +330,11 @@
 
                 <div class="d-flex flex-row justify-content-end">
                   <span class="mr-2">
-                    <i class="fas fa-square text-primary" style="color:#007bff"></i> Non Fiksi
+                    <i class="fa fa-square text-primary" style="color:#007bff"></i> Non Fiksi
                   </span>
 
                   <span>
-                    <i class="fas fa-square text-gray" style="color:#ced4da"></i> Fiksi
+                    <i class="fa fa-square text-gray" style="color:#ced4da"></i> Fiksi
                   </span>
                 </div>
               </div>
@@ -167,11 +355,11 @@
 
                 <div class="d-flex flex-row justify-content-end">
                   <span class="mr-2">
-                    <i class="fa-square text-primary" style="color:#007bff"></i> Dalam proses pengajuan
+                    <i class="fa fa-square text-primary" style="color:#007bff"></i> Dalam proses pengajuan
                   </span>
 
                   <span>
-                    <i class="fa-square text-gray" style="color:#ced4da"></i> Sudah diterima
+                    <i class="fa fa-square text-gray" style="color:#ced4da"></i> Sudah diterima
                   </span>
                 </div>
               </div>
@@ -188,6 +376,9 @@
 <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="dist/js/adminlte.js"></script>
 <script src="js/Chart.min.js"></script>
+<?php
+   $label = ['JULI', 'AGUSTUS', 'SEPTEMBER', 'OKTOBER', 'NOVEMBER'];
+?>
 <script>
 $(function () {
   'use strict'
@@ -204,31 +395,25 @@ $(function () {
   var salesChart  = new Chart($salesChart, {
     type   : 'bar',
     data   : {
-      labels  : ['JULI', 'AGUSTUS', 'SEPTEMBER', 'OKTOBER', 'NOVEMBER'],
+      labels  : <?php echo json_encode($label); ?>,
       datasets: [
         {
           backgroundColor: '#007bff',
           borderColor    : '#007bff',
-		  data           : [10,
-							15,
-							10, 
-							5, 
-							<?php 
-							$jumlah_pengajuan = statusPengajuan("Dalam Proses Penyuntingan", "%2019-11%");
-							echo mysqli_num_rows($jumlah_pengajuan);
-							?>]
+      data           : <?php 
+                        for($bulan=7;$bulan<12;$bulan++){
+                          $jumlah_proses[] = getStatus($bulan, "Dalam Proses Penyuntingan");
+                        }
+                       echo json_encode($jumlah_proses); ?>
         },
         {
           backgroundColor: '#ced4da',
           borderColor    : '#ced4da',
-		  data           : [6,
-							10,
-							20, 
-							18, 
-							<?php 
-							$jumlah_pengajuan = statusPengajuan("Sudah Diterima", "%2019-11%");
-							echo mysqli_num_rows($jumlah_pengajuan);
-							?>]
+		  data           : <?php 
+                        for($bulan=7;$bulan<12;$bulan++){
+                          $jumlah_diterima[] = getStatus($bulan, "Sudah Diterima");
+                        }
+                       echo json_encode($jumlah_diterima); ?>
         }
       ]
     },
@@ -272,28 +457,38 @@ $(function () {
   var $visitorsChart = $('#visitors-chart')
   var visitorsChart  = new Chart($visitorsChart, {
     data   : {
-      labels  : ['Juli', 'Agustus', 'September', 'Oktober', 'November'],
+      // labels  : ['September', 'Oktober', 'November'],
+      labels  : <?php echo json_encode($label); ?>,
       datasets: [{
         type                : 'line',
-        data                : [96, 50, 60, 85, 83],
+        // data                : [12, 10, 12, 17,10],
+                               
+                            
+        data                : <?php
+                                for($bulan=7;$bulan<12;$bulan++){
+                                  $jumlah_nf[] = getSoldNonFiksi($bulan);
+                                }
+                              echo json_encode($jumlah_nf); 
+                             ?>,                       
         backgroundColor     : 'transparent',
         borderColor         : '#007bff',
         pointBorderColor    : '#007bff',
         pointBackgroundColor: '#007bff',
         fill                : false
-        // pointHoverBackgroundColor: '#007bff',
-        // pointHoverBorderColor    : '#007bff'
       },
         {
           type                : 'line',
-          data                : [30, 40, 35, 33, 40, 38],
+          data                : <?php 
+                                  for($bulan=7;$bulan<12;$bulan++){
+                                    $jumlah_f[] = getSoldFiksi($bulan);
+                                  }
+                                  echo json_encode($jumlah_f); 
+                                ?>,
           backgroundColor     : 'tansparent',
           borderColor         : '#ced4da',
           pointBorderColor    : '#ced4da',
           pointBackgroundColor: '#ced4da',
           fill                : false
-          // pointHoverBackgroundColor: '#ced4da',
-          // pointHoverBorderColor    : '#ced4da'
         }]
     },
     options: {
@@ -334,11 +529,9 @@ $(function () {
   })
 })
 </script>
-<!-- <script src="dist/js/dashboard3.js"></script> -->
 	</body>
 	<footer>
 		<hr>
 		<h4>&copy; 2019 Litehub Inc. All rights reserved</h4>
 	</footer>
 </html>							
-
