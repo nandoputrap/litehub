@@ -1,5 +1,37 @@
 <?php
 require_once("templates/header.php");
+session_start();
+?>
+
+<?php
+	// session_start();
+	function connectDB() {
+		$servername = "sql12.freesqldatabase.com";
+		$username = "sql12310568";
+		$password = "wmiLAF7a6g";
+		$dbname = "sql12310568";
+
+		// Create connection
+		$conn = mysqli_connect($servername, $username, $password, $dbname);
+
+		// Check connection
+		if (!$conn) {
+			die("Connection failed: " + mysqli_connect_error());
+		}
+		return $conn;
+	}
+
+	function daftarBuku($table) {
+		$conn = connectDB();
+
+		$sql = "SELECT no, title, author, category, description, file, upload_date, status FROM $table";
+
+		if(!$result = mysqli_query($conn, $sql)) {
+			die("Error: $sql");
+		}
+		mysqli_close($conn);
+		return $result;
+	}
 ?>
 
 <?php
@@ -67,47 +99,50 @@ function connectDB() {
           <table class="table table-hover table-bordered table-responsive">
             <thead>
               <tr>
-                <th class="text-center">Judul Buku</th>
-                <th class="text-center">Kategori</th>
-                <th class="text-center">Tanggal Unggah</th>
-                <th class="text-center">Status</th>
-                <th class="text-center">Aksi</th>
+                <th class="text-center btn-danger">Judul Buku</th>
+                <th class="text-center btn-danger">Kategori</th>
+                <th class="text-center btn-danger">Tanggal Unggah</th>
+                <th class="text-center btn-danger">Status</th>
+                <th class="text-center btn-danger">Aksi</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td class="text-center">How to Code 101</td>
-                <td class="text-center">Komputer</td>
-                <td class="text-center">1 Januari 2019</td>
-                <td class="text-center">Dalam Proses Penyuntingan</td>
-                <td class="text-center"><button type="button" class="btn btn-info" onclick="window.location='status-pengajuan-detail.php'">Detail</button></td>
-              </tr>
+            <?php
+  						$daftarbuku = daftarBuku("unggah");
+  						if (mysqli_num_rows($daftarbuku) > 0) {
+  							while ($row = mysqli_fetch_assoc($daftarbuku)) {
+  								$olddate = $row['upload_date'];
+  								$bulan = array (1 =>   	'Januari',
+  														'Februari',
+  														'Maret',
+  														'April',
+  														'Mei',
+  														'Juni',
+  														'Juli',
+  														'Agustus',
+  														'September',
+  														'Oktober',
+  														'November',
+  														'Desember'
+  												);
+  								$split = explode('-', $olddate);
+  								$tanggal = $split[2] . ' ' . $bulan[(int)$split[1]] . ' ' . $split[0];
+  								if($row['status'] == "Dalam Proses Penyuntingan") {
+  									echo'
+  									<tbody>
+  									<tr>
+  										<td class="text-center">'.$row['title'].'</td>
+  										<td class="text-center">'.$row['category'].'</td>
+  										<td class="text-center">'.$tanggal.'</td>
+  										<td class="text-center">'.$row['status'].'</td>
+  										<td class="text-center"><a class="btn btn-info" href="unggah_detail.php?id='.$row['no'].'">Detail</a></td>
 
-              <tr>
-                <td class="text-center">How to Code 101</td>
-                <td class="text-center">Komputer</td>
-                <td class="text-center">1 Januari 2019</td>
-                <td class="text-center">Dalam Proses Penyuntingan</td>
-                <td class="text-center"><button type="button" class="btn btn-info" onclick="window.location='status-pengajuan-detail.php'">Detail</button></td>
-              </tr>
+  									</tr>
+  									</tbody>';
+  								}
+  							}
+  						}
 
-              <tr>
-                <td class="text-center">How to Code 101</td>
-                <td class="text-center">Komputer</td>
-                <td class="text-center">1 Januari 2019</td>
-                <td class="text-center">Dalam Proses Penyuntingan</td>
-                <td class="text-center"><button type="button" class="btn btn-info" onclick="window.location='status-pengajuan-detail.php'">Detail</button></td>
-              </tr>
-
-              <tr>
-                <td class="text-center">How to Code 101</td>
-                <td class="text-center">Komputer</td>
-                <td class="text-center">1 Januari 2019</td>
-                <td class="text-center">Dalam Proses Penyuntingan</td>
-                <td class="text-center"><button type="button" class="btn btn-info" onclick="window.location='status-pengajuan-detail.php'">Detail</button></td>
-              </tr>
-
-            </tbody>
+  					?>
           </table>
         </div>
 
@@ -118,34 +153,50 @@ function connectDB() {
           <table class="table table-hover table-bordered table-responsive">
             <thead>
               <tr>
-                <th class="text-center">Judul Buku</th>
-                <th class="text-center">Kategori</th>
-                <th class="text-center">Tanggal Terbit</th>
-                <th class="text-center">Status</th>
-                <th class="text-center">Jumlah Terjual</th>
-                <th class="text-center">Aksi</th>
+                <th class="text-center btn-danger">Judul Buku</th>
+                <th class="text-center btn-danger">Kategori</th>
+                <th class="text-center btn-danger">Tanggal Terbit</th>
+                <th class="text-center btn-danger">Status</th>
+                <th class="text-center btn-danger">Jumlah Terjual</th>
+                <th class="text-center btn-danger">Aksi</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td class="text-center">How to Code 101</td>
-                <td class="text-center">Komputer</td>
-                <td class="text-center">1 Juni 2019</td>
-                <td class="text-center">Sudah Diterbitkan</td>
-                <td class="text-center">509</td>
-                <td class="text-center"><button type="button" class="btn btn-info" onclick="window.location='status-terbit-detail.php'">Detail</button></td>
-              </tr>
-
-              <tr>
-                <td class="text-center">How to Code 101</td>
-                <td class="text-center">Komputer</td>
-                <td class="text-center">12 Oktober 2019</td>
-                <td class="text-center">Sudah Diterbitkan</td>
-                <td class="text-center">159</td>
-                <td class="text-center"><button type="button" class="btn btn-info" onclick="window.location='status-terbit-detail.php'">Detail</button></td>
-              </tr>
-
-            </tbody>
+            <?php
+  						$daftarbuku = daftarBuku("unggah");
+  						if (mysqli_num_rows($daftarbuku) > 0) {
+  							while ($row = mysqli_fetch_assoc($daftarbuku)) {
+  								$olddate = $row['upload_date'];
+  								$bulan = array (1 =>   	'Januari',
+  														'Februari',
+  														'Maret',
+  														'April',
+  														'Mei',
+  														'Juni',
+  														'Juli',
+  														'Agustus',
+  														'September',
+  														'Oktober',
+  														'November',
+  														'Desember'
+  												);
+  								$split = explode('-', $olddate);
+  								$tanggal = $split[2] . ' ' . $bulan[(int)$split[1]] . ' ' . $split[0];
+  								if($row['status'] == "Sudah Diterima") {
+  									echo'
+  										<tbody>
+  										<tr>
+  											<td class="text-center">'.$row['title'].'</td>
+  											<td class="text-center">'.$row['category'].'</td>
+  											<td class="text-center">'.$tanggal.'</td>
+  											<td class="text-center">'.$row['status'].'</td>
+  											<td class="text-center">'.$row['status'].'</td>
+  											<td class="text-center"><a class="btn btn-info" href="unggah_detail.php?id='.$row['no'].'">Detail</a></td>
+  										</tr>
+  										</tbody>';
+  								}
+  							}
+  						}
+  					?>
           </table>
         </div>
       </div>
