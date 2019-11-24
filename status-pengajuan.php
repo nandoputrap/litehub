@@ -23,10 +23,16 @@ require_once("templates/header.php");
             <div class="panel-body">
               <ul class="nav nav-pills nav-stacked category-menu">
                 <li>
-                  <a href="edit-profil.php">Edit Profil</a>
+                  <a href="lihat-profil.php">Profil</a>
+                </li>
+                <li>
+                  <a href="edit-password.php">Edit Password</a>
                 </li>
                 <li class="active-profil">
                   <a href="status-pengajuan.php">Status Pengajuan</a>
+                </li>
+                <li>
+                  <a href="buku-saya.php">Buku Saya</a>
                 </li>
               </ul>
             </div>
@@ -109,7 +115,7 @@ require_once("templates/header.php");
                 <td class="text-center">1 Juni 2019</td>
                 <td class="text-center">Sudah Diterbitkan</td>
                 <td class="text-center">509</td>
-                <td class="text-center"><button type="button" class="btn btn-info" onclick="window.location='status-pengajuan-detail.php'">Detail</button></td>
+                <td class="text-center"><button type="button" class="btn btn-info" onclick="window.location='status-terbit-detail.php'">Detail</button></td>
               </tr>
 
               <tr>
@@ -118,7 +124,7 @@ require_once("templates/header.php");
                 <td class="text-center">12 Oktober 2019</td>
                 <td class="text-center">Sudah Diterbitkan</td>
                 <td class="text-center">159</td>
-                <td class="text-center"><button type="button" class="btn btn-info" onclick="window.location='status-pengajuan-detail.php'">Detail</button></td>
+                <td class="text-center"><button type="button" class="btn btn-info" onclick="window.location='status-terbit-detail.php'">Detail</button></td>
               </tr>
 
             </tbody>
