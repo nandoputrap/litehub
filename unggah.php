@@ -140,7 +140,7 @@
                                 </div>
 								<div class="form-group">
                                     <label for="namaPenulis">Nama Penulis</label>
-                                    <input type="text" class="form-control" id="insert-namaPenulis" name="namaPenulis" placeholder="Masukkan Nama Penulis">
+                                    <input type="text" class="form-control" id="insert-namaPenulis" name="namaPenulis" placeholder="Masukkan Nama Penulis" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="kategori">Kategori</label>
@@ -172,10 +172,10 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="deskripsiBuku">Deskripsi Buku</label>
-                                    <textarea class="form-control" id="insert-deskripsiBuku" name="deskripsiBuku" placeholder="Deskripsi Buku" rows="3"></textarea>
+                                    <textarea class="form-control" id="insert-deskripsiBuku" name="deskripsiBuku" placeholder="Deskripsi Buku" rows="3" required></textarea>
                                 </div>
                                 <div class="form-group">
-									<input type="file" name="fileToUpload" id="fileToUpload">
+									<input type="file" name="fileToUpload" id="fileToUpload" required>
 									<!-- <button class="btn btn-secondary" method="post" action="upload.php" enctype="multipart/form-data">Upload Buku</button> -->
                 					<h6>Format buku dalam bentuk .doc atau .docx. Format penulisan dan layout dapat dilihat pada halaman <a href="#">ini</a>. Ukuran file maksimal 50 MB.</h6>
                                 </div>

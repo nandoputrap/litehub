@@ -14,6 +14,19 @@
 		}
 		return $conn;
 	}
+
+	function daftarBuku($table) {
+		$conn = connectDB();
+		
+		$sql = "SELECT book_id, img_path, title, author, publisher, quantity FROM $table";
+		
+		if(!$result = mysqli_query($conn, $sql)) {
+			die("Error: $sql");
+		}
+		mysqli_close($conn);
+		return $result;
+	}
+
     function insertBuku() {
 		$conn = connectDB();
 		

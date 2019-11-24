@@ -3,6 +3,20 @@
 	session_start();
 ?>
 
+<?php
+	function daftarKategori($table) {
+		$conn = connectDB();
+		
+		$sql = "SELECT * FROM $table";
+		
+		if(!$result = mysqli_query($conn, $sql)) {
+			die("Error: $sql");
+		}
+		mysqli_close($conn);
+		return $result;
+	}
+?>
+
 
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -25,6 +39,8 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  	<link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- <link rel="stylesheet" href="css/docs.theme.min.css"> -->
     <link rel="stylesheet" href="css/owl.carousel.min.css">
     <!-- <link rel="stylesheet" href="css/owl.theme.default.min.css"> -->
@@ -64,9 +80,14 @@
                 Kategori <i class="fa fa-angle-down" aria-hidden="true"></i>
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Kategori 1</a>
-                <a class="dropdown-item" href="#">Kategori 2</a>
-                <a class="dropdown-item" href="#">Kategori 3</a>
+                <?php
+                  $daftarkategori = daftarKategori("category");
+                  while ($row = mysqli_fetch_row($daftarkategori)) {
+                    echo '
+                    <a class="dropdown-item" href="#">'.$row[1].'</a>
+                    ';
+                  }
+                ?>
               </div>
             </li>
             <li><a href="shop.php">Shop</a></li>

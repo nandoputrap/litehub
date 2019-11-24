@@ -37,6 +37,19 @@
 		return $result;
 	}
 
+	function getbook() {
+		$conn = connectDB();
+		
+		$sql = "SELECT count(*) FROM book";
+		
+		if(!$result = mysqli_query($conn, $sql)) {
+			die("Error: $sql");
+		}
+
+		mysqli_close($conn);
+		return $result;
+	}
+
 	function selectRowsFromSubmission() {
 		$conn = connectDB();
 
@@ -171,7 +184,14 @@
       </div>
 
       <div class="col-md-9">
-        <h4>Menampilkan 1-6 dari 200 e-book Teknologi</h4>
+	  	<?php
+		$count = getbook();
+		while ($row = mysqli_fetch_row($count)) {
+			echo '
+		  <h4>Menampilkan 1-6 dari '.$row[0].' e-book Teknologi</h4>
+		  ';
+		}
+		?>
 
         <div class="row">
           <div class="product">
@@ -219,12 +239,19 @@
         <div class="row">
           <div class="row text-center">
                   <ul class="pagination pagination-lg">
-                    <li><a href="shop.php?offset=0">1</a></li>
-                    <li><a href="shop.php?offset=6">2</a></li>
-                    <li><a href="shop.php?offset=12">3</a></li>
-                    <li><a href="shop.php?offset=18">4</a></li>
-                    <li><a href="shop.php?offset=24">5</a></li>
-                    <li> <a href="shop.php?offset=30"><i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+				  <?php
+					$count = getbook();
+					while ($row = mysqli_fetch_row($count)) {
+						$sum = 1;
+						for ($i=0; $i < $row[0]; $i+=6) { 
+							echo '
+							<li><a href="shop.php?offset='.$i.'">'.$sum.'</a></li>
+						';
+						$sum+=1;	
+						}
+					}
+				?>
+                    <li> <a href="""><i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
                   </ul>
                 </div>
 
