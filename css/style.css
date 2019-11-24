@@ -198,6 +198,13 @@ footer .glyphicon {
   margin: 20px auto;
 }
 
+.text-white{
+  color: white;
+}
+
+.text-tiny{
+  font-size: 12px;
+}
 
 
 
@@ -626,7 +633,7 @@ box-shadow: 5px 5px 20px 0px rgba(0,0,0,0.5);
 } */
 
 .cart-footer{
-  margin-top: 
+  margin-top:
 }
 
 /* CART.PHP */

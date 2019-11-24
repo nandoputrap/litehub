@@ -10,10 +10,10 @@
 		$username = "sql12310568";
 		$password = "wmiLAF7a6g";
 		$dbname = "sql12310568";
-		
+
 		// Create connection
 		$conn = mysqli_connect($servername, $username, $password, $dbname);
-		
+
 		// Check connection
 		if (!$conn) {
 			die("Connection failed: " + mysqli_connect_error());
@@ -30,13 +30,13 @@
         die("Error: $sql");
       }
       mysqli_close($conn);
-      
+
       $query = $result;
       $row = $query->fetch_array();
       $jumlah[] = $row['jumlah'];
       return $jumlah;
   }
-  
+
   function getSoldFiksi($bulan){
     $conn = connectDB();
 
@@ -46,7 +46,7 @@
       die("Error: $sql");
     }
     mysqli_close($conn);
-    
+
     $query = $result;
     $row = $query->fetch_array();
     $jumlah[] = $row['terjual'];
@@ -62,7 +62,7 @@ function getSoldNonFiksi($bulan){
     die("Error: $sql");
   }
   mysqli_close($conn);
-  
+
   $query = $result;
   $row = $query->fetch_array();
   $jumlah[] = $row['terjual'];
@@ -71,9 +71,9 @@ function getSoldNonFiksi($bulan){
 
   function getpenulis() {
 		$conn = connectDB();
-		
+
 		$sql = "SELECT count(*) FROM user WHERE role = 'penulis'";
-		
+
 		if(!$result = mysqli_query($conn, $sql)) {
 			die("Error: $sql");
 		}
@@ -84,9 +84,9 @@ function getSoldNonFiksi($bulan){
 
 	function getpembaca() {
 		$conn = connectDB();
-		
+
 		$sql = "SELECT count(*) FROM user WHERE role = 'user'";
-		
+
 		if(!$result = mysqli_query($conn, $sql)) {
 			die("Error: $sql");
 		}
@@ -94,12 +94,12 @@ function getSoldNonFiksi($bulan){
 		mysqli_close($conn);
 		return $result;
   }
-  
+
   function statusPenjualan() {
 		$conn = connectDB();
-		
+
 		$sql = "SELECT count(quantity) FROM book";
-		
+
 		if(!$result = mysqli_query($conn, $sql)) {
 			die("Error: $sql");
 		}
@@ -110,9 +110,9 @@ function getSoldNonFiksi($bulan){
 
   function getKategori() {
 		$conn = connectDB();
-		
+
 		$sql = "SELECT count(*) FROM category";
-		
+
 		if(!$result = mysqli_query($conn, $sql)) {
 			die("Error: $sql");
 		}
@@ -120,12 +120,12 @@ function getSoldNonFiksi($bulan){
 		mysqli_close($conn);
 		return $result;
   }
-  
+
 	function getbook() {
 		$conn = connectDB();
-		
+
 		$sql = "SELECT count(*) FROM book";
-		
+
 		if(!$result = mysqli_query($conn, $sql)) {
 			die("Error: $sql");
 		}
@@ -140,14 +140,8 @@ function getSoldNonFiksi($bulan){
   <div class="container">
 
     <div class="row">
-      <div class="content-header">
-        <div class="container-fluid">
-          <div class="row mb-2">
-            <div class="col-sm-6">
-              <h1 class="m-0 text-dark">Statistik</h1>
-            </div>
-          </div>
-        </div>
+      <div class="col-sm-12">
+        <h1>Statistik</h1>
       </div>
 
       <div class='col-lg-3 col-md-6'>
@@ -160,10 +154,10 @@ function getSoldNonFiksi($bulan){
               <div class='col-xs-9 text-right'>
                 <div id="leadmonth"></div>
                 <div>Total Penulis</div>
-                <?php 
+                <?php
                   $countuser = getpenulis();
                   while ($row = mysqli_fetch_row($countuser)) {
-                    echo '<h2>'.$row[0].'</h2>';
+                    echo '<h2 class="text-white">'.$row[0].'</h2>';
                   }
                 ?>
               </div>
@@ -182,17 +176,17 @@ function getSoldNonFiksi($bulan){
               <div class='col-xs-9 text-right'>
                 <div id="leadmonth"></div>
                 <div>Total Buku Terbit</div>
-                <?php 
+                <?php
                   $countuser = getbook();
                   while ($row = mysqli_fetch_row($countuser)) {
-                    echo '<h2>'.$row[0].'</h2>';
+                    echo '<h2 class="text-white">'.$row[0].'</h2>';
                   }
                 ?>
               </div>
             </div>
           </div>
         </div>
-      </div>              
+      </div>
 
       <div class='col-lg-3 col-md-6'>
         <div class='panel panel-primary'>
@@ -204,10 +198,10 @@ function getSoldNonFiksi($bulan){
               <div class='col-xs-9 text-right'>
                 <div id="leadmonth"></div>
                 <div>Total Pembaca</div>
-                <?php 
+                <?php
                   $countuser = getpembaca();
                   while ($row = mysqli_fetch_row($countuser)) {
-                    echo '<h2>'.$row[0].'</h2>';
+                    echo '<h2 class="text-white">'.$row[0].'</h2>';
                   }
                 ?>
               </div>
@@ -215,7 +209,7 @@ function getSoldNonFiksi($bulan){
           </div>
         </div>
       </div>
-              
+
       <div class='col-lg-3 col-md-6'>
         <div class='panel panel-primary'>
           <div class='panel-heading'>
@@ -226,10 +220,10 @@ function getSoldNonFiksi($bulan){
               <div class='col-xs-9 text-right'>
                 <div id="leadmonth"></div>
                 <div>Total Kategori Buku</div>
-                <?php 
+                <?php
                   $countuser = getKategori();
                   while ($row = mysqli_fetch_row($countuser)) {
-                    echo '<h2 color="white">'.$row[0].'</h2>';
+                    echo '<h2 class="text-white">'.$row[0].'</h2>';
                   }
                 ?>
               </div>
@@ -238,8 +232,13 @@ function getSoldNonFiksi($bulan){
         </div>
       </div>
 
-      <div class="content">
-        <div class="container-fluid">
+
+
+    </div>
+
+    <div class="row section-mini-margin">
+      <div class="content-grafik">
+
           <div class="row">
             <div class="col-lg-6">
               <div class="card">
@@ -253,19 +252,20 @@ function getSoldNonFiksi($bulan){
                     <canvas id="visitors-chart" height="200"></canvas>
                   </div>
 
+                  <br>
                   <div class="d-flex flex-row justify-content-end">
-                    <span class="mr-2">
-                      <i class="fa fa-square text-primary" style="color:#007bff"></i> Non Fiksi
+                    <span class="mr-2 text-tiny">
+                      <i class="fa fa-square text-primary" style="color:#007bff"></i> Non Fiksi &nbsp;&nbsp;
                     </span>
 
-                    <span>
+                    <span class="text-tiny">
                       <i class="fa fa-square text-gray" style="color:#ced4da"></i> Fiksi
                     </span>
                   </div>
                 </div>
               </div>
             </div>
-            
+
             <div class="col-lg-6">
               <div class="card">
                 <div class="card-header border-0">
@@ -277,13 +277,13 @@ function getSoldNonFiksi($bulan){
                   <div class="position-relative mb-4">
                     <canvas id="sales-chart" height="200"></canvas>
                   </div>
-
+                  <br>
                   <div class="d-flex flex-row justify-content-end">
-                    <span class="mr-2">
-                      <i class="fa fa-square text-primary" style="color:#007bff"></i> Dalam proses pengajuan
+                    <span class="mr-2 text-tiny">
+                      <i class="fa fa-square text-primary" style="color:#007bff"></i> Dalam proses pengajuan &nbsp;&nbsp;
                     </span>
 
-                    <span>
+                    <span class="text-tiny">
                       <i class="fa fa-square text-gray" style="color:#ced4da"></i> Sudah diterima
                     </span>
                   </div>
@@ -291,7 +291,6 @@ function getSoldNonFiksi($bulan){
               </div>
             </div>
           </div>
-        </div>
       </div>
 
     </div>
@@ -301,7 +300,7 @@ function getSoldNonFiksi($bulan){
 </div>
 
 <script src="js/jquery-3.1.0.min.js"> </script>
-<script src="bootstrap/dist/js/bootstrap.min.js"></script>	
+<script src="bootstrap/dist/js/bootstrap.min.js"></script>
 
 <script src="plugins/jquery/jquery.min.js"></script>
 <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -331,7 +330,7 @@ $(function () {
         {
           backgroundColor: '#007bff',
           borderColor    : '#007bff',
-      data           : <?php 
+      data           : <?php
                         for($bulan=7;$bulan<12;$bulan++){
                           $jumlah_proses[] = getStatus($bulan, "Dalam Proses Penyuntingan");
                         }
@@ -340,7 +339,7 @@ $(function () {
         {
           backgroundColor: '#ced4da',
           borderColor    : '#ced4da',
-		  data           : <?php 
+		  data           : <?php
                         for($bulan=7;$bulan<12;$bulan++){
                           $jumlah_diterima[] = getStatus($bulan, "Sudah Diterima");
                         }
@@ -393,14 +392,14 @@ $(function () {
       datasets: [{
         type                : 'line',
         // data                : [12, 10, 12, 17,10],
-                               
-                            
+
+
         data                : <?php
                                 for($bulan=7;$bulan<12;$bulan++){
                                   $jumlah_nf[] = getSoldNonFiksi($bulan);
                                 }
-                              echo json_encode($jumlah_nf); 
-                             ?>,                       
+                              echo json_encode($jumlah_nf);
+                             ?>,
         backgroundColor     : 'transparent',
         borderColor         : '#007bff',
         pointBorderColor    : '#007bff',
@@ -409,11 +408,11 @@ $(function () {
       },
         {
           type                : 'line',
-          data                : <?php 
+          data                : <?php
                                   for($bulan=7;$bulan<12;$bulan++){
                                     $jumlah_f[] = getSoldFiksi($bulan);
                                   }
-                                  echo json_encode($jumlah_f); 
+                                  echo json_encode($jumlah_f);
                                 ?>,
           backgroundColor     : 'tansparent',
           borderColor         : '#ced4da',
@@ -469,11 +468,11 @@ $(function () {
 <!-- <!DOCTYPE html>
 <html lang="en">
 	<body>
-		
+
 
 	</body>
 	<footer>
 		<hr>
 		<h4>&copy; 2019 Litehub Inc. All rights reserved</h4>
 	</footer>
-</html>							
+</html>
