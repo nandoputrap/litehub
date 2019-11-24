@@ -11,6 +11,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Ebookhub</title>
 
+		<!-- FAVICON -->
+		<link rel="shortcut icon" href="images/favicon.png">
+
     <!-- ALL CSS HERE  -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
@@ -87,8 +90,9 @@
                   '.$_SESSION["namauser"].' <i class="fa fa-angle-down" aria-hidden="true"></i>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="#">Kategori 1</a>
-                  <a class="dropdown-item" href="#">Kategori 2</a>
+                  <a class="dropdown-item" href="lihat-profil.php">Profil</a>
+                  <a class="dropdown-item" href="status-pengajuan.php">Status Pengajuan</a>
+                  <a class="dropdown-item" href="buku-saya.php">Buku Saya</a>
                   <a href="services/logout.php" class="dropdown-item" href="#">Keluar</a>
                 </div>
               </li>

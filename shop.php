@@ -221,10 +221,10 @@
                   <ul class="pagination pagination-lg">
                     <li><a href="shop.php?offset=0">1</a></li>
                     <li><a href="shop.php?offset=6">2</a></li>
-                    <li><a href="shop.php?offset=12"">3</a></li>
-                    <li><a href="shop.php?offset=18"">4</a></li>
-                    <li><a href="shop.php?offset=24"">5</a></li>
-                    <li> <a href="shop.php?offset=30""><i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+                    <li><a href="shop.php?offset=12">3</a></li>
+                    <li><a href="shop.php?offset=18">4</a></li>
+                    <li><a href="shop.php?offset=24">5</a></li>
+                    <li> <a href="shop.php?offset=30"><i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
                   </ul>
                 </div>
 

@@ -13,7 +13,6 @@
             <!-- <h2>Nando Putra Pratama</h2> -->
           </div>
         </div>
-
         <div class="panel panel-default sidebar-menu">
           <div class="panel-harga">
             <div class="panel-heading text-center">
@@ -41,7 +40,7 @@
       </div>
 
       <div class="col-md-9">
-        <h1 class="register-title">Status Pengajuan</h1>
+        <h1 class="register-title">Detail Buku Terbit</h1>
 
         <div class="table-details">
           <table class="table table-hover table-bordered table-responsive">
@@ -63,12 +62,16 @@
                 <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</td>
               </tr>
               <tr>
-                <td><strong>Tanggal Unggah</strong></td>
+                <td><strong>Tanggal Terbit</strong></td>
                 <td>1 Januari 2019</td>
               </tr>
               <tr>
                 <td><strong>Status Pengajuan</strong></td>
-                <td> <h4 class="status">Dalam proses penyuntingan</h4></td>
+                <td>Sudah Diterbitkan</td>
+              </tr>
+              <tr>
+                <td><strong>Jumlah Terjual</strong></td>
+                <td> <h4 class="status">509</h4></td>
               </tr>
             </tbody>
           </table>
