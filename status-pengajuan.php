@@ -81,11 +81,11 @@ session_start();
           <table class="table table-hover table-bordered table-responsive">
             <thead>
               <tr>
-                <th class="text-center btn-danger">Judul Buku</th>
-                <th class="text-center btn-danger">Kategori</th>
-                <th class="text-center btn-danger">Tanggal Unggah</th>
-                <th class="text-center btn-danger">Status</th>
-                <th class="text-center btn-danger">Aksi</th>
+                <th class="text-center panel-danger">Judul Buku</th>
+                <th class="text-center panel-danger">Kategori</th>
+                <th class="text-center panel-danger">Tanggal Unggah</th>
+                <th class="text-center panel-danger">Status</th>
+                <th class="text-center panel-danger">Aksi</th>
               </tr>
             </thead>
             <?php
