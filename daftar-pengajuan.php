@@ -2,6 +2,24 @@
 require_once("templates/header.php");
 ?>
 
+<?php
+function connectDB() {
+  $servername = "sql12.freesqldatabase.com";
+  $username = "sql12310568";
+  $password = "wmiLAF7a6g";
+  $dbname = "sql12310568";
+
+  // Create connection
+  $conn = mysqli_connect($servername, $username, $password, $dbname);
+
+  // Check connection
+  if (!$conn) {
+    die("Connection failed: " + mysqli_connect_error());
+  }
+  return $conn;
+}
+?>
+
 <div class="daftar-pengajuan section-margin">
   <div class="container">
 
@@ -46,7 +64,7 @@ require_once("templates/header.php");
                   <a href="daftar-pengajuan.php">Daftar Pengajuan</a>
                 </li>
                 <li>
-                  <a href="status-pengajuan.php">Status Pengajuan</a>
+                  <a href="status-pengajuan.php">Daftar </a>
                 </li>
               </ul>
             </div>
@@ -76,8 +94,8 @@ require_once("templates/header.php");
                 <td class="text-center">Nando P. Pratama</td>
                 <td class="text-center">Komputer</td>
                 <td class="text-center">1 Januari 2019</td>
-                <td class="text-center"><button type="button" class="btn btn-info" onclick="window.location='status-pengajuan-detail-editor.php'"> <i class="fa fa-info"></i> &nbsp;Detail</button></td>
                 <td class="text-center"><button type="button" class="btn btn-primary" onclick="window.location='status-pengajuan-detail.php'"><i class="fa fa-download"></i> &nbsp;Unduh</button></td>
+                <td class="text-center"><button type="button" class="btn btn-warning" onclick="window.location='status-pengajuan-detail-editor.php'"> <i class="fa fa-edit"></i> &nbsp;Update</button></td>
               </tr>
 
               <tr>
@@ -85,8 +103,8 @@ require_once("templates/header.php");
                 <td class="text-center">Nando P. Pratama</td>
                 <td class="text-center">Komputer</td>
                 <td class="text-center">1 Januari 2019</td>
-                <td class="text-center"><button type="button" class="btn btn-info" onclick="window.location='status-pengajuan-detail-editor.php'"><i class="fa fa-info"></i> &nbsp;Detail</button></td>
-                                <td class="text-center"><button type="button" class="btn btn-primary" onclick="window.location='status-pengajuan-detail.php'"><i class="fa fa-download"></i> &nbsp;Unduh</button></td>
+                <td class="text-center"><button type="button" class="btn btn-primary" onclick="window.location='status-pengajuan-detail.php'"><i class="fa fa-download"></i> &nbsp;Unduh</button></td>
+                <td class="text-center"><button type="button" class="btn btn-warning" onclick="window.location='status-pengajuan-detail-editor.php'"><i class="fa fa-edit"></i> &nbsp;Update</button></td>
               </tr>
 
               <tr>
@@ -94,8 +112,8 @@ require_once("templates/header.php");
                 <td class="text-center">Nando P. Pratama</td>
                 <td class="text-center">Komputer</td>
                 <td class="text-center">1 Januari 2019</td>
-                <td class="text-center"><button type="button" class="btn btn-info" onclick="window.location='status-pengajuan-detail-editor.php'"><i class="fa fa-info"></i> &nbsp;Detail</button></td>
-                                <td class="text-center"><button type="button" class="btn btn-primary" onclick="window.location='status-pengajuan-detail.php'"><i class="fa fa-download"></i> &nbsp;Unduh</button></td>
+                <td class="text-center"><button type="button" class="btn btn-primary" onclick="window.location='status-pengajuan-detail.php'"><i class="fa fa-download"></i> &nbsp;Unduh</button></td>
+                <td class="text-center"><button type="button" class="btn btn-warning" onclick="window.location='status-pengajuan-detail-editor.php'"><i class="fa fa-edit"></i> &nbsp;Update</button></td>
               </tr>
 
               <tr>
@@ -103,8 +121,8 @@ require_once("templates/header.php");
                 <td class="text-center">Nando P. Pratama</td>
                 <td class="text-center">Komputer</td>
                 <td class="text-center">1 Januari 2019</td>
-                <td class="text-center"><button type="button" class="btn btn-info" onclick="window.location='status-pengajuan-detail-editor.php'"><i class="fa fa-info"></i> &nbsp;Detail</button></td>
-                                <td class="text-center"><button type="button" class="btn btn-primary" onclick="window.location='status-pengajuan-detail.php'"><i class="fa fa-download"></i> &nbsp;Unduh</button></td>
+                <td class="text-center"><button type="button" class="btn btn-primary" onclick="window.location='status-pengajuan-detail.php'"><i class="fa fa-download"></i> &nbsp;Unduh</button></td>
+                <td class="text-center"><button type="button" class="btn btn-warning" onclick="window.location='status-pengajuan-detail-editor.php'"><i class="fa fa-edit"></i> &nbsp;Update</button></td>
               </tr>
 
             </tbody>
