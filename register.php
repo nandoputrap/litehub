@@ -11,19 +11,13 @@
 
       <div class="col-md-9 form-register-group">
         <form action="services/register.php" method="post">
-          <input type="text" class="form-control form-register" placeholder="Nama lengkap...">
-          <input type="text" class="form-control form-register" placeholder="Nama pengguna...">
-          <input type="text" class="form-control form-register" id="insert-username" name="username" placeholder="Username...">
-          <input type="password" class="form-control form-register" id="insert-password" name="password" placeholder="Kata sandi...">
-          <input type="password" class="form-control form-register" placeholder="Ulangi kata sandi...">
-          <select class="form-control form-register" id="insert-role" name="role" placeholder="Role">
-            <option>User</option>
-            <option>Admin</option>
-            <option>Penulis</option>
-            <option>Editor</option>
-          </select>
+          <input type="text" class="form-control form-register" placeholder="Nama lengkap..." required>
+          <input type="text" class="form-control form-register" placeholder="Nama pengguna..." required>
+          <input type="email" class="form-control form-register" id="insert-username" name="username" placeholder="E-mail..." required>
+          <input type="password" class="form-control form-register" id="insert-password" name="password" placeholder="Kata sandi..." required>
+          <input type="password" class="form-control form-register" placeholder="Ulangi kata sandi..." required>
           <label class="checkbox-inline">
-          <input type="checkbox" value="">Dengan pembuatan akun, Anda menyetujui <a href="syarat-dan-ketentuan.php">syarat & ketentuan</a> dari Ebookhub
+          <input type="checkbox" value="" required>Dengan pembuatan akun, Anda menyetujui <a href="syarat-dan-ketentuan.php">syarat & ketentuan</a> dari Ebookhub
           </label>
 
           <input type="hidden" id="insert-command" name="command" value="insert">
