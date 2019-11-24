@@ -7,11 +7,18 @@
 
     <div class="panel-body">
       <ul class="nav nav-pills nav-stacked category-menu">
-        <li><a href="#">Nama Kategori</a></li>
-        <li><a href="#">Nama Kategori</a></li>
-        <li><a href="#">Nama Kategori</a></li>
-        <li><a href="#">Nama Kategori</a></li>
-        <li><a href="#">Nama Kategori</a></li>
+      <?php
+        $daftarkategori = daftarKategori("category");
+        $limit = 0;
+        while ($row = mysqli_fetch_row($daftarkategori)) {
+          if ($limit < 5) {
+            echo '
+            <li><a href="#">'.$row[1].'</a></li>
+            ';
+            $limit++;
+          }
+        }
+      ?>
       </ul>
     </div>
   </div>

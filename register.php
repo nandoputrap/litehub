@@ -2,6 +2,24 @@
   require_once("templates/header.php");
 ?>
 
+<?php
+  function connectDB() {
+		$servername = "sql12.freesqldatabase.com";
+		$username = "sql12310568";
+		$password = "wmiLAF7a6g";
+		$dbname = "sql12310568";
+
+		// Create connection
+		$conn = mysqli_connect($servername, $username, $password, $dbname);
+
+		// Check connection
+		if (!$conn) {
+			die("Connection failed: " + mysqli_connect_error());
+		}
+		return $conn;
+	}
+?>
+
 <div class="register">
   <div class="container">
     <div class="row">
@@ -11,9 +29,9 @@
 
       <div class="col-md-9 form-register-group">
         <form action="services/register.php" method="post">
-          <input type="text" class="form-control form-register" placeholder="Nama lengkap..." required>
-          <input type="text" class="form-control form-register" id="insert-username" placeholder="Nama pengguna..." required>
-          <input type="email" class="form-control form-register" id="insert-email" placeholder="E-mail..." required>
+          <input type="text" class="form-control form-register" name="lengkap" placeholder="Nama lengkap..." required>
+          <input type="text" class="form-control form-register" name="pengguna" id="insert-username" placeholder="Nama pengguna..." required>
+          <input type="email" class="form-control form-register" name="email" id="insert-email" placeholder="E-mail..." required>
           <input type="password" class="form-control form-register" id="insert-password" name="password" placeholder="Kata sandi..." required>
           <input type="password" class="form-control form-register" placeholder="Ulangi kata sandi..." required>
           <label class="checkbox-inline">

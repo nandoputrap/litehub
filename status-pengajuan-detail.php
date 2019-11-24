@@ -1,6 +1,8 @@
 <?php
   require_once("templates/header.php");
-  function connectDB() {
+  session_start();
+	function connectDB() {
+		// require 'config/connect.php';
 		$servername = "sql12.freesqldatabase.com";
 		$username = "sql12310568";
 		$password = "wmiLAF7a6g";
@@ -15,6 +17,13 @@
 		}
 		return $conn;
 	}
+
+	if (isset($_GET['id'])) {
+		$no = $_GET['id'];
+	  }
+	  else {
+		header('Location:unggah.php');
+	  }
 ?>
 
 <div class="status-pengajuan-detail section-margin">
