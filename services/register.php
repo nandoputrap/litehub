@@ -33,9 +33,11 @@
 		// username and password sent from form 
 		session_start();
 		
-		$username = $_POST['username'];
+		// $username = $_POST['username'];
+		$username = $_POST['email'];
         $password = $_POST['password']; 
-        $role = strtolower($_POST['role']); 
+		// $role = strtolower($_POST['role']); 
+		$role = "user"; 
         
         $daftaruser = daftarUser("user");
 		$sdhAda = false;

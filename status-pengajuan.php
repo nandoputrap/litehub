@@ -34,6 +34,24 @@ session_start();
 	}
 ?>
 
+<?php
+function connectDB() {
+  $servername = "sql12.freesqldatabase.com";
+  $username = "sql12310568";
+  $password = "wmiLAF7a6g";
+  $dbname = "sql12310568";
+
+  // Create connection
+  $conn = mysqli_connect($servername, $username, $password, $dbname);
+
+  // Check connection
+  if (!$conn) {
+    die("Connection failed: " + mysqli_connect_error());
+  }
+  return $conn;
+}
+?>
+
 <div class="status-pengajuan-detail section-margin">
   <div class="container">
 
@@ -55,10 +73,16 @@ session_start();
             <div class="panel-body">
               <ul class="nav nav-pills nav-stacked category-menu">
                 <li>
-                  <a href="edit-profil.php">Edit Profil</a>
+                  <a href="lihat-profil.php">Profil</a>
+                </li>
+                <li>
+                  <a href="edit-password.php">Edit Password</a>
                 </li>
                 <li class="active-profil">
                   <a href="status-pengajuan.php">Status Pengajuan</a>
+                </li>
+                <li>
+                  <a href="buku-saya.php">Buku Saya</a>
                 </li>
               </ul>
             </div>
