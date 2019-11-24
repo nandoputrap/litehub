@@ -1,6 +1,5 @@
 <?php
   require_once("templates/header.php");
-
   session_start();
 	function connectDB() {
 		// require 'config/connect.php';
