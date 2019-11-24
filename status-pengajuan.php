@@ -24,7 +24,7 @@ session_start();
 	function daftarBuku($table) {
 		$conn = connectDB();
 
-		$sql = "SELECT no, title, author, category, description, file, upload_date, status FROM $table";
+		$sql = "SELECT no, title, author, category, description, file, upload_date, status FROM $table where author = '".$_SESSION["namauser"]."'";
 
 		if(!$result = mysqli_query($conn, $sql)) {
 			die("Error: $sql");
