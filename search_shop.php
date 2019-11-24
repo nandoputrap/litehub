@@ -10,42 +10,30 @@
 		$username = "sql12310568";
 		$password = "wmiLAF7a6g";
 		$dbname = "sql12310568";
-
+		
 		// Create connection
 		$conn = mysqli_connect($servername, $username, $password, $dbname);
-
+		
 		// Check connection
 		if (!$conn) {
 			die("Connection failed: " + mysqli_connect_error());
 		}
 		return $conn;
 	}
-
-	function daftarBuku($table) {
-		$conn = connectDB();
-		if (isset($_GET['offset'])) {
-			$no = $_GET['offset'];
-			$sql = "SELECT book_id, img_path, title, author, publisher, quantity FROM $table LIMIT 6 OFFSET $no";
-		}else{
-			$sql = "SELECT book_id, img_path, title, author, publisher, quantity FROM $table LIMIT 6 OFFSET 0";
-		}
-
-		if(!$result = mysqli_query($conn, $sql)) {
-			die("Error: $sql");
-		}
-		mysqli_close($conn);
-		return $result;
-	}
-
-	function getbook() {
+	
+    function daftarBuku($table) {
+		$query = $_GET['query']; 
+    // gets value sent over search form
+     
+    	$min_length = 3;
 		$conn = connectDB();
 		
-		$sql = "SELECT count(*) FROM book";
+		$sql = "SELECT book_id, img_path, title, author, publisher, quantity FROM $table
+		WHERE (`title` LIKE '%".$query."%') OR (`author` LIKE '%".$query."%')";
 		
 		if(!$result = mysqli_query($conn, $sql)) {
 			die("Error: $sql");
 		}
-
 		mysqli_close($conn);
 		return $result;
 	}
@@ -93,7 +81,7 @@
 
 	function showActButton($arraysubmission, $bookid, $stocknum) {
 		$flag = false;
-		for ($i=0; $i < count($arraysubmission); $i++) {
+		for ($i=0; $i < count($arraysubmission); $i++) { 
 			if ($arraysubmission[$i] == $bookid) {
 				echo '
 				<form action="daftar.php" method="post">
@@ -120,7 +108,7 @@
 
 	function insertBuku() {
 		$conn = connectDB();
-
+		
 		$displayBuku = $_POST['displayBuku'];
 		$judulBuku = $_POST['judulBuku'];
 		$pengarangBuku = $_POST['pengarangBuku'];
@@ -131,7 +119,7 @@
 		$daftarbuku = daftarBuku("book");
 		$sdhAda = false;
 		$bookid = 0;
-		while ($row = mysqli_fetch_row($daftarbuku)) {
+		while ($row = mysqli_fetch_row($daftarbuku)) {	
 			if($row[2] == $judulBuku) {
 				$sdhAda = true;
 				$bookid = $row[0];
@@ -139,7 +127,7 @@
 			}
 		}
 		$_SESSION["titlebookadded"] = $judulBuku;
-
+		
 		if($sdhAda == true) {
 			$sql = "UPDATE book SET quantity = quantity + $stokBuku where book_id = $bookid";
 		} else {
@@ -164,7 +152,7 @@
 			balikBuku($_POST['book_id'],$_SESSION["user_id"]);
 		}
 	}
-
+	
 ?>
 
 <div class="shop">
@@ -184,14 +172,7 @@
       </div>
 
       <div class="col-md-9">
-	  	<?php
-		$count = getbook();
-		while ($row = mysqli_fetch_row($count)) {
-			echo '
-		  <h4>Menampilkan 1-6 dari '.$row[0].' e-book Teknologi</h4>
-		  ';
-		}
-		?>
+        <h4>Menampilkan 1-6 dari 200 e-book Teknologi</h4>
 
         <div class="row">
           <div class="product">
@@ -213,15 +194,15 @@
                           <img class="card-img-top img-fluid" style="height:300px;" src="'.$row[1].'" alt="card-img">
                           <div class="card-body">
                           <a href="details.php?id='.$row[0].'"><h3 class="card-title ebook-title" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><strong>'.$row[2].'</strong></h3></a>
-                            <p class="card-text ebook-author" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">'.$row[3].'</p>
-                            <p class="card-text ebook-author" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">'.$row[4].'</p>';
+                            <p class="card-text ebook-author" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Penulis : '.$row[3].'</p>
+                            <p class="card-text ebook-author" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Penerbit : '.$row[4].'</p>';
                             if($row[5] > 0) {
                               echo '<h4 class="card-title ebook-price"><strong>Rp. '.$row[5].'</strong></h4>';
                             } else {
                               echo '<h4 class="card-title ebook-price"><strong>Stok Kosong</strong></h4>';
                             }
                             echo '
-                            <a href="cart.php?id='.$row[0].'" class="btn btn-lg btn-danger btn-beli text-capitalize"><i class="fa fa-shopping-cart"> </i>&nbsp; Beli</a>
+                            <a class="btn btn-lg btn-danger btn-beli text-capitalize"><i class="fa fa-shopping-cart"> </i>&nbsp; Beli</a>
                             ';
                             echo '
                         </div>
@@ -231,30 +212,7 @@
             }
           ?>
 
-
-
           </div>
-        </div>
-
-        <div class="row">
-          <div class="row text-center">
-                  <ul class="pagination pagination-lg">
-				  <?php
-					$count = getbook();
-					while ($row = mysqli_fetch_row($count)) {
-						$sum = 1;
-						for ($i=0; $i < $row[0]; $i+=6) { 
-							echo '
-							<li><a href="shop.php?offset='.$i.'">'.$sum.'</a></li>
-						';
-						$sum+=1;	
-						}
-					}
-				?>
-                    <li> <a href="""><i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
-                  </ul>
-                </div>
-
         </div>
       </div>
     </div>

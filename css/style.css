@@ -25,7 +25,7 @@ h4 {
   /* margin-bottom: 30px; */
 }
 .jumbotron {
-  background-color: #f4511e;
+  background-color: #0A5494;
   color: #fff;
   padding: 100px 25px;
   font-family: Montserrat, sans-serif;
@@ -37,11 +37,11 @@ h4 {
   background-color: #f6f6f6;
 }
 .logo-small {
-  color: #f4511e;
+  color: #0A5494;
   font-size: 50px;
 }
 .logo {
-  color: #f4511e;
+  color: #0A5494;
   font-size: 200px;
 }
 .thumbnail {
@@ -56,13 +56,13 @@ h4 {
 }
 .carousel-control.right, .carousel-control.left {
   background-image: none;
-  color: #f4511e;
+  color: #0A5494;
 }
 .carousel-indicators li {
-  border-color: #f4511e;
+  border-color: #0A5494;
 }
 .carousel-indicators li.active {
-  background-color: #f4511e;
+  background-color: #0A5494;
 }
 .item h4 {
   font-size: 19px;
@@ -75,7 +75,7 @@ h4 {
   font-style: normal;
 }
 .panel {
-  border: 1px solid #f4511e;
+  border: 1px solid #0A5494;
   border-radius:0 !important;
   transition: box-shadow 0.5s;
 }
@@ -83,13 +83,13 @@ h4 {
   box-shadow: 5px 0px 40px rgba(0,0,0, .2);
 }
 .panel-footer .btn:hover {
-  border: 1px solid #f4511e;
+  border: 1px solid #0A5494;
   background-color: #fff !important;
-  color: #f4511e;
+  color: #0A5494;
 }
 .panel-heading {
   color: #fff !important;
-  background-color: #f4511e !important;
+  background-color: #0A5494 !important;
   padding: 25px;
   border-bottom: 1px solid transparent;
   border-top-left-radius: 0px;
@@ -109,7 +109,7 @@ h4 {
 }
 .panel-footer .btn {
   margin: 15px 0;
-  background-color: #f4511e;
+  background-color: #0A5494;
   color: #fff;
 }
 .navbar {
@@ -129,7 +129,7 @@ h4 {
   color: black !important;
 }
 .navbar-nav li a:hover, .navbar-nav li.active a {
-  color: #f4511e !important;
+  color: #0A5494;
   background-color: #fff !important;
 }
 .navbar-default .navbar-toggle {
@@ -139,7 +139,7 @@ h4 {
 footer .glyphicon {
   font-size: 20px;
   margin-bottom: 20px;
-  color: #f4511e;
+  color: #0A5494;
 }
 .slideanim {visibility:hidden;}
 .slide {
@@ -190,6 +190,13 @@ footer .glyphicon {
         box-shadow: 0 0 5px 2px rgba(0, 0, 0, .5);
 }
 
+.section-margin{
+  margin: 100px auto;
+}
+
+.section-mini-margin{
+  margin: 20px auto;
+}
 
 
 
@@ -203,6 +210,10 @@ footer .glyphicon {
   height: 100%;
   /* padding: 15px; /* firefox bug fix */ */
   width: auto;
+}
+
+.dropdown-menu{
+  padding: 20px;
 }
 /* End navigation */
 
@@ -345,6 +356,10 @@ box-shadow: 5px 5px 20px 0px rgba(0,0,0,0.5);
 
 .btn-beli{
   margin: 20px auto;
+}
+
+.btn-hapus{
+  margin: 10px auto;
 }
 /* End Baru diterbitkan */
 
@@ -542,3 +557,241 @@ box-shadow: 5px 5px 20px 0px rgba(0,0,0,0.5);
   color: white;
 }
 /* End footer */
+
+
+/* SIDEBAR.PHP */
+
+.sidebar-menu{
+  margin-bottom: 50px;
+}
+
+/* SIDEBAR.PHP */
+
+
+/* SHOP .PHP */
+.shop{
+  /* margin-top: 100px; */
+}
+
+.card-img-top{
+  max-width: 100%;
+  max-height: auto;
+}
+
+.card-product{
+  margin: 30px auto;
+}
+
+.active-pagination{
+  background-color: #D72323 !important;
+}
+
+.pagination{
+  /* margin-left: 20px; */
+}
+/* SHOP .PHP */
+
+/* DETAILS.PHP */
+.card-product-details{
+  margin-bottom: 30px;
+}
+
+#ebook-title{
+  color: #0A5494;
+  font-weight: bold;
+  margin: 10px auto;
+}
+
+.description-box{
+  padding: 0 30px;
+}
+
+.ebook-price-single{
+  font-size: 48px;
+}
+/* DETAILS.PHP */
+
+/* CART.PHP */
+.cart{
+  /* margin-top: 100px; */
+}
+
+.img-cart{
+  max-width: 100%;
+  max-height: auto;
+}
+
+/* .table-cart{
+  padding: 50px;
+} */
+
+.cart-footer{
+  margin-top: 
+}
+
+/* CART.PHP */
+
+/* LOGIN */
+.modal-content{
+  margin-top: 100px;
+}
+
+.input-login{
+  padding: 0 10%;
+}
+
+.input-login input,
+.input-login button{
+  height: 50px;
+  margin: 20px auto;
+  width: 100%;
+}
+
+.login-social{
+  margin: 50px auto;
+}
+
+.belum-daftar{
+  margin-top: 50px;
+}
+
+.modal-footer{
+  padding: 20px 50px 50px 50px;
+}
+
+.btn-google{
+  background-color: #939393;
+  border: none;
+}
+
+.btn-google:hover{
+  background-color: #D72323;
+}
+/* LOGIN */
+
+/* REGISTER.PHP */
+.register{
+  margin: 50px;
+}
+
+.form-register-group{
+  padding: 0 50px 0 0;
+}
+
+.form-register{
+  height: 50px;
+  margin: 10px auto 30px auto;
+  /* padding: 0 50px; */
+}
+
+.btn-register{
+  margin-top: 30px;
+}
+/* REGISTER.PHP */
+
+/* METODE-PEMBAYARAN.PHP */
+.img-bank{
+  max-width: 100%;
+  max-height: auto;
+}
+
+.radio-bank{
+  margin: 20px auto;
+}
+
+.panel-ringkasan-belanja{
+  border: 1px solid #0A5494;
+}
+
+.metode-pembayaran{
+  margin-top: 100px;
+}
+
+.panel-transfer{
+  background-color: #D72323 !important;
+  border: 1px solid #D72323 !important;
+}
+
+.panduan-pembayaran{
+  margin-bottom: 100px;
+}
+/* METODE-PEMBAYARAN.PHP */
+
+/* UNGGAH.PHP */
+.form-group-kategori{
+  padding-left: 10px;
+  margin-top: -30px;
+}
+/* UNGGAH.PHP */
+
+/* STATUS-PENGAJUAN.PHP*/
+.status-pengajuan{
+  margin: 100px auto;
+}
+
+.p-status-pengajuan{
+  font-size: 24px;
+  color: #303030;
+  margin-bottom: 30px;
+}
+
+.p-head{
+  font-weight: 600;
+}
+
+.vertically-center{
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+.status{
+  color: #D72323;
+  padding-top: 0 !important;
+}
+/* STATUS-PENGAJUAN.PHP*/
+
+/* GOOGLE MAP */
+.map-container{
+overflow:hidden;
+padding-bottom:56.25%;
+position:relative;
+height:0;
+}
+
+.map-container iframe{
+left:0;
+top:0;
+height:100%;
+width:100%;
+position:absolute;
+}
+/* GOOGLE MAP */
+
+/* FAQ.PHP */
+.faq-group{
+  margin: 50px auto;
+}
+/* FAQ.PHP */
+
+/* EDIT PROFIL.PHP */
+.form-profil{
+  height: 50px;
+}
+
+.active-profil{
+  background-color: #eeeeee !important;
+}
+/* EDIT PROFIL.PHP */
+
+/* about.php */
+.visi-ebookhub{
+  margin-bottom: 50px;
+}
+
+.visi-text{
+  font-style: italic;
+}
+/* about.php */
