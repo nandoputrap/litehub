@@ -722,6 +722,10 @@ box-shadow: 5px 5px 20px 0px rgba(0,0,0,0.5);
 .panduan-pembayaran{
   margin-bottom: 100px;
 }
+
+.col-pembayaran{
+  margin: auto 15px;
+}
 /* METODE-PEMBAYARAN.PHP */
 
 /* UNGGAH.PHP */

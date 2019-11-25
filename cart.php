@@ -30,7 +30,7 @@ function selectRowsFromSubmission() {
   }
   mysqli_close($conn);
   return $result;
-} 
+}
 
 function selectBooks() {
   $pinjam = selectRowsFromSubmission();
@@ -105,7 +105,7 @@ if(!isset($_SESSION['namauser'])) {
                         }
                       }else{
                         $arraybook = selectBooks();
-                        for ($i=0; $i < count($arraybook); $i++) { 
+                        for ($i=0; $i < count($arraybook); $i++) {
                           $buku = selectAllFromBook($arraybook[$i]);
                           while ($row = mysqli_fetch_row($buku)) {
                             echo '
@@ -147,7 +147,7 @@ if(!isset($_SESSION['namauser'])) {
                       }else{
                         $arraybook = selectBooks();
                         $sum = 0;
-                        for ($i=0; $i < count($arraybook); $i++) { 
+                        for ($i=0; $i < count($arraybook); $i++) {
                           $buku = selectAllFromBook($arraybook[$i]);
                           while ($row = mysqli_fetch_row($buku)) {
                             $sum = $sum + $row[6];
