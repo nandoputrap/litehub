@@ -61,15 +61,15 @@ function selectAllFromBook($book_id) {
       <div class="col-md-4 form-register-group">
         <form class="" action="" method="post">
           <div class="radio">
-            <label><input type="radio" name="optradio"> <img src="images/bni.png" alt="" class="img-bank radio-bank"> </label>
+            <label><input type="radio" name="optradio"> <img src="https://i.ibb.co/7td7Zmp/bni.png" alt="" class="img-bank radio-bank"> </label>
           </div>
 
           <div class="radio">
-            <label><input type="radio" name="optradio"> <img src="images/bri.png" alt="" class="img-bank radio-bank"> </label>
+            <label><input type="radio" name="optradio"> <img src="https://i.ibb.co/7bvW3Vd/bri.png" alt="" class="img-bank radio-bank"> </label>
           </div>
 
           <div class="radio">
-            <label><input type="radio" name="optradio"> <img src="images/bca.png" alt="" class="img-bank radio-bank"> </label>
+            <label><input type="radio" name="optradio"> <img src="https://i.ibb.co/g7Yk44X/bca.png" alt="" class="img-bank radio-bank"> </label>
           </div>
 
         </form>
@@ -78,11 +78,11 @@ function selectAllFromBook($book_id) {
       <div class="col-md-4 form-register-group">
         <form class="" action="" method="post">
           <div class="radio">
-            <label><input type="radio" name="optradio"> <img src="images/mandiri.png" alt="" class="img-bank radio-bank"> </label>
+            <label><input type="radio" name="optradio"> <img src="https://i.ibb.co/kJ2MTnt/mandiri.png" alt="" class="img-bank radio-bank"> </label>
           </div>
 
           <div class="radio">
-            <label><input type="radio" name="optradio"> <img src="images/gopay.png" alt="" class="img-bank radio-bank"> </label>
+            <label><input type="radio" name="optradio"> <img src="https://i.ibb.co/172GzxX/gopay.png" alt="" class="img-bank radio-bank"> </label>
           </div>
 
 
@@ -124,8 +124,8 @@ function selectAllFromBook($book_id) {
                     }
                   }
                   echo '
-                  <li><p href="#">Jumlah '.$sum.'</p></li>
-                  <li><p href="#">Total '.$qty.'</p></li>
+                  <li><p href="#">Jumlah '.$qty.'</p></li>
+                  <li><p href="#">Total '.$sum.'</p></li>
                   ';
                 }
                 ?>
