@@ -92,7 +92,7 @@ function selectAllFromBook($book_id) {
       <div class="col-md-3 pull-right">
         <div class="panel-ringkasan-belanja">
           <div class="panel-heading">
-            <h3 class="panel-title">Ringkasan belanja</h3>
+            <h3 class="panel-title">Ringkasan Belanja</h3>
           </div>
 
           <div class="panel-body">
@@ -130,7 +130,7 @@ function selectAllFromBook($book_id) {
                 }
                 ?>
 
-              <button type="button" class="btn btn-primary btn-block btn-ebookhub btn-register">Bayar sekarang</button>
+              <button type="button" class="btn btn-primary btn-block btn-ebookhub btn-register">Bayar Sekarang</button>
             </ul>
           </div>
         </div>
