@@ -28,7 +28,7 @@ function selectRowsFromSubmission() {
   }
   mysqli_close($conn);
   return $result;
-}
+} 
 
 function selectBooks() {
   $pinjam = selectRowsFromSubmission();
@@ -72,7 +72,8 @@ function selectAllFromBook($book_id) {
             <label><input type="radio" name="optradio"> <img src="https://i.ibb.co/g7Yk44X/bca.png" alt="" class="img-bank radio-bank"> </label>
           </div>
 
-        <div class="col-md-1">
+        </form>
+      </div>
 
       <div class="col-md-4 form-register-group">
         <form class="" action="" method="post">
@@ -85,24 +86,7 @@ function selectAllFromBook($book_id) {
           </div>
 
 
-          </form>
-        </div>
-
-        <div class="col-md-1">
-
-        </div>
-
-        <div class="col-md-2 form-register-group">
-          <form class="" action="" method="post">
-
-
-            <div class="radio">
-              <label><input type="radio" name="optradio"> <img src="images/gopay.png" alt="" class="img-bank radio-bank"> </label>
-            </div>
-
-
-          </form>
-        </div>
+        </form>
       </div>
 
       <div class="col-md-3 pull-right">
@@ -132,7 +116,7 @@ function selectAllFromBook($book_id) {
                   $arraybook = selectBooks();
                   $sum = 0;
                   $qty = 0;
-                  for ($i=0; $i < count($arraybook); $i++) {
+                  for ($i=0; $i < count($arraybook); $i++) { 
                     $buku = selectAllFromBook($arraybook[$i]);
                     while ($row = mysqli_fetch_row($buku)) {
                       $sum = $sum + $row[6];
