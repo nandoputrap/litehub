@@ -128,7 +128,7 @@ if(!isset($_SESSION['namauser'])) {
                       ?>
 
                     <tr>
-                      <th> <a href="shop.php">Lanjutkan belanja</a> </th>
+                      <th> <a href="shop.php"> <i class="fa fa-angle-left"></i> &nbsp; Lanjutkan belanja</a> </th>
                       <th class="pull-right">Total</th>
                       <?php
                       $conn = connectDB();
@@ -140,8 +140,8 @@ if(!isset($_SESSION['namauser'])) {
                         if (mysqli_num_rows($detail_unggah) > 0) {
                           $row = mysqli_fetch_assoc($detail_unggah);
                           echo '
-                          <th>'.$row['quantity'].'</th>
-                          <th> <a href="metode-pembayaran.php?id='.$no.'">Lanjut ke pembayaran</a> </th>
+                          <th> Rp. '.$row['quantity'].'</th>
+                          <th> <a href="metode-pembayaran.php?id='.$no.'">Lanjut ke pembayaran &nbsp;<i class="fa fa-angle-right"></i></a> </th>
                           ';
                         }
                       }else{

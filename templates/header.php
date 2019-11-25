@@ -96,7 +96,7 @@
 
               <form class="navbar-form" role="search" action="search_shop.php" method="GET">
                   <div class="input-group">
-                      <input type="text" class="form-control" placeholder="Search" name="query">
+                      <input type="text" class="form-control" placeholder="Kata Kunci..." name="query">
                       <div class="input-group-btn">
                           <button class="btn btn-default hidden-xs" type="submit">Cari</button>
                       </div>
