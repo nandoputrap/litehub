@@ -92,7 +92,7 @@ function selectAllFromBook($book_id) {
       <div class="col-md-3 pull-right">
         <div class="panel-ringkasan-belanja">
           <div class="panel-heading">
-            <h3 class="panel-title">Ringkasan belanja</h3>
+            <h3 class="panel-title">Ringkasan Belanja</h3>
           </div>
 
           <div class="panel-body">
@@ -108,8 +108,8 @@ function selectAllFromBook($book_id) {
                   if (mysqli_num_rows($detail_unggah) > 0) {
                     $row = mysqli_fetch_assoc($detail_unggah);
                     echo '
-                    <li><p href="#">Jumlah 1</p></li>
-                    <li><p href="#">Total '.$row['quantity'].'</p></li>
+                    <li><p href="#">Jumlah: Rp. '.$row['quantity'].'</p></li>
+                    <li><p href="#">Total Barang:  1</p></li>
                     ';
                   }
                 }else{
@@ -130,7 +130,7 @@ function selectAllFromBook($book_id) {
                 }
                 ?>
 
-              <button type="button" class="btn btn-primary btn-block btn-ebookhub btn-register">Bayar sekarang</button>
+              <button type="button" class="btn btn-primary btn-block btn-ebookhub btn-register">Bayar Sekarang</button>
             </ul>
           </div>
         </div>

@@ -307,7 +307,7 @@ function getSoldNonFiksi($bulan){
 <script src="dist/js/adminlte.js"></script>
 <script src="js/Chart.min.js"></script>
 <?php
-   $label = ['JULI', 'AGUSTUS', 'SEPTEMBER', 'OKTOBER', 'NOVEMBER'];
+   $label = ['AGUSTUS', 'SEPTEMBER', 'OKTOBER', 'NOVEMBER', 'DESEMBER'];
 ?>
 <script>
 $(function () {
@@ -331,7 +331,7 @@ $(function () {
           backgroundColor: '#007bff',
           borderColor    : '#007bff',
       data           : <?php
-                        for($bulan=7;$bulan<12;$bulan++){
+                        for($bulan=8;$bulan<=12;$bulan++){
                           $jumlah_proses[] = getStatus($bulan, "Dalam Proses Penyuntingan");
                         }
                        echo json_encode($jumlah_proses); ?>
@@ -340,7 +340,7 @@ $(function () {
           backgroundColor: '#ced4da',
           borderColor    : '#ced4da',
 		  data           : <?php
-                        for($bulan=7;$bulan<12;$bulan++){
+                        for($bulan=8;$bulan<=12;$bulan++){
                           $jumlah_diterima[] = getStatus($bulan, "Sudah Diterima");
                         }
                        echo json_encode($jumlah_diterima); ?>
@@ -395,7 +395,7 @@ $(function () {
 
 
         data                : <?php
-                                for($bulan=7;$bulan<12;$bulan++){
+                                for($bulan=8;$bulan<=12;$bulan++){
                                   $jumlah_nf[] = getSoldNonFiksi($bulan);
                                 }
                               echo json_encode($jumlah_nf);
@@ -409,7 +409,7 @@ $(function () {
         {
           type                : 'line',
           data                : <?php
-                                  for($bulan=7;$bulan<12;$bulan++){
+                                  for($bulan=8;$bulan<=12;$bulan++){
                                     $jumlah_f[] = getSoldFiksi($bulan);
                                   }
                                   echo json_encode($jumlah_f);

@@ -34,7 +34,9 @@
 		session_start();
 		
 		// $username = $_POST['username'];
-		$username = $_POST['email'];
+		$username = $_POST['pengguna'];
+		$email = $_POST['email'];
+		$nama_lengkap = $_POST['lengkap'];
         $password = $_POST['password']; 
 		// $role = strtolower($_POST['role']); 
 		$role = "user"; 
@@ -50,13 +52,15 @@
 			$last = $row[0];
 		}
         $_SESSION["namauser"] = $username;
+        $_SESSION["email"] = $email;
+        $_SESSION["nama_lengkap"] = $nama_lengkap;
 		$_SESSION["role"] = $role;
 		$_SESSION["user_id"] = $last + 1;
 		
 		if($sdhAda == true) {
 			echo  "<script type='text/javascript'>alert('Register Gagal, username sudah ada');window.location = '../register.php';</script>";
 		} else {
-			$sql = "INSERT INTO user(username, password, role) VALUES('$username', '$password', LOWER('$role'))";
+			$sql = "INSERT INTO user(username, password, role, email, nama_lengkap) VALUES('$username', '$password', LOWER('$role'), '$email', '$nama_lengkap')";
 		}
 
 		if($result = mysqli_query($conn, $sql)) {

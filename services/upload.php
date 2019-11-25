@@ -1,6 +1,8 @@
 <?php
 // error_reporting(E_ALL);
 // ini_set('display_errors',1);
+    session_start();
+
 function connectDB() {
     $servername = "sql12.freesqldatabase.com";
     $username = "sql12310568";
@@ -16,6 +18,7 @@ function connectDB() {
     }
     return $conn;
 }
+
 $target_dir = __DIR__ . "/../file_buku/";
 $name_file = $_FILES["fileToUpload"]["name"];
 $target_file = $target_dir . basename($name_file);
@@ -66,13 +69,14 @@ if ($uploadOk == 0) {
         $file = $_POST['fileBuku'];
         $tanggalUpload = date("Y-m-d");
         $status = 'Dalam Proses Penyuntingan';
+        $user_id = $_SESSION["namauser"];
         $_SESSION["titlebookadded"] = $judulBuku;
 		
-        $sql = "INSERT into unggah (title, author, category, description, file, upload_date, status) values('$judulBuku', '$namaPenulis', '$kategori', '$deskripsiBuku', '$filename', '$tanggalUpload', '$status')";
+        $sql = "INSERT into unggah (title, author, category, description, file, upload_date, status, user_id) values('$judulBuku', '$namaPenulis', '$kategori', '$deskripsiBuku', '$filename', '$tanggalUpload', '$status', '$user_id')";
 
         if($result = mysqli_query($conn, $sql)) {
             echo "New record created successfully <br/>";
-            header("Location: ../unggah.php");
+            header("Location: ../status-pengajuan.php");
         } 
         else {
             die("Error: $sql");

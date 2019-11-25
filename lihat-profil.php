@@ -39,12 +39,13 @@ if(!isset($_SESSION['namauser'])) {
         <div class="panel panel-default sidebar-menu">
           <div class="panel-harga">
             <div class="panel-heading text-center">
-            
+              <h3 class="panel-title">
               <?php
-                echo '
-                <h3 class="panel-title">'.$_SESSION['namauser'].'</h3>
-                ';
+                if (isset($_SESSION["namauser"])){
+                      echo$_SESSION["nama_lengkap"];
+              }
               ?>
+              </h3>
             </div>
 
             <div class="panel-body">
@@ -71,9 +72,29 @@ if(!isset($_SESSION['namauser'])) {
       <div class="col-md-9">
         <h1 class="register-title">Profil</h1>
 
+          <?php
+            if (isset($_SESSION["namauser"])){
+              echo '
+              <div class="form-group">
+                <label for="">Nama Lengkap:</label>
+                <input type="text" class="form-control form-register" value="'.$_SESSION["nama_lengkap"].'" disabled>
+              </div>
+    
+              <div class="form-group">
+                <label for="">Nama Pengguna:</label>
+                <input type="text" class="form-control form-register" value="'.$_SESSION["namauser"].'" disabled>
+              </div>
+    
+              <div class="form-group">
+                <label for="">E-mail:</label>
+                <input type="email" class="form-control form-register" value="'.$_SESSION["email"].'" disabled>
+              </div>
+  
+              ';
+            }
+          ?>
 
-
-          <div class="form-group">
+          <!-- <div class="form-group">
             <label for="">Nama Lengkap:</label>
             <input type="text" class="form-control form-register" value="Nando Putra Pratama" disabled>
           </div>
@@ -86,7 +107,7 @@ if(!isset($_SESSION['namauser'])) {
           <div class="form-group">
             <label for="">E-mail:</label>
             <input type="email" class="form-control form-register" value="nandoputrap@gmail.com" disabled>
-          </div>
+          </div> -->
 
 
 
