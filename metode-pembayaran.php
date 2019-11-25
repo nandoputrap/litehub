@@ -108,8 +108,8 @@ function selectAllFromBook($book_id) {
                   if (mysqli_num_rows($detail_unggah) > 0) {
                     $row = mysqli_fetch_assoc($detail_unggah);
                     echo '
-                    <li><p href="#">Jumlah '.$row['quantity'].'</p></li>
-                    <li><p href="#">Total 1</p></li>
+                    <li><p href="#">Jumlah: Rp. '.$row['quantity'].'</p></li>
+                    <li><p href="#">Total Barang:  1</p></li>
                     ';
                   }
                 }else{

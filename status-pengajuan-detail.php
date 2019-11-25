@@ -45,7 +45,7 @@
               <h3 class="panel-title">
               <?php
                 if (isset($_SESSION["namauser"])){
-                  echo$_SESSION["namauser"];
+                  echo$_SESSION["nama_lengkap"];
                 }
               ?>
               </h3>
