@@ -836,3 +836,9 @@ position:absolute;
 .form-publish{
   display: none;
 }
+
+/* TABEL HEADER */
+.tabel-header{
+  background-color: #D72323;
+  color: white;
+}
