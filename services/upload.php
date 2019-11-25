@@ -1,11 +1,7 @@
 <?php
 // error_reporting(E_ALL);
 // ini_set('display_errors',1);
-//   if(!isset($_SESSION['namauser'])) {
-    //     echo  "<script type='text/javascript'>alert('Silahkan Login/Register terlebih dahulu');window.location = './landing.php';</script>";
-    //   }
-    // session_start();
-    // require_once("templates/header.php");
+    session_start();
 
 function connectDB() {
     $servername = "sql12.freesqldatabase.com";
