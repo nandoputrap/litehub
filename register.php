@@ -2,6 +2,24 @@
   require_once("templates/header.php");
 ?>
 
+<?php
+  function connectDB() {
+		$servername = "sql12.freesqldatabase.com";
+		$username = "sql12310568";
+		$password = "wmiLAF7a6g";
+		$dbname = "sql12310568";
+
+		// Create connection
+		$conn = mysqli_connect($servername, $username, $password, $dbname);
+
+		// Check connection
+		if (!$conn) {
+			die("Connection failed: " + mysqli_connect_error());
+		}
+		return $conn;
+	}
+?>
+
 <div class="register">
   <div class="container">
     <div class="row">
@@ -10,17 +28,18 @@
       </div>
 
       <div class="col-md-9 form-register-group">
-        <form class="" action="" method="post">
-          <input type="text" class="form-control form-register" placeholder="Nama lengkap...">
-          <input type="text" class="form-control form-register" placeholder="Nama pengguna...">
-          <input type="email" class="form-control form-register" placeholder="E-mail...">
-          <input type="password" class="form-control form-register" placeholder="Kata sandi...">
-          <input type="password" class="form-control form-register" placeholder="Ulangi kata sandi...">
+        <form action="services/register.php" method="post">
+          <input type="text" class="form-control form-register" name="lengkap" placeholder="Nama lengkap..." required>
+          <input type="text" class="form-control form-register" name="pengguna" id="insert-username" placeholder="Nama pengguna..." required>
+          <input type="email" class="form-control form-register" name="email" id="insert-email" placeholder="E-mail..." required>
+          <input type="password" class="form-control form-register" id="insert-password" name="password" placeholder="Kata sandi..." required>
+          <input type="password" class="form-control form-register" placeholder="Ulangi kata sandi..." required>
           <label class="checkbox-inline">
-            <input type="checkbox" value="">Dengan pembuatan akun, Anda menyetujui <a href="#">syarat & ketentuan</a> dari Ebookhub
+          <input type="checkbox" value="" required>Dengan pembuatan akun, Anda menyetujui <a href="syarat-dan-ketentuan.php">syarat & ketentuan</a> dari Ebookhub
           </label>
 
-          <button type="button" class="btn btn-primary btn-block btn-ebookhub btn-register">Daftar</button>
+          <input type="hidden" id="insert-command" name="command" value="insert">
+          <button type="submit" class="btn btn-primary btn-block btn-ebookhub btn-register">Daftar</button>
         </form>
       </div>
 

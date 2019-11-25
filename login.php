@@ -34,21 +34,22 @@
 			$_SESSION["namauser"] = $row["username"];
 			$_SESSION["role"] = $row["role"];
 			
-			if ($row["role"] === "user"){
-				header("Location: shop.php");
-			}else if ($row["role"] === "penulis"){
-				header("Location: unggah.php");
-			}else if ($row["role"] === "editor"){
+			// if ($row["role"] === "user"){
+			// 	header("Location: shop.php");
+			// }else if ($row["role"] === "penulis"){
+			// 	header("Location: upload.php");
+      // }else 
+      if ($row["role"] === "editor"){
 				header("Location: unduh.php");
 			}else if ($row["role"] === "admin"){
 				header("Location: statistik.php");
 			}
 			else{
-				header("Location: daftar.php");
+				header("Location: landing.php");
 			}
 
 		}else {
-			echo  "<script type='text/javascript'>alert('Login Gagal');</script>";
+      echo  "<script type='text/javascript'>alert('Login Gagal');window.location = './landing.php';</script>";
 		}
 		
 	}
@@ -69,7 +70,7 @@
 
         <div class="modal-form text-center input-login">
         <form action="login.php" method="post">
-          <input type="text" id="insert-username" name="username" class="form-control" placeholder="Masukkan username..." required>
+          <input type="text" id="insert-username" name="username" class="form-control" placeholder="Masukkan E-mail..." required>
           <input type="password" id="insert-password" name="password" class="form-control" placeholder="Masukkan kata sandi..." required>
           <input type="hidden" id="insert-command" name="command" value="insert">
           <button type="submit" class="btn btn-primary btn-block btn-ebookhub">Masuk</button>

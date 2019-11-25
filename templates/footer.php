@@ -5,23 +5,23 @@
       <div class="col-md-4 col-sm-12">
         <h2>Tentang Kami</h2>
         <ul class="list-group">
-          <li class="li-footer"><a href="#">Tentang Kami</a></li>
-          <li class="li-footer"><a href="#">Kantor dan Workshop</a></li>
-          <li class="li-footer"><a href="#">Panduan Penggunaan</a></li>
+        <li class="li-footer"><a href="about.php">Tentang Kami</a></li>
+          <li class="li-footer"><a href="workshop.php">Kantor dan Workshop</a></li>
+          <li class="li-footer"><a href="panduan-penggunaan.php">Panduan Penggunaan</a></li>
         </ul>
       </div>
       <div class="col-md-4 col-sm-12">
         <h2>Lainnya</h2>
         <ul class="list-group">
-          <li class="li-footer"><a href="#">Syarat dan Ketentuan</a></li>
-          <li class="li-footer"><a href="#">Kebijakan dan Privasi</a></li>
-          <li class="li-footer"><a href="#">Bantuan dan FAQ</a></li>
-          <li class="li-footer"><a href="#">Kerja Sama</a></li>
+        <li class="li-footer"><a href="syarat-dan-ketentuan.php">Syarat dan Ketentuan</a></li>
+          <li class="li-footer"><a href="kebijakan-dan-privasi.php">Kebijakan dan Privasi</a></li>
+          <li class="li-footer"><a href="faq.php">Bantuan dan FAQ</a></li>
+          <li class="li-footer"><a href="kerja-sama.php">Kerja Sama</a></li>
         </ul>
       </div>
       <div class="col-md-4 col-sm-12">
         <h2>Pembayaran</h2>
-        <img src="images/payments.png" alt="payments" class="payments">
+        <img src="https://i.ibb.co/wM8WHBV/payments.png" alt="payments" class="payments">
       </div>
     </div>
 

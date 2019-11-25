@@ -9,21 +9,45 @@
 		$username = "sql12310568";
 		$password = "wmiLAF7a6g";
 		$dbname = "sql12310568";
-		
+
 		// Create connection
 		$conn = mysqli_connect($servername, $username, $password, $dbname);
-		
+
 		// Check connection
 		if (!$conn) {
 			die("Connection failed: " + mysqli_connect_error());
 		}
 		return $conn;
 	}
-	
+
 	function daftarBuku($table) {
 		$conn = connectDB();
-		
+
 		$sql = "SELECT book_id, img_path, title, author, publisher, quantity FROM $table";
+
+		if(!$result = mysqli_query($conn, $sql)) {
+			die("Error: $sql");
+		}
+		mysqli_close($conn);
+		return $result;
+  }
+  
+  function daftarNon($table) {
+		$conn = connectDB();
+		
+		$sql = "SELECT * FROM $table WHERE category = 'Non Fiksi'";
+		
+		if(!$result = mysqli_query($conn, $sql)) {
+			die("Error: $sql");
+		}
+		mysqli_close($conn);
+		return $result;
+  }
+  
+  function daftarFiksi($table) {
+		$conn = connectDB();
+		
+		$sql = "SELECT * FROM $table WHERE category = 'Fiksi'";
 		
 		if(!$result = mysqli_query($conn, $sql)) {
 			die("Error: $sql");
@@ -41,7 +65,47 @@
 		}
 		mysqli_close($conn);
 		return $result;
-	}
+  }
+
+  function selectAllRowsFromSubmission() {
+		$conn = connectDB();
+
+		$sql = "SELECT DISTINCT book_id FROM submission";
+		if(!$result = mysqli_query($conn, $sql)) {
+			die("Error: $sql");
+		}
+		mysqli_close($conn);
+		return $result;
+  }
+  
+  function selectBooks() {
+    $pinjam = selectRowsFromSubmission();
+    $arraysubmission = array();
+    while ($baris = mysqli_fetch_row($pinjam)) {
+      array_push($arraysubmission, $baris[1]);
+    }
+    return $arraysubmission;
+  }
+
+  function selectAllBooks() {
+    $pinjam = selectAllRowsFromSubmission();
+    $arraysubmission = array();
+    while ($baris = mysqli_fetch_row($pinjam)) {
+      array_push($arraysubmission, $baris[0]);
+    }
+    return $arraysubmission;
+  }
+  
+  function selectAllFromBook($book_id) {
+    $conn = connectDB();
+  
+    $sql = "SELECT * FROM book WHERE book_id = $book_id";
+    if(!$result = mysqli_query($conn, $sql)) {
+      die("Error: $sql");
+    }
+    mysqli_close($conn);
+    return $result;
+  }
 
 	function pinjamBuku($book_id, $user_id) {
 		$conn = connectDB();
@@ -75,7 +139,7 @@
 
 	function showActButton($arraysubmission, $bookid, $stocknum) {
 		$flag = false;
-		for ($i=0; $i < count($arraysubmission); $i++) { 
+		for ($i=0; $i < count($arraysubmission); $i++) {
 			if ($arraysubmission[$i] == $bookid) {
 				echo '
 				<form action="daftar.php" method="post">
@@ -102,7 +166,7 @@
 
 	function insertBuku() {
 		$conn = connectDB();
-		
+
 		$displayBuku = $_POST['displayBuku'];
 		$judulBuku = $_POST['judulBuku'];
 		$pengarangBuku = $_POST['pengarangBuku'];
@@ -113,7 +177,7 @@
 		$daftarbuku = daftarBuku("book");
 		$sdhAda = false;
 		$bookid = 0;
-		while ($row = mysqli_fetch_row($daftarbuku)) {	
+		while ($row = mysqli_fetch_row($daftarbuku)) {
 			if($row[2] == $judulBuku) {
 				$sdhAda = true;
 				$bookid = $row[0];
@@ -121,7 +185,7 @@
 			}
 		}
 		$_SESSION["titlebookadded"] = $judulBuku;
-		
+
 		if($sdhAda == true) {
 			$sql = "UPDATE book SET quantity = quantity + $stokBuku where book_id = $bookid";
 		} else {
@@ -146,7 +210,7 @@
 			balikBuku($_POST['book_id'],$_SESSION["user_id"]);
 		}
 	}
-	
+
 ?>
 
 
@@ -157,13 +221,13 @@
       <div class="col-md-6 greetings">
         <h1 id="greetings-1">Hi, kami Ebookhub!</h1>
         <h3 id="greetings-2">Platform untuk menerbitkan e-book, membaca e-book, dan membeli e-book yang tepat untukmu!</h3>
-        <h3 id="greetings-3">Ebookhub ingin membantu minat baca di Indonesia, ayo mulai membaca dan menerbitkan sekarang!</h3>
+        <h3 id="greetings-3">Ebookhub ingin membantu meningkatkan minat baca di Indonesia, ayo mulai sekarang!</h3>
 
         <div class="col-md-6">
-          <button type="button" class="btn btn-primary btn-block btn-ebookhub">Mulai Baca</button>
+        <button type="button" class="btn btn-primary btn-block btn-ebookhub" onclick="window.location='shop.php'">Mulai Baca</button>
         </div>
         <div class="col-md-6">
-          <button type="button" class="btn btn-primary btn-block btn-ebookhub">Mulai Terbitkan</button>
+        <button type="button" class="btn btn-primary btn-block btn-ebookhub" onclick="window.location='upload.php'">Mulai Terbitkan</button>
         </div>
       </div>
 
@@ -188,7 +252,7 @@
           <div class="box-how-to-use box-shadow text-center">
             <i class="fa fa-upload fa-how-to-use" aria-hidden="true"></i>
             <h2>Unggah</h2>
-            <p>Unggah draft e-book mu dan kami akan segera melakukan pengecekan dan kelayakan terbit.</p>
+            <p>Unggah draft e-book yang kamu miliki dan kami akan segera melakukan pengecekan dan penilaian kelayakan terbit.</p>
 
           </div>
         </div>
@@ -197,7 +261,7 @@
           <div class="box-how-to-use box-shadow text-center">
             <i class="fa fa-edit fa-how-to-use" aria-hidden="true"></i>
             <h2>Proses Edit</h2>
-            <p>Proses pengeditan ± 1 bulan, apabila draft e-book mu layak, maka akan dihubungi oleh tim kami dan melanjutkan ke proses negosiasi harga jual buku.</p>
+            <p>Apabila draft e-book lulus uji kelayakan, maka kami akan mempersiapkan e-book milikmu untuk dipublikasi. </p>
 
           </div>
         </div>
@@ -206,7 +270,7 @@
           <div class="box-how-to-use box-shadow text-center">
             <i class="fa fa-book fa-how-to-use" aria-hidden="true"></i>
             <h2>Terbit</h2>
-            <p>Unggah draft e-book mu dan kami akan segera melakukan pengecekan dan kelayakan terbit.</p>
+            <p>Selamat! E-book milikmu sudah dipublikasi dan siap untuk dibaca oleh seluruh pecinta buku.</p>
 
           </div>
         </div>
@@ -222,7 +286,7 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-12">
-        <h1 class="text-center">Baru Diterbitkan</h1>
+        <h1 class="text-center">Buku Baru Diterbitkan</h1>
       </div>
 
       <div class="col-lg-12 text-center">
@@ -243,16 +307,16 @@
                       <div class="card box-shadow">
                         <img class="card-img-top img-fluid" style="height:300px;" src="'.$row[1].'" alt="card-img">
                         <div class="card-body">
-                          <a href="index.php"><h3 class="card-title ebook-title" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><strong>'.$row[2].'</strong></h3></a>
-                          <p class="card-text ebook-author">Penulis : '.$row[3].'</p>
-                          <p class="card-text ebook-source">Penerbit : '.$row[4].'</p>';
+                          <a href="details.php?id='.$row[0].'"><h3 class="card-title ebook-title" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><strong>'.$row[2].'</strong></h3></a>
+                          <p class="card-text ebook-author">'.$row[3].'</p>
+                          <p class="card-text ebook-source">'.$row[4].'</p>';
                           if($row[5] > 0) {
                             echo '<h4 class="card-title ebook-price"><strong>Rp. '.$row[5].'</strong></h4>';
                           } else {
                             echo '<h4 class="card-title ebook-price"><strong>Stok Kosong</strong></h4>';
                           }
                           echo '
-                          <a class="btn btn-lg btn-danger btn-beli text-capitalize"><i class="fa fa-shopping-cart"> </i>&nbsp; Beli</a>
+                          <a href="cart.php?id='.$row[0].'" class="btn btn-lg btn-danger btn-beli text-capitalize"><i class="fa fa-shopping-cart"> </i>&nbsp; Beli</a>
                           ';
                         echo '
                         </div>
@@ -262,12 +326,15 @@
           ?>
         </div>
         <div class="customNavigation">
-          <a class="btn prev">Previous</a>
-          <a class="btn next">Next</a>
+          <a class="btn prev"> <i class="fa fa-angle-left"></i> </a>
+          <a class="btn next"> <i class="fa fa-angle-right"></i> </a>
           <!-- <a class="btn play">Autoplay</a>
           <a class="btn stop">Stop</a> -->
         </div>
       </div>
+    </div>
+  </div>
+</div>
 <!-- End Baru diterbitkan -->
 
 <!-- Begin Buku terpopuler -->
@@ -280,83 +347,39 @@
 
       <div class="col-lg-12 text-center">
         <div id="owl-buku-terpopuler" class="owl-carousel owl-theme">
-
-          <div class="item">
-            <div class="card box-shadow">
-              <img class="card-img-top img-fluid" src="images/ebook-1.png" alt="card-img">
-              <div class="card-body">
-                <a href="index.php"><h3 class="card-title ebook-title"><strong>Judul buku</strong></h3></a>
-                <p class="card-text ebook-author">Nama Penulis</p>
-                <h4 class="card-title ebook-price"><strong>Rp. 100.000</strong></h4>
-                <a class="btn btn-lg btn-danger btn-beli text-capitalize"><i class="fa fa-shopping-cart"> </i>&nbsp; Beli</a>
-              </div>
-            </div>
-          </div>
-
-          <div class="item">
-            <div class="card box-shadow">
-              <img class="card-img-top img-fluid" src="images/ebook-2.png" alt="card-img">
-              <div class="card-body">
-                <a href="index.php"><h3 class="card-title ebook-title"><strong>Judul buku</strong></h3></a>
-                <p class="card-text ebook-author">Nama Penulis</p>
-                <h4 class="card-title ebook-price"><strong>Rp. 100.000</strong></h4>
-                <a class="btn btn-lg btn-danger btn-beli text-capitalize"><i class="fa fa-shopping-cart"> </i>&nbsp; Beli</a>
-              </div>
-            </div>
-          </div>
-
-          <div class="item">
-            <div class="card box-shadow">
-              <img class="card-img-top img-fluid" src="images/ebook-1.png" alt="card-img">
-              <div class="card-body">
-                <a href="index.php"><h3 class="card-title ebook-title"><strong>Judul buku</strong></h3></a>
-                <p class="card-text ebook-author">Nama Penulis</p>
-                <h4 class="card-title ebook-price"><strong>Rp. 100.000</strong></h4>
-                <a class="btn btn-lg btn-danger btn-beli text-capitalize"><i class="fa fa-shopping-cart"> </i>&nbsp; Beli</a>
-              </div>
-            </div>
-          </div>
-
-          <div class="item">
-            <div class="card box-shadow">
-              <img class="card-img-top img-fluid" src="images/ebook-2.png" alt="card-img">
-              <div class="card-body">
-                <a href="index.php"><h3 class="card-title ebook-title"><strong>Judul buku</strong></h3></a>
-                <p class="card-text ebook-author">Nama Penulis</p>
-                <h4 class="card-title ebook-price"><strong>Rp. 100.000</strong></h4>
-                <a class="btn btn-lg btn-danger btn-beli text-capitalize"><i class="fa fa-shopping-cart"> </i>&nbsp; Beli</a>
-              </div>
-            </div>
-          </div>
-
-          <div class="item">
-            <div class="card box-shadow">
-              <img class="card-img-top img-fluid" src="images/ebook-1.png" alt="card-img">
-              <div class="card-body">
-                <a href="index.php"><h3 class="card-title ebook-title"><strong>Judul buku</strong></h3></a>
-                <p class="card-text ebook-author">Nama Penulis</p>
-                <h4 class="card-title ebook-price"><strong>Rp. 100.000</strong></h4>
-                <a class="btn btn-lg btn-danger btn-beli text-capitalize"><i class="fa fa-shopping-cart"> </i>&nbsp; Beli</a>
-              </div>
-            </div>
-          </div>
-
-          <div class="item">
-            <div class="card box-shadow">
-              <img class="card-img-top img-fluid" src="images/ebook-2.png" alt="card-img">
-              <div class="card-body">
-                <a href="index.php"><h3 class="card-title ebook-title"><strong>Judul buku</strong></h3></a>
-                <p class="card-text ebook-author">Nama Penulis</p>
-                <h4 class="card-title ebook-price"><strong>Rp. 100.000</strong></h4>
-                <a class="btn btn-lg btn-danger btn-beli text-capitalize"><i class="fa fa-shopping-cart"></i>&nbsp; Beli</a>
-              </div>
-            </div>
-          </div>
+        <?php
+              $arraybook = selectAllBooks();
+              for ($i=0; $i < count($arraybook); $i++) { 
+                $buku = selectAllFromBook($arraybook[$i]);
+                while ($row = mysqli_fetch_row($buku)) {
+                  echo '
+                  <div class="item">
+                    <div class="card box-shadow">
+                      <img class="card-img-top img-fluid" style="height:300px;" src="'.$row[1].'" alt="card-img">
+                      <div class="card-body">
+                        <a href="details.php?id='.$row[0].'"><h3 class="card-title ebook-title" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><strong>'.$row[2].'</strong></h3></a>
+                        <p class="card-text ebook-author">'.$row[3].'</p>
+                        <p class="card-text ebook-source">'.$row[4].'</p>';
+                        if($row[6] > 0) {
+                          echo '<h4 class="card-title ebook-price"><strong>Rp. '.$row[6].'</strong></h4>';
+                        } else {
+                          echo '<h4 class="card-title ebook-price"><strong>Stok Kosong</strong></h4>';
+                        }
+                        echo '
+                        <a href="cart.php?id='.$row[0].'" class="btn btn-lg btn-danger btn-beli text-capitalize"><i class="fa fa-shopping-cart"> </i>&nbsp; Beli</a>
+                        ';
+                      echo '
+                      </div>
+                    </div>
+                  </div>';
+                }
+              }
+          ?>
         </div>
 
         <div class="customNavigation">
-          <a class="btn prev2">Previous</a>
-          <a class="btn next2">Next</a>
+          <a class="btn prev2"><i class="fa fa-angle-left"></i></a>
+          <a class="btn next2"><i class="fa fa-angle-right"></i></a>
           <!-- <a class="btn play">Autoplay</a>
           <a class="btn stop">Stop</a> -->
         </div>
@@ -384,10 +407,14 @@
 			    <div class="hvrbox-layer_top hvrbox-layer_slideup hvr-non-fiction">
 				    <div class="hvrbox-text">
               <ul>
-                <li><a href="#">Nama kategori</a></li>
-                <li><a href="#">Nama kategori</a></li>
-                <li><a href="#">Nama kategori</a></li>
-                <li><a href="#">Nama kategori</a></li>
+              <?php
+                  $daftarnon = daftarNon("category");
+                  while ($rownon = mysqli_fetch_row($daftarnon)) {
+                    echo '
+                    <li><a href="#">'.$rownon[1].'</a></li>
+                    ';
+                  }
+                ?>
               </ul>
             </div>
 			    </div>
@@ -401,10 +428,14 @@
 			    <div class="hvrbox-layer_top hvrbox-layer_slideup hvr-fiction">
 				    <div class="hvrbox-text">
               <ul>
-                <li><a href="#">Nama kategori</a></li>
-                <li><a href="#">Nama kategori</a></li>
-                <li><a href="#">Nama kategori</a></li>
-                <li><a href="#">Nama kategori</a></li>
+              <?php
+                  $daftarfiks = daftarFiksi("category");
+                  while ($rowfiks = mysqli_fetch_row($daftarfiks)) {
+                    echo '
+                    <li><a href="#">'.$rowfiks[1].'</a></li>
+                    ';
+                  }
+                ?>
               </ul>
             </div>
 			    </div>
@@ -442,7 +473,7 @@
 
 <!-- Begin Subscribe -->
 <div class="subscribe">
-  <div class="container">
+  <div class="container-fluid">
     <div class="row">
       <div class="col-sm-12 subscribe-box text-center">
         <h2>Jadilah yang pertama tahu berita dan promosi menarik dari kami! (Gratis)</h2>

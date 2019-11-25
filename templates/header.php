@@ -3,6 +3,20 @@
 	session_start();
 ?>
 
+<?php
+	function daftarKategori($table) {
+		$conn = connectDB();
+
+		$sql = "SELECT * FROM $table";
+
+		if(!$result = mysqli_query($conn, $sql)) {
+			die("Error: $sql");
+		}
+		mysqli_close($conn);
+		return $result;
+	}
+?>
+
 
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -10,6 +24,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Ebookhub</title>
+
+		<!-- FAVICON -->
+		<link rel="shortcut icon" href="images/favicon.png">
 
     <!-- ALL CSS HERE  -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -58,7 +75,21 @@
 
         <div class="collapse navbar-collapse" id="myNavbar">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#about">Kategori</a></li>
+          <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Kategori <i class="fa fa-angle-down" aria-hidden="true"></i>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <?php
+                  $daftarkategori = daftarKategori("category");
+                  while ($row = mysqli_fetch_row($daftarkategori)) {
+                    echo '
+                    <a class="dropdown-item" href="#">'.$row[1].'</a>
+                    ';
+                  }
+                ?>
+              </div>
+            </li>
             <li><a href="shop.php">Shop</a></li>
 
             <li>
@@ -75,7 +106,24 @@
             <?php
 						if (isset($_SESSION["namauser"])){
               echo '
-              <li> <a data-toggle="modal" href="services/logout.php">Keluar</a> </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  '.$_SESSION["namauser"].' <i class="fa fa-angle-down" aria-hidden="true"></i>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" href="lihat-profil.php">Profil</a><br/>
+                  <a class="dropdown-item" href="status-pengajuan.php">Status Pengajuan</a><br/>
+                  <a class="dropdown-item" href="buku-saya.php">Buku Saya</a><br/>
+                  ';
+                  if ($_SESSION["role"] === "editor"){
+                    echo '
+                    <a class="dropdown-item" href="daftar-pengajuan.php">Editor Area</a><br />
+                    ';
+                  }
+                  echo '
+                  <a href="services/logout.php" class="dropdown-item" href="#">Keluar</a>
+                </div>
+              </li>
 							';
 						}else if(!isset($_SESSION['namauser'])) {
 							echo '

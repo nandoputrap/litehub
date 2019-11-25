@@ -85,7 +85,13 @@
 					?>
 					<li><a href="daftar.php">Daftar Buku</a></li>
 					<li class="active"><a href="unggah.php">Unggah Buku</a></li>
-					<li><a href="statistik.php">Statistik</a></li>
+					<?php
+					if(isset($_SESSION['namauser']) && $_SESSION['role'] === 'admin') {
+						echo '
+						<li><a href="statistik.php">Statistik</a></li>
+						';
+					}
+					?>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<?php
@@ -134,7 +140,7 @@
                                 </div>
 								<div class="form-group">
                                     <label for="namaPenulis">Nama Penulis</label>
-                                    <input type="text" class="form-control" id="insert-namaPenulis" name="namaPenulis" placeholder="Masukkan Nama Penulis">
+                                    <input type="text" class="form-control" id="insert-namaPenulis" name="namaPenulis" placeholder="Masukkan Nama Penulis" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="kategori">Kategori</label>
@@ -166,10 +172,10 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="deskripsiBuku">Deskripsi Buku</label>
-                                    <textarea class="form-control" id="insert-deskripsiBuku" name="deskripsiBuku" placeholder="Deskripsi Buku" rows="3"></textarea>
+                                    <textarea class="form-control" id="insert-deskripsiBuku" name="deskripsiBuku" placeholder="Deskripsi Buku" rows="3" required></textarea>
                                 </div>
                                 <div class="form-group">
-									<input type="file" name="fileToUpload" id="fileToUpload">
+									<input type="file" name="fileToUpload" id="fileToUpload" required>
 									<!-- <button class="btn btn-secondary" method="post" action="upload.php" enctype="multipart/form-data">Upload Buku</button> -->
                 					<h6>Format buku dalam bentuk .doc atau .docx. Format penulisan dan layout dapat dilihat pada halaman <a href="#">ini</a>. Ukuran file maksimal 50 MB.</h6>
                                 </div>
