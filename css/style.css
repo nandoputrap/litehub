@@ -722,6 +722,10 @@ box-shadow: 5px 5px 20px 0px rgba(0,0,0,0.5);
 .panduan-pembayaran{
   margin-bottom: 100px;
 }
+
+.col-pembayaran{
+  margin: auto 15px;
+}
 /* METODE-PEMBAYARAN.PHP */
 
 /* UNGGAH.PHP */
@@ -809,4 +813,32 @@ position:absolute;
   font-weight: bold;
   color: #0A5494;
   font-size: 20px;
+}
+
+/* EDIT STATUS PENGAJUAN */
+/* .item1 a {
+  text-decoration: none;
+}
+.item1 #content1 {
+  display: none;
+}
+
+#content1 {
+  background: green;
+  color: white;
+  padding: 5em;
+}
+
+#content1:target {
+  display: block;
+ */
+
+.form-publish{
+  display: none;
+}
+
+/* TABEL HEADER */
+.tabel-header{
+  background-color: #D72323;
+  color: white;
 }

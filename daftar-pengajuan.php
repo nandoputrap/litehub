@@ -79,11 +79,11 @@ function connectDB() {
           <table class="table table-hover table-bordered table-responsive">
             <thead>
               <tr>
-                <th class="text-center">Judul Buku</th>
-                <th class="text-center">Nama Penulis</th>
-                <th class="text-center">Kategori</th>
-                <th class="text-center">Tanggal Unggah</th>
-                <th colspan="2" class="text-center">Aksi</th>
+                <th class="text-center tabel-header">Judul Buku</th>
+                <th class="text-center tabel-header">Nama Penulis</th>
+                <th class="text-center tabel-header">Kategori</th>
+                <th class="text-center tabel-header">Tanggal Unggah</th>
+                <th colspan="2" class="text-center tabel-header">Aksi</th>
               </tr>
             </thead>
             <tbody>
@@ -134,12 +134,12 @@ function connectDB() {
           <table class="table table-hover table-bordered table-responsive">
             <thead>
               <tr>
-                <th class="text-center">Judul Buku</th>
-                <th class="text-center">Kategori</th>
-                <th class="text-center">Tanggal Terbit</th>
-                <th class="text-center">Status</th>
-                <th class="text-center">Jumlah Terjual</th>
-                <th class="text-center">Aksi</th>
+                <th class="text-center tabel-header">Judul Buku</th>
+                <th class="text-center tabel-header">Kategori</th>
+                <th class="text-center tabel-header">Tanggal Terbit</th>
+                <th class="text-center tabel-header">Status</th>
+                <th class="text-center tabel-header">Jumlah Terjual</th>
+                <th class="text-center tabel-header">Aksi</th>
               </tr>
             </thead>
             <tbody>
