@@ -814,4 +814,25 @@ position:absolute;
   color: #0A5494;
   font-size: 20px;
 }
-.f
+
+/* EDIT STATUS PENGAJUAN */
+/* .item1 a {
+  text-decoration: none;
+}
+.item1 #content1 {
+  display: none;
+}
+
+#content1 {
+  background: green;
+  color: white;
+  padding: 5em;
+}
+
+#content1:target {
+  display: block;
+ */
+
+.form-publish{
+  display: none;
+}
