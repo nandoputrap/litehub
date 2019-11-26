@@ -91,3 +91,10 @@
     		}
     	});
     });
+
+    $(function() {
+  $('#status-pengajuan').change(function(){
+    $('.form-publish').show();
+    $('#' + $(this).val()).hide();
+  });
+});
