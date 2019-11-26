@@ -126,8 +126,9 @@ function selectAllFromBook($book_id) {
                   if (mysqli_num_rows($detail_unggah) > 0) {
                     $row = mysqli_fetch_assoc($detail_unggah);
                     echo '
-                    <li><p href="#">Jumlah '.$row['quantity'].'</p></li>
+                    <li><p href="#">Jumlah: Rp. '.$row['quantity'].'</p></li>
                     <li><p href="#">Total 1</p></li>
+                    <a href="status-pembayaran.php?id='.$no.'" class="btn btn-primary btn-block btn-ebookhub btn-register">Bayar Sekarang</a>
                     ';
                   }
                 }else{
@@ -142,13 +143,11 @@ function selectAllFromBook($book_id) {
                     }
                   }
                   echo '
-                  <li><p href="#">Jumlah '.$sum.'</p></li>
-                  <li><p href="#">Total '.$qty.'</p></li>
+                  <li><p href="#">Jumlah: Rp. '.$sum.'</p></li>
+                  <li><p href="#">Total Barang:  1'.$qty.'</p></li>
                   ';
                 }
                 ?>
-
-              <button type="button" class="btn btn-primary btn-block btn-ebookhub btn-register">Bayar sekarang</button>
             </ul>
           </div>
         </div>
