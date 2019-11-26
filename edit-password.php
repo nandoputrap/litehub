@@ -3,7 +3,6 @@ require_once("templates/header.php");
 ?>
 
 <?php
-session_start();
 function connectDB() {
   $servername = "sql12.freesqldatabase.com";
   $username = "sql12310568";

@@ -19,21 +19,8 @@ function connectDB() {
   }
   return $conn;
 }
-
-function update(){
-  if(isset($_POST['edit'])){
-    $conn = connectDB();
-    $nama_lengkap = $_POST['nama_lengkap'];
-    $namauser = $_POST['namauser'];
-    $email = $_POST['email'];
-
-    $sql = "UPDATE FROM user SET nama_lengkap = '$nama_lengkap', username = '$namauser', email = '$email' WHERE user_id = ".$_SESSION["user_id"]."";
-    if(!$result = mysqli_query($conn, $sql)) {
-      die("Error: $sql");
-    }
-    mysqli_close($conn);
-    return $result;
-    }
+if(!isset($_SESSION['namauser'])) {
+  echo  "<script type='text/javascript'>alert('Silahkan Login/Register terlebih dahulu');window.location = './landing.php';</script>";
 }
 ?>
 

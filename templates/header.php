@@ -6,9 +6,9 @@
 <?php
 	function daftarKategori($table) {
 		$conn = connectDB();
-		
+
 		$sql = "SELECT * FROM $table";
-		
+
 		if(!$result = mysqli_query($conn, $sql)) {
 			die("Error: $sql");
 		}
@@ -111,13 +111,13 @@
                   '.$_SESSION["namauser"].' <i class="fa fa-angle-down" aria-hidden="true"></i>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="lihat-profil.php">Profil</a>
-                  <a class="dropdown-item" href="status-pengajuan.php">Status Pengajuan</a>
-                  <a class="dropdown-item" href="buku-saya.php">Buku Saya</a>
+                  <a class="dropdown-item" href="lihat-profil.php">Profil</a><br/>
+                  <a class="dropdown-item" href="status-pengajuan.php">Status Pengajuan</a><br/>
+                  <a class="dropdown-item" href="buku-saya.php">Buku Saya</a><br/>
                   ';
                   if ($_SESSION["role"] === "editor"){
                     echo '
-                    <a class="dropdown-item" href="daftar-pengajuan.php">Editor Area</a>
+                    <a class="dropdown-item" href="daftar-pengajuan.php">Editor Area</a><br />
                     ';
                   }
                   echo '
