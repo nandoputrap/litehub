@@ -74,7 +74,7 @@
 
         <div class="modal-form text-center input-login">
         <form action="login.php" method="post">
-          <input type="text" id="insert-username" name="username" class="form-control" placeholder="Masukkan E-mail..." required>
+          <input type="text" id="insert-username" name="username" class="form-control" placeholder="Masukkan username..." required>
           <input type="password" id="insert-password" name="password" class="form-control" placeholder="Masukkan kata sandi..." required>
           <input type="hidden" id="insert-command" name="command" value="insert">
           <button type="submit" class="btn btn-primary btn-block btn-ebookhub">Masuk</button>

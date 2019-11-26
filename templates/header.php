@@ -109,16 +109,20 @@
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   '.$_SESSION["namauser"].' <i class="fa fa-angle-down" aria-hidden="true"></i>
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                </a>';
+                if ($_SESSION["role"] === "editor"){
+                  echo '
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" href="lihat-profil.php">Profil</a><br/>
+                  <a class="dropdown-item" href="daftar-pengajuan.php">Editor Area</a><br />  
+                  ';
+                }else{
+                  echo'
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                   <a class="dropdown-item" href="lihat-profil.php">Profil</a><br/>
                   <a class="dropdown-item" href="status-pengajuan.php">Status Pengajuan</a><br/>
                   <a class="dropdown-item" href="buku-saya.php">Buku Saya</a><br/>
                   ';
-                  if ($_SESSION["role"] === "editor"){
-                    echo '
-                    <a class="dropdown-item" href="daftar-pengajuan.php">Editor Area</a><br />
-                    ';
                   }
                   echo '
                   <a href="services/logout.php" class="dropdown-item" href="#">Keluar</a>

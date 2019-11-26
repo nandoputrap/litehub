@@ -33,7 +33,13 @@ function connectDB() {
         <div class="panel panel-default sidebar-menu">
           <div class="panel-harga">
             <div class="panel-heading text-center">
-              <h3 class="panel-title">Nando Putra Pratama</h3>
+              <h3 class="panel-title">
+              <?php
+                if (isset($_SESSION["namauser"])){
+                  echo$_SESSION["nama_lengkap"];
+                }
+              ?>
+              </h3>
             </div>
 
             <div class="panel-body">
@@ -41,23 +47,6 @@ function connectDB() {
                 <li>
                   <a href="edit-profil.php">Edit Profil</a>
                 </li>
-                <li>
-                  <a href="status-pengajuan.php">Status Pengajuan</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-
-        <div class="panel panel-default sidebar-menu">
-          <div class="panel-harga">
-            <div class="panel-heading text-center">
-              <h3 class="panel-title">Editor Area</h3>
-            </div>
-
-            <div class="panel-body">
-              <ul class="nav nav-pills nav-stacked category-menu">
                 <li class="active-profil">
                   <a href="daftar-pengajuan.php">Daftar Pengajuan</a>
                 </li>

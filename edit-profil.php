@@ -28,38 +28,46 @@ function connectDB() {
         <div class="item">
           <div class="card  text-center card-product-details">
             <img class='card-img-top img-circle img-fluid' src='images/avatar.png' alt='card-img'>
-            <div class="form-group">
-              <input type="file" class="form-control-file" name="fileToUpload" id="exampleFormControlFile1">
-            </div>
-            <!-- <h2>Nando Putra Pratama</h2> -->
           </div>
         </div>
 
-        <div class="panel panel-default sidebar-menu">
-          <div class="panel-harga">
-            <div class="panel-heading text-center">
-              <h3 class="panel-title">Nando Putra Pratama</h3>
-            </div>
+        
 
-            <div class="panel-body">
-              <ul class="nav nav-pills nav-stacked category-menu">
-                <li class="active-profil">
+        <?php 
+              if ($_SESSION["role"] === "editor"){
+                echo'
+                <div class="panel panel-default sidebar-menu">
+                  <div class="panel-harga">
+                    <div class="panel-heading text-center">
+                      <h3 class="panel-title">';
+                      if (isset($_SESSION["namauser"])){
+                        echo$_SESSION["nama_lengkap"];
+                      }
+                      echo'</h3>
+                    </div>
+    
+                    <div class="panel-body">
+                      <ul class="nav nav-pills nav-stacked category-menu">
+                      <li class="active-profil">
                   <a href="lihat-profil.php">Profil</a>
                 </li>
                 <li>
                   <a href="edit-password.php">Edit Password</a>
-                </li>
-                <li>
-                  <a href="status-pengajuan.php">Status Pengajuan</a>
-                </li>
-                <li>
-                  <a href="buku-saya.php">Buku Saya</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
+                </li>  
+                      
+                      <li>
+                          <a href="daftar-pengajuan.php">Daftar Pengajuan</a>
+                        </li>
+                        <li>
+                          <a href="status-pengajuan.php">Daftar </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                ';
+              }
+            ?>
       </div>
 
       <div class="col-md-9">

@@ -28,7 +28,7 @@ h4 {
   background-color: #0A5494;
   color: #fff;
   padding: 100px 25px;
-  font-family: Montserrat, sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
 .container-fluid {
   padding: 60px 50px;
@@ -121,7 +121,7 @@ h4 {
   line-height: 1.42857143 !important;
   letter-spacing: 4px;
   border-radius: 0;
-  font-family: Montserrat, sans-serif;
+  font-family: Lato, sans-serif;
   padding: 15px 0;
 
 }
