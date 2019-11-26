@@ -92,14 +92,7 @@ function connectDB() {
             </tbody>
           </table>
         </div>
-
-
-        <!-- Jika belum beli buku, maka akan muncul tampilan ini
-             Use JavaScript ehehe.. :))
-       -->
-        <div class="belum-punya-buku text-center">
-          <h4>Maaf kamu belum punya buku yang dibeli :(</h4>
-        </div>
+        
 
       </div>
 
