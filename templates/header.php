@@ -116,6 +116,12 @@
                   <a class="dropdown-item" href="lihat-profil.php">Profil</a><br/>
                   <a class="dropdown-item" href="daftar-pengajuan.php">Editor Area</a><br />  
                   ';
+                }else if ($_SESSION["role"] === "admin"){
+                  echo '
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" href="lihat-profil.php">Profil</a><br/>
+                  <a class="dropdown-item" href="statistik2.php">Statistik</a><br />  
+                  ';
                 }else{
                   echo'
                   <div class="dropdown-menu" aria-labelledby="navbarDropdown">
