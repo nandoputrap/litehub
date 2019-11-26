@@ -207,13 +207,15 @@
               </div>
 
               <input type="hidden" id="insert-command" name="command" value="insert">
-              <button type="button" class="btn btn-primary btn-block btn-ebookhub btn-register">Simpan</button>
             </form>
 
 
 
           </div>
         </div>
+
+        <!-- tandai -->
+        <button type="button" class="btn btn-primary btn-block btn-ebookhub btn-register">Simpan</button>
 
         <!-- End Form buku untuk diterbitkan -->
 
