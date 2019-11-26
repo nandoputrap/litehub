@@ -66,7 +66,17 @@ if(!isset($_SESSION['namauser'])) {
                     <a href="status-pengajuan.php">Daftar </a>
                   </li>
                   ';
-                }?>
+                }else{
+                  echo'
+                  <li>
+                    <a href="status-pengajuan.php">Status Pengajuan</a>
+                  </li>
+                  <li>
+                    <a href="buku-saya.php">Buku Saya</a>
+                  </li>
+                  ';
+                }
+                ?>
               </ul>
             </div>
           </div>
