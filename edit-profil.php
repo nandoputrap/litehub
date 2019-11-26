@@ -73,30 +73,27 @@ function connectDB() {
       <div class="col-md-9">
         <h1 class="register-title">Edit Profil</h1>
 
-
         <form class="" action="" method="post">
-          <div class="form-group">
-            <label for="">Nama Lengkap:</label>
-            <input type="text" class="form-control form-register" value="Nando Putra Pratama">
-          </div>
+        <?php
+          if (isset($_SESSION["namauser"])){
+            echo'
+            <div class="form-group">
+              <label for="">Nama Lengkap:</label>
+              <input type="text" class="form-control form-register" value="'.$_SESSION["nama_lengkap"].'">
+            </div>
 
-          <div class="form-group">
-            <label for="">Nama Pengguna:</label>
-            <input type="text" class="form-control form-register" value="nandoputrap">
-          </div>
+            <div class="form-group">
+              <label for="">Nama Pengguna:</label>
+              <input type="text" class="form-control form-register" value="'.$_SESSION["namauser"].'">
+            </div>
 
-          <div class="form-group">
-            <label for="">E-mail:</label>
-            <input type="email" class="form-control form-register" value="nandoputrap@gmail.com">
-          </div>
-
-
-
-
-
-
-
-
+            <div class="form-group">
+              <label for="">E-mail:</label>
+              <input type="email" class="form-control form-register" value="'.$_SESSION["email"].'">
+            </div>  
+            ';
+          }
+        ?>  
           <button type="button" class="btn btn-primary btn-block btn-ebookhub btn-register">Simpan</button>
         </form>
 

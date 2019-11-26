@@ -56,12 +56,17 @@ if(!isset($_SESSION['namauser'])) {
                 <li>
                   <a href="edit-password.php">Edit Password</a>
                 </li>
-                <li>
-                  <a href="status-pengajuan.php">Status Pengajuan</a>
-                </li>
-                <li>
-                  <a href="buku-saya.php">Buku Saya</a>
-                </li>
+                <?php
+                if ($_SESSION["role"] === "editor"){
+                  echo '
+                  <li>
+                    <a href="daftar-pengajuan.php">Daftar Pengajuan</a>
+                  </li>
+                  <li>
+                    <a href="status-pengajuan.php">Daftar </a>
+                  </li>
+                  ';
+                }?>
               </ul>
             </div>
           </div>
