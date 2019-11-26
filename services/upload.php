@@ -68,7 +68,7 @@ if ($uploadOk == 0) {
         $deskripsiBuku = $_POST['deskripsiBuku'];
         $file = $_POST['fileBuku'];
         $tanggalUpload = date("Y-m-d");
-        $status = 'Dalam Proses Penyuntingan';
+        $status = 'Dalam Proses Review';
         $user_id = $_SESSION["namauser"];
         $_SESSION["titlebookadded"] = $judulBuku;
 		

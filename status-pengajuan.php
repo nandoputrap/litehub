@@ -34,7 +34,8 @@ session_start();
 	}
 ?>
 
-<div class="status-pengajuan-detail section-margin">
+<br>
+<div class="status-pengajuan-detail section-mini-margin">
   <div class="container">
 
     <div class="row">
@@ -114,7 +115,7 @@ session_start();
   												);
   								$split = explode('-', $olddate);
   								$tanggal = $split[2] . ' ' . $bulan[(int)$split[1]] . ' ' . $split[0];
-  								if($row['status'] == "Dalam Proses Penyuntingan") {
+  								if($row['status'] == "Dalam Proses Review") {
   									echo'
   									<tbody>
   									<tr>
@@ -122,7 +123,7 @@ session_start();
   										<td class="text-center">'.$row['category'].'</td>
   										<td class="text-center">'.$tanggal.'</td>
   										<td class="text-center">'.$row['status'].'</td>
-  										<td class="text-center"><a class="btn btn-info" href="status-pengajuan-detail.php?id='.$row['no'].'">Detail</a></td>
+  										<td class="text-center"><a class="btn btn-info" href="status-pengajuan-detail.php?id='.$row['no'].'"><i class="fa fa-info"></i>&nbsp;&nbsp;Detail</a></td>
 
   									</tr>
   									</tbody>';

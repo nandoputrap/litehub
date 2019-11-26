@@ -157,7 +157,7 @@
 
     <div class="row section-mini-margin">
       <div class="col-md-12">
-        <h2>Buku-buku karya <strong>Nando P. Pratama Lainnya</strong> </h2>
+        <h2>Buku-buku Terkait</h2>
 
         <div class="col-md-3 col-sm-4">
           <div class="item">
@@ -193,7 +193,7 @@
 
     <div class="row section-mini-margin">
       <div class="col-md-12">
-        <h2>Buku-buku Terkait</h2>
+        <h2>Buku-buku Terpopuler</h2>
 
         <div class="col-md-3 col-sm-4">
           <div class="item">

@@ -332,7 +332,7 @@ $(function () {
           borderColor    : '#007bff',
       data           : <?php
                         for($bulan=8;$bulan<=12;$bulan++){
-                          $jumlah_proses[] = getStatus($bulan, "Dalam Proses Penyuntingan");
+                          $jumlah_proses[] = getStatus($bulan, "Dalam Proses Review");
                         }
                        echo json_encode($jumlah_proses); ?>
         },
