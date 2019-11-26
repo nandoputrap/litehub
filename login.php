@@ -46,7 +46,7 @@
       if ($row["role"] === "editor"){
 				header("Location: daftar-pengajuan.php");
 			}else if ($row["role"] === "admin"){
-				header("Location: statistik.php");
+				header("Location: statistik2.php");
 			}
 			else{
 				header("Location: landing.php");
