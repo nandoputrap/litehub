@@ -44,7 +44,7 @@
 			// 	header("Location: upload.php");
       // }else 
       if ($row["role"] === "editor"){
-				header("Location: unduh.php");
+				header("Location: daftar-pengajuan.php");
 			}else if ($row["role"] === "admin"){
 				header("Location: statistik.php");
 			}
