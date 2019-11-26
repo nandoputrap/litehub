@@ -3,6 +3,7 @@ require_once("templates/header.php");
 ?>
 
 <?php
+session_start();
 function connectDB() {
   $servername = "sql12.freesqldatabase.com";
   $username = "sql12310568";
@@ -18,6 +19,22 @@ function connectDB() {
   }
   return $conn;
 }
+
+function update(){
+  if(isset($_POST['edit'])){
+    $conn = connectDB();
+    $nama_lengkap = $_POST['nama_lengkap'];
+    $namauser = $_POST['namauser'];
+    $email = $_POST['email'];
+
+    $sql = "UPDATE FROM user SET nama_lengkap = '$nama_lengkap', username = '$namauser', email = '$email' WHERE user_id = ".$_SESSION["user_id"]."";
+    if(!$result = mysqli_query($conn, $sql)) {
+      die("Error: $sql");
+    }
+    mysqli_close($conn);
+    return $result;
+    }
+}
 ?>
 
 <div class="status-pengajuan-detail section-margin">
@@ -29,7 +46,6 @@ function connectDB() {
           <div class="card  text-center card-product-details">
             <form class="" action="" method="post">
             <img class='card-img-top img-circle img-fluid' src='images/avatar.png' alt='card-img'>
-            <!-- <h2>Nando Putra Pratama</h2> -->
           </div>
         </div>
 
@@ -39,8 +55,8 @@ function connectDB() {
               <h3 class="panel-title">
               <?php
                 if (isset($_SESSION["namauser"])){
-                      echo$_SESSION["nama_lengkap"];
-              }
+                  echo$_SESSION["nama_lengkap"];
+                }
               ?>
               </h3>
             </div>
@@ -74,46 +90,24 @@ function connectDB() {
               echo '
               <div class="form-group">
                 <label for="">Nama Lengkap:</label>
-                <input type="text" class="form-control form-register" value="'.$_SESSION["nama_lengkap"].'" disabled>
+                <input type="text" name="nama_lengkap" class="form-control form-register" value="'.$_SESSION["nama_lengkap"].'" disabled>
               </div>
     
               <div class="form-group">
                 <label for="">Nama Pengguna:</label>
-                <input type="text" class="form-control form-register" value="'.$_SESSION["namauser"].'" disabled>
+                <input type="text" name="namauser" class="form-control form-register" value="'.$_SESSION["namauser"].'" disabled>
               </div>
     
               <div class="form-group">
                 <label for="">E-mail:</label>
-                <input type="email" class="form-control form-register" value="'.$_SESSION["email"].'" disabled>
+                <input type="email" name="email" class="form-control form-register" value="'.$_SESSION["email"].'" disabled>
               </div>
   
               ';
             }
           ?>
 
-          <!-- <div class="form-group">
-            <label for="">Nama Lengkap:</label>
-            <input type="text" class="form-control form-register" value="Nando Putra Pratama" disabled>
-          </div>
-
-          <div class="form-group">
-            <label for="">Nama Pengguna:</label>
-            <input type="text" class="form-control form-register" value="nandoputrap" disabled>
-          </div>
-
-          <div class="form-group">
-            <label for="">E-mail:</label>
-            <input type="email" class="form-control form-register" value="nandoputrap@gmail.com" disabled>
-          </div> -->
-
-
-
-
-
-
-
-
-          <button type="button" class="btn btn-primary btn-block btn-ebookhub btn-register" onclick="window.location='edit-profil.php'">Edit Profil</button>
+          <button type="submit" name="edit" class="btn btn-primary btn-block btn-ebookhub btn-register" onclick="window.location='edit-profil.php'">Edit Profil</button>
         </form>
 
 

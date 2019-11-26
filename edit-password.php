@@ -2,6 +2,25 @@
 require_once("templates/header.php");
 ?>
 
+<?php
+session_start();
+function connectDB() {
+  $servername = "sql12.freesqldatabase.com";
+  $username = "sql12310568";
+  $password = "wmiLAF7a6g";
+  $dbname = "sql12310568";
+
+  // Create connection
+  $conn = mysqli_connect($servername, $username, $password, $dbname);
+
+  // Check connection
+  if (!$conn) {
+    die("Connection failed: " + mysqli_connect_error());
+  }
+  return $conn;
+}
+?>
+
 <div class="status-pengajuan-detail section-margin">
   <div class="container">
 
@@ -17,7 +36,13 @@ require_once("templates/header.php");
         <div class="panel panel-default sidebar-menu">
           <div class="panel-harga">
             <div class="panel-heading text-center">
-              <h3 class="panel-title">Nando Putra Pratama</h3>
+              <h3 class="panel-title">
+              <?php
+                if (isset($_SESSION["namauser"])){
+                  echo$_SESSION["nama_lengkap"];
+                }
+              ?>
+              </h3>
             </div>
 
             <div class="panel-body">

@@ -18,8 +18,8 @@
 		
 		$username = $_POST['username'];
 		$password = $_POST['password']; 
-		$email = $_POST['email']; 
-		$nama_lengkap = $_POST['nama_lengkap']; 
+		// $email = $_POST['email']; 
+		// $nama_lengkap = $_POST['nama_lengkap']; 
 				
 		$queryLogin = "SELECT * FROM user WHERE username = '$username' AND password = '$password'";
 		$resultLogin = mysqli_query($databaseConnection,$queryLogin);

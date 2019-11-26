@@ -110,6 +110,7 @@ function selectAllFromBook($book_id) {
                     echo '
                     <li><p href="#">Jumlah: Rp. '.$row['quantity'].'</p></li>
                     <li><p href="#">Total Barang:  1</p></li>
+                    <a href="status-pembayaran.php?id='.$no.'" class="btn btn-primary btn-block btn-ebookhub btn-register">Bayar Sekarang</a>
                     ';
                   }
                 }else{
@@ -124,13 +125,14 @@ function selectAllFromBook($book_id) {
                     }
                   }
                   echo '
-                  <li><p href="#">Jumlah '.$sum.'</p></li>
+                  <li><p href="#">Jumlah: Rp. '.$sum.'</p></li>
                   <li><p href="#">Total '.$qty.'</p></li>
                   ';
                 }
                 ?>
 
-              <button type="button" class="btn btn-primary btn-block btn-ebookhub btn-register">Bayar Sekarang</button>
+
+              <!-- <a href="status-pembayaran.php" class="btn btn-primary btn-block btn-ebookhub btn-register">Bayar Sekarang</a> -->
             </ul>
           </div>
         </div>

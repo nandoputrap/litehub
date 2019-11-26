@@ -35,7 +35,13 @@ function connectDB() {
         <div class="panel panel-default sidebar-menu">
           <div class="panel-harga">
             <div class="panel-heading text-center">
-              <h3 class="panel-title">Nando Putra Pratama</h3>
+              <h3 class="panel-title">
+              <?php
+                if (isset($_SESSION["namauser"])){
+                        echo$_SESSION["nama_lengkap"];
+                }
+              ?>
+              </h3>
             </div>
 
             <div class="panel-body">
@@ -61,7 +67,7 @@ function connectDB() {
       <div class="col-md-9">
         <h1 class="register-title">Buku Saya</h1>
 
-        <h2>Daftar Buku Saya</h2>
+        <h2>Daftar Pembelian Buku Saya</h2>
 
         <div class="table-details">
           <table class="table table-hover table-bordered table-responsive">
@@ -74,51 +80,6 @@ function connectDB() {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td class="text-center">How to Code 101</td>
-                <td class="text-center">Komputer</td>
-                <td class="text-center">1 Januari 2019</td>
-                <td class="text-center"><button type="button" class="btn btn-info" onclick="window.location='buku-saya-detail.php'"> <i class="fa fa-info"></i>&nbsp; Detail </button></td>
-                <td class="text-center"><button type="button" class="btn btn-warning"> <i class="fa fa-book"></i>&nbsp;Baca</button></td>
-                <td class="text-center"><button type="button" class="btn btn-success"> <i class="fa fa-download"></i>&nbsp;Download</button></td>
-              </tr>
-
-              <tr>
-                <td class="text-center">How to Code 101</td>
-                <td class="text-center">Komputer</td>
-                <td class="text-center">1 Januari 2019</td>
-                <td class="text-center"><button type="button" class="btn btn-info" onclick="window.location='buku-saya-detail.php'"> <i class="fa fa-info"></i>&nbsp; Detail </button></td>
-                <td class="text-center"><button type="button" class="btn btn-warning"> <i class="fa fa-book"></i>&nbsp;Baca</button></td>
-                <td class="text-center"><button type="button" class="btn btn-success"> <i class="fa fa-download"></i>&nbsp;Download</button></td>
-              </tr>
-
-              <tr>
-                <td class="text-center">How to Code 101</td>
-                <td class="text-center">Komputer</td>
-                <td class="text-center">1 Januari 2019</td>
-                <td class="text-center"><button type="button" class="btn btn-info" onclick="window.location='buku-saya-detail.php'"> <i class="fa fa-info"></i>&nbsp; Detail </button></td>
-                <td class="text-center"><button type="button" class="btn btn-warning"> <i class="fa fa-book"></i>&nbsp;Baca</button></td>
-                <td class="text-center"><button type="button" class="btn btn-success"> <i class="fa fa-download"></i>&nbsp;Download</button></td>
-              </tr>
-
-              <tr>
-                <td class="text-center">How to Code 101</td>
-                <td class="text-center">Komputer</td>
-                <td class="text-center">1 Januari 2019</td>
-                <td class="text-center"><button type="button" class="btn btn-info" onclick="window.location='buku-saya-detail.php'"> <i class="fa fa-info"></i>&nbsp; Detail </button></td>
-                <td class="text-center"><button type="button" class="btn btn-warning"> <i class="fa fa-book"></i>&nbsp;Baca</button></td>
-                <td class="text-center"><button type="button" class="btn btn-success"> <i class="fa fa-download"></i>&nbsp;Download</button></td>
-              </tr>
-
-              <tr>
-                <td class="text-center">How to Code 101</td>
-                <td class="text-center">Komputer</td>
-                <td class="text-center">1 Januari 2019</td>
-                <td class="text-center"><button type="button" class="btn btn-info" onclick="window.location='buku-saya-detail.php'"> <i class="fa fa-info"></i>&nbsp; Detail </button></td>
-                <td class="text-center"><button type="button" class="btn btn-warning"> <i class="fa fa-book"></i>&nbsp;Baca</button></td>
-                <td class="text-center"><button type="button" class="btn btn-success"> <i class="fa fa-download"></i>&nbsp;Download</button></td>
-              </tr>
-
               <tr>
                 <td class="text-center">How to Code 101</td>
                 <td class="text-center">Komputer</td>
