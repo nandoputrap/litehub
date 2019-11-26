@@ -1,5 +1,7 @@
 <?php
 	
+	header("Location: landing.php");
+
 	$databaseServer = "sql12.freesqldatabase.com";
 	$databaseUsername = "sql12310568";
 	$databasePassword = "wmiLAF7a6g";

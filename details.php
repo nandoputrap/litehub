@@ -1,9 +1,14 @@
 <?php
+  if (isset($_GET['id'])) {
+    $no = $_GET['id'];
+  }else{
+    header('Location:shop.php');
+  }
   require_once("templates/header.php");
 ?>
 
 <?php
-	session_start();
+  session_start();
 	function connectDB() {
 		// require 'config/connect.php';
 		$servername = "sql12.freesqldatabase.com";
@@ -20,6 +25,19 @@
 		}
 		return $conn;
   }
+
+  function daftarBuku($table) {
+		$conn = connectDB();
+		
+		$sql = "SELECT book_id, img_path, title, author, publisher, quantity FROM $table WHERE book_id != '$no' LIMIT 4";
+		
+		if(!$result = mysqli_query($conn, $sql)) {
+			die("Error: $sql");
+		}
+		mysqli_close($conn);
+		return $result;
+	}
+
   function ebook(){
     $host = 'localhost';
     $user = 'root';
@@ -45,13 +63,6 @@
       $jumlah_halaman = $row_ebooks['jumlah_halaman'];
     }
   }
-
-	if (isset($_GET['id'])) {
-		$no = $_GET['id'];
-	  }
-	  else {
-		header('Location:shop.php');
-	  }
 
 ?>
 
@@ -159,35 +170,32 @@
       <div class="col-md-12">
         <h2>Buku-buku Terkait</h2>
 
-        <div class="col-md-3 col-sm-4">
+        <?php
+			$daftarbuku = daftarBuku("book");
+
+    while ($row = mysqli_fetch_row($daftarbuku)) {
+      echo '
+      <div class="col-md-3 col-sm-4">
           <div class="item">
             <div class="card box-shadow text-center card-product">
-              <img class="card-img-top img-fluid" src="images/ebook-1.png" alt="card-img">
+              <img class="card-img-top img-fluid" style="height:300px;" src="'.$row[1].'" alt="card-img">
               <div class="card-body">
-                <a href="index.php"><h3 class="card-title ebook-title"><strong>Judul buku</strong></h3></a>
-                <p class="card-text ebook-author">Nama Penulis</p>
-                <h4 class="card-title ebook-price"><strong>Rp. 100.000</strong></h4>
-                <a class="btn btn-lg btn-danger btn-beli text-capitalize"><i class="fa fa-shopping-cart"></i>&nbsp; Beli</a>
+                <a href="details.php?id='.$row[0].'"><h3 class="card-title ebook-title" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><strong>'.$row[2].'</strong></h3></a>
+                <p class="card-text ebook-author">'.$row[3].'</p>';
+                if($row[5] > 0) {
+                  echo '<h4 class="card-title ebook-price"><strong>Rp. '.$row[5].'</strong></h4>';
+                } else {
+                  echo '<h4 class="card-title ebook-price"><strong>Stok Kosong</strong></h4>';
+                }
+                echo '
+                <a href="cart.php?id='.$row[0].'"class="btn btn-lg btn-danger btn-beli text-capitalize"><i class="fa fa-shopping-cart"></i>&nbsp; Beli</a>
               </div>
             </div>
           </div>
         </div>
-
-        <div class="col-md-3 col-sm-4">
-          <div class="item">
-            <div class="card box-shadow text-center card-product">
-              <img class="card-img-top img-fluid" src="images/ebook-1.png" alt="card-img">
-              <div class="card-body">
-                <a href="index.php"><h3 class="card-title ebook-title"><strong>Judul buku</strong></h3></a>
-                <p class="card-text ebook-author">Nama Penulis</p>
-                <h4 class="card-title ebook-price"><strong>Rp. 100.000</strong></h4>
-                <a class="btn btn-lg btn-danger btn-beli text-capitalize"><i class="fa fa-shopping-cart"></i>&nbsp; Beli</a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-
+      ';
+    }
+      ?>
       </div>
     </div>
 
