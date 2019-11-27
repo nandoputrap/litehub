@@ -1,5 +1,5 @@
 <?php
-$name= $_GET['nama'];
+$name= $_GET['id'];
 $filedir = __DIR__ . "/../file_buku/".$name;
 if (file_exists($filedir))
 {

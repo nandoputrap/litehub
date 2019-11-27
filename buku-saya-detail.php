@@ -2,6 +2,31 @@
   require_once("templates/header.php");
 ?>
 
+<?php
+function connectDB() {
+  $servername = "sql12.freesqldatabase.com";
+  $username = "sql12310568";
+  $password = "wmiLAF7a6g";
+  $dbname = "sql12310568";
+
+  // Create connection
+  $conn = mysqli_connect($servername, $username, $password, $dbname);
+
+  // Check connection
+  if (!$conn) {
+    die("Connection failed: " + mysqli_connect_error());
+  }
+  return $conn;
+}
+
+if (isset($_GET['id'])) {
+  $no = $_GET['id'];
+}
+else {
+  header('Location:status-pengajuan.php');
+}
+?>
+
 <div class="status-pengajuan-detail section-margin">
   <div class="container">
 
@@ -17,7 +42,13 @@
         <div class="panel panel-default sidebar-menu">
           <div class="panel-harga">
             <div class="panel-heading text-center">
-              <h3 class="panel-title">Nando Putra Pratama</h3>
+              <h3 class="panel-title">
+              <?php
+                if (isset($_SESSION["namauser"])){
+                  echo$_SESSION["nama_lengkap"];
+                }
+              ?>
+              </h3>
             </div>
 
             <div class="panel-body">
@@ -45,39 +76,70 @@
 
         <div class="table-details">
           <table class="table table-hover table-bordered table-responsive">
-            <tbody>
+          <?php
+            $conn = connectDB();
+            $query = "SELECT t.purchase_id, t.book_id, t.user_id, t.date, b.title, b.author, b.category, b.total_page, b.isbn, b.sku, u.description 
+                      FROM purchase t 
+                      INNER JOIN book b ON b.book_id = t.book_id
+                      INNER JOIN unggah u ON u.no = b.upload_id
+                      WHERE t.purchase_id = '$no'";
+            $detail_beli = mysqli_query($conn, $query);
+
+            if (mysqli_num_rows($detail_beli) > 0) {
+              $row = mysqli_fetch_assoc($detail_beli);
+              $olddate = $row['date'];
+              $bulan = array (1 =>   	'Januari',
+                                      'Februari',
+                                      'Maret',
+                                      'April',
+                                      'Mei',
+                                      'Juni',
+                                      'Juli',
+                                      'Agustus',
+                                      'September',
+                                      'Oktober',
+                                      'November',
+                                      'Desember'
+                              );
+              $split = explode('-', $olddate);
+              $tanggal = $split[2] . ' ' . $bulan[(int)$split[1]] . ' ' . $split[0];
+              echo '
+              <tbody>
               <tr>
                 <td><strong>Judul Buku</strong></td>
-                <td>How to Code 101</td>
+                <td>'.$row['title'].'</td>
               </tr>
               <tr>
                 <td><strong>Nama Penulis</strong></td>
-                <td>Nando P. Pratama</td>
+                <td>'.$row['author'].'</td>
               </tr>
               <tr>
                 <td><strong>Kategori</strong></td>
-                <td>Teknologi</td>
+                <td>'.$row['category'].'</td>
               </tr>
               <tr>
                 <td><strong>Deskripsi/Sinopsis Buku</strong></td>
-                <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</td>
+                <td>'.$row['description'].'</td>
               </tr>
               <tr>
                 <td><strong>Tanggal Beli</strong></td>
-                <td>1 Januari 2019</td>
+                <td>'.$tanggal.'</td>
               </tr>
               <tr>
                 <td><strong>Jumlah Halaman</strong></td>
-                <td>509</td>
+                <td>'.$row['total_page'].'</td>
               </tr>
               <tr>
                 <td><strong>ISBN</strong></td>
-                <td>123456789</td>
+                <td>'.$row['isbn'].'</td>
               </tr>
               <tr>
                 <td><strong>SKU</strong></td>
-                <td>32143</td>
+                <td>'.$row['sku'].'</td>
               </tr>
+              ';
+            }
+            ?>
 
             </tbody>
           </table>

@@ -22,7 +22,7 @@
 		$no = $_GET['id'];
 	  }
 	  else {
-		header('Location:unggah.php');
+		header('Location:status-pengajuan.php');
 	  }
 ?>
 
