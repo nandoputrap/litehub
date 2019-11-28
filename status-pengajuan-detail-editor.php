@@ -227,14 +227,14 @@ function daftarBuku($table) {
                 <label for="exampleFormControlFile1">
                   Pilih Cover Buku
                 </label>
-                <input type="file" class="form-control-file" name="fileBuku" id="exampleFormControlFile1">
+                <input type="file" name="fileCover" id="fileCover">
               </div>
 
               <div class="form-group">
                 <label for="exampleFormControlFile1">
                   Format buku dalam bentuk .doc atau .docx. Format penulisan dan layout dapat melihat pada halaman <a href="#">ini.</a> Ukuran file maksimal 50 MB.
                 </label>
-                <input type="file" class="form-control-file" name="fileToUpload" id="exampleFormControlFile1">
+                <input type="file" name="fileEditor" id="fileEditor">
               </div>
 
               <input type="hidden" id="insert-command" name="command" value="insert">

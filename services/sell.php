@@ -41,7 +41,7 @@
 		$isbn = $_POST['isbn'];
 		$sku = $_POST['sku'];
 		$target_dir = __DIR__ . "/../file_buku/";
-		$name_file = "file_buku/".$_FILES["fileBuku"]["name"];
+		$name_file = $_FILES["fileEditor"]["name"];
 		$target_file = $target_dir . basename($name_file);
 		$uploadOk = 1;
 		$fileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
@@ -64,7 +64,7 @@
 			$uploadOk = 0;
 		}
 		// Check file size
-		if ($_FILES["fileToUpload"]["size"] > 52428800) {
+		if ($_FILES["fileEditor"]["size"] > 52428800) {
 			echo "Sorry, your file is too large.";
 			$uploadOk = 0;
 		}
@@ -79,8 +79,8 @@
 			echo "Sorry, your file was not uploaded.";
 		// if everything is ok, try to upload file
 		} else {
-			if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-				$filename = $_FILES["fileToUpload"]["name"];
+			if (move_uploaded_file($_FILES["fileEditor"]["tmp_name"], $target_file)) {
+				$filename = $_FILES["fileEditor"]["name"];
 				echo "The file ". basename( $filename). " has been uploaded.";
 				$daftarbuku = daftarBuku("book");
 				$sdhAda = false;
@@ -98,16 +98,19 @@
 				if($sdhAda == true) {
 					echo  "<script type='text/javascript'>alert('Buku Sudah Ada');</script>";
 				} else {
-					if (move_uploaded_file($_FILES["fileBuku"]["tmp_name"], $target_file)) {
+					$name_buku = "file_buku/".$_FILES["fileCover"]["name"];
+					$target_buku = $target_dir . basename($name_buku);
+					if (move_uploaded_file($_FILES["fileCover"]["tmp_name"], $target_buku)) {
 						$tanggalUpload = date("Y-m-d");
-						$sql = "INSERT into book (img_path, title, author, publisher, description, quantity, category, publish_date, upload_id, isbn, sku) values('$name_file', '$judulBuku', '$pengarangBuku', '$penerbitBuku', '$deskripsiBuku', $stokBuku, '$category', '$tanggalUpload', '$idUnggah', '$isbn', '$sku')";
+						$sql = "INSERT into book (img_path, title, author, publisher, description, quantity, category, publish_date, upload_id, isbn, sku) values('$name_buku', '$judulBuku', '$pengarangBuku', '$penerbitBuku', '$deskripsiBuku', $stokBuku, '$category', '$tanggalUpload', '$idUnggah', '$isbn', '$sku')";
 					}else{
 						echo  "<script type='text/javascript'>alert('Upload Cover Error');</script>";
 					}
 				}
 		
 				if($result = mysqli_query($conn, $sql)) {
-					$sql = "UPDATE unggah SET status = 'Sudah Diterima' AND file = '$filename' WHERE no = '$idUnggah'";
+					$diterima = 'Sudah Diterima';
+					$sql = "UPDATE unggah SET status = '$diterima' AND file = '$filename' WHERE no = '$idUnggah'";
 					if($result = mysqli_query($conn, $sql)) {
 						echo "New record created successfully <br/>";
 						header("Location: ../daftar-pengajuan.php");
@@ -118,7 +121,7 @@
 				mysqli_close($conn);
 				header("Location: ../daftar-pengajuan.php");
 			} else {
-				echo "Sorry, there was an error ". $_FILES['fileToUpload']['error']. " uploading your file.";
+				echo "Sorry, there was an error ". $_FILES['fileEditor']['error']. " uploading your file.";
 			}
 		}
 	}
