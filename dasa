@@ -1,0 +1,97 @@
+[33m30527ad[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m Merge pull request #20 from bryanzanr/uat
+[33mccc1e1d[m Merge remote-tracking branch 'origin/master' into uat
+[33m65750f9[m Merge pull request #18 from bryanzanr/uploadingnew
+[33ma106611[m minor bug statistik2
+[33mc4b7805[m Merge pull request #17 from bryanzanr/uploadingnew
+[33m8ad7af0[m Merge pull request #16 from bryanzanr/nando2
+[33m74b897b[m penambahan where
+[33m45033e2[m dah sore cape
+[33m241cde7[m broken image in metode pembayaran
+[33m1008cd3[m updatan pengajuan
+[33m19feb84[m Merge pull request #15 from bryanzanr/nando2
+[33m64ed830[m Update status-pengajuan-detail-editor.php
+[33m02b04fc[m Update daftar-pengajuan.php
+[33m47d1e1b[m merge conflict on status pengajuan detail
+[33m7168f51[m Merge remote-tracking branch 'origin/uat' into uploadingnew
+[33m565536f[m fixing typo on duplicate function database
+[33m0a1495f[m Merge branch 'uploadingnew' of https://github.com/bryanzanr/litehub into uploadingnew
+[33ma774be6[m asuwtenan
+[33m0fbf31a[m Merge pull request #14 from bryanzanr/uploadingnew
+[33mf629a9c[m merge conflict on status pengajuan
+[33m4a18eef[m Merge pull request #13 from bryanzanr/fidrian2
+[33mb444075[m[33m ([m[1;31morigin/fidrian2[m[33m)[m merge conflict on source buku-saya.php
+[33m632da2d[m fadil ganteng
+[33m1d6d0f8[m add missing footer page that connect without database
+[33m9bcce63[m fixing unconnect database from many pages
+[33m8afd450[m aaaaaaa
+[33m8402d05[m integrasi status pengajuan by ndo
+[33m544f261[m Merge branch 'uploadingnew' of https://github.com/bryanzanr/litehub into uploadingnew
+[33m98ee59d[m buat menu penulis
+[33m77e7113[m benerin statistik fadil by ndo
+[33med865d2[m Merge pull request #12 from bryanzanr/nando2
+[33m7909268[m fixing conflict on source branch
+[33m0291abf[m Merge remote-tracking branch 'origin/uat' into fidrian2
+[33mea621f3[m editor area
+[33mee0a1da[m Merge pull request #11 from bryanzanr/fidrian2
+[33mb9dc8ca[m penambahan frontend statistik
+[33m826b7b8[m tambahan beberapa tampilan front end user & editor
+[33ma2536c6[m fixing many kind of function from list issue excel
+[33md43a41c[m Merge pull request #10 from bryanzanr/fidrian2
+[33mb6a6556[m penambahan stylesheet
+[33m28a52bd[m Merge branch 'uat' of https://github.com/bryanzanr/litehub into uat
+[33ma7ca598[m Add submission, publish, and pagination mechanism
+[33m0e10488[m Merge pull request #9 from bryanzanr/fidrian2
+[33mb42cf48[m penambahan kategori pada statistik
+[33m623c136[m add publish book status button
+[33m3706594[m Merge pull request #8 from bryanzanr/nando
+[33m2c6a2e0[m Merge pull request #7 from bryanzanr/fidrian2
+[33m82fbc8f[m update statistik
+[33m6ab35c8[m revisi kosmetik
+[33m8e55b72[m fix statistik
+[33mfaf9671[m minor bug 21/11
+[33m39eb44c[m minor update
+[33md99a244[m Merge pull request #6 from bryanzanr/fidrian2
+[33m4efcf9d[m integrate upload, register, and cart
+[33me69e0b1[m prepare merge shop2
+[33m2efaf7d[m perubahan menu statistik
+[33m5198e2a[m Integrate shop and details
+[33mc220697[m merge with shop nando
+[33m11cabb0[m Merge pull request #5 from bryanzanr/fidrian2
+[33m52cef59[m merge conflict on source
+[33m820d2ee[m Add register user
+[33m77d5d1f[m perubahan statistik
+[33mad841be[m updatan statistik
+[33m81bea6b[m Merge branch 'fidrian2' of https://github.com/bryanzanr/litehub into fidrian2
+[33me706061[m updatan unggah
+[33m528950c[m perubahan fitur unggah
+[33m9a4cd91[m Delete unggah.js
+[33m8a3f0b5[m little improvement to unggah and search
+[33m69e9690[m Merge pull request #4 from bryanzanr/shuistama
+[33m227b8e8[m Add integration on show book without login
+[33m4cbc308[m tambah pencarian
+[33m787abee[m merge with nando git
+[33m9c82a64[m Merge pull request #3 from bryanzanr/fidrian2
+[33m0f557fd[m little hotfix because of typo
+[33mbf60a70[m perubahan pada unggah detail
+[33m66e561b[m Delete detail_unggah.php
+[33m71c53ba[m Delete Esai_I Gede Sthitaprajna Virananda_1606896003_26_Rupee_Alma Madina M Arief Ramadhan.docx
+[33m6571d00[m buat page detailnya
+[33m2fa1f10[m little improvement on landing page
+[33mddafc6b[m Merge pull request #2 from bryanzanr/fidrian
+[33m4f68655[m[33m ([m[1;31morigin/fidrian[m[33m)[m download success
+[33m140c3dc[m fixing typo on service upload
+[33ma66b15e[m Merge branch 'master' of https://github.com/bryanzanr/litehub
+[33m86cc622[m Merge pull request #1 from bryanzanr/fidrian
+[33ma1113f9[m Merge branch 'master' into fidrian
+[33mcc01174[m upload success because wrong path
+[33ma8668bb[m add unggah table sql
+[33m344f5c7[m fakuuuy
+[33mbaa56c3[m bangke dah
+[33mac9bd10[m menu upload buku
+[33m25480b3[m try to fix the ajax
+[33m5080510[m fixing typo variable
+[33m6377845[m test cloud sql
+[33m9cde683[m fixing ajax
+[33mb38eb62[m merge conflict literally manual
+[33m0ff8f45[m Prepare changes from loan to submission and from review to purchase
+[33mfc1d7e2[m make it better

@@ -29,9 +29,9 @@
       <div class="col-md-4 col-sm-12">
         <h2>Ikuti Kami</h2>
         <ul class="list-inline">
-          <li><a href="#"><i class="fa fa-instagram fa-footer"></i></a></li>
-          <li><a href="#"><i class="fa fa-twitter fa-footer"></i></a></li>
-          <li><a href="#"><i class="fa fa-facebook fa-footer"></i></a></li>
+          <li><a href="https://instagram.com"><i class="fa fa-instagram fa-footer"></i></a></li>
+          <li><a href="https://twitter.com"><i class="fa fa-twitter fa-footer"></i></a></li>
+          <li><a href="https://facebook.com"><i class="fa fa-facebook fa-footer"></i></a></li>
         </ul>
       </div>
     </div>
