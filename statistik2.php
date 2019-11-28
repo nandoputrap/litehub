@@ -1,10 +1,10 @@
 <?php
   require_once("templates/header.php");
-  session_start();
+  // session_start();
 ?>
 
 <?php
-	// session_start();
+	session_start();
 	function connectDB() {
 		$servername = "sql12.freesqldatabase.com";
 		$username = "sql12310568";
@@ -300,7 +300,6 @@ function getSoldNonFiksi($bulan){
 </div>
 
 <script src="js/jquery-3.1.0.min.js"> </script>
-<script src="bootstrap/dist/js/bootstrap.min.js"></script>
 
 <script src="plugins/jquery/jquery.min.js"></script>
 <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
