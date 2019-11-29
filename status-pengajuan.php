@@ -170,7 +170,7 @@ session_start();
   												);
   								$split = explode('-', $olddate);
   								$tanggal = $split[2] . ' ' . $bulan[(int)$split[1]] . ' ' . $split[0];
-  								if($row['status'] == "Sudah Diterima") {
+  								if($row['status'] == "Sudah Diterbitkan") {
   									echo'
   										<tbody>
   										<tr>
