@@ -108,7 +108,7 @@ function daftarBuku($table) {
             <?php
               $daftarbuku = daftarBuku("unggah");
               while ($row = mysqli_fetch_array($daftarbuku)) {
-                if($row[7] == "Dalam Proses Review") {
+                if($row[7] == "Dalam Proses Review" || $row[7] == "Dalam Proses Penyuntingan") {
                   echo '
                   <tr>
                   <td><strong>Judul Buku</strong></td>
@@ -138,10 +138,6 @@ function daftarBuku($table) {
                 <td><strong>Status Pengajuan</strong></td>
                 <td>
 
-                    <!-- <select class="form-control" id="kategori" style="height: 100%;">
-                      <option>Dalam Proses Penyuntingan</option>
-                      <option>Sudah Diterbitkan</option>
-                    </select> -->
                     <div class="button dropdown">
                       <select id="status-pengajuan" class="form-control" id="kategori" style="height: 100%;">
                        <option>Dalam Proses Penyuntingan</option>
@@ -152,9 +148,12 @@ function daftarBuku($table) {
                 </td>
               </tr>
 
-
             </tbody>
           </table>
+          <form action="services/edit.php" method="post" enctype="multipart/form-data">
+          <input type="hidden" id="insert-unggah" name="idUnggah" value=<?php echo $_GET['id'];?>>
+          <button type="submit" class="btn btn-primary btn-block btn-ebookhub btn-register">Simpan</button>
+          </form>
         </div>
         <br><br>
 
@@ -232,7 +231,7 @@ function daftarBuku($table) {
 
               <div class="form-group">
                 <label for="exampleFormControlFile1">
-                  Format buku dalam bentuk .doc atau .docx. Format penulisan dan layout dapat melihat pada halaman <a href="#">ini.</a> Ukuran file maksimal 50 MB.
+                  Format buku dalam bentuk .pdf, .epug atau .mobi. Format penulisan dan layout dapat melihat pada halaman <a href="#">ini.</a> Ukuran file maksimal 50 MB.
                 </label>
                 <input type="file" name="fileEditor" id="fileEditor">
               </div>

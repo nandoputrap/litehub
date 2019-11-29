@@ -2,7 +2,7 @@
 
   <div class="panel-kategori">
     <div class="panel-heading">
-      <h3 class="panel-title">Teknologi</h3>
+      <h3 class="panel-title">Kategori</h3>
     </div>
 
     <div class="panel-body">
