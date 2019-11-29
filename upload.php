@@ -63,17 +63,6 @@
             </select>
           </div>
 
-          <!-- <div class="form-group">
-            <label for="subkategori"></label>
-            <select class="form-control form-register form-group-kategori" id="subkategori">
-               <option>-Pilih kategori-</option>
-              <option>SubKategori 1</option>
-              <option>SubKategori 2</option>
-              <option>SubKategori 3</option>
-              <option>SubKategori 4</option>
-              <option>SubKategori 5</option>
-            </select>
-          </div> -->
           <div class="form-group">
            <textarea class="form-control" rows="5" id="comment" name="deskripsiBuku" placeholder="Deskripsi/Sinopsis buku..."></textarea>
           </div>
