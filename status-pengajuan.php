@@ -32,6 +32,20 @@ session_start();
 		mysqli_close($conn);
 		return $result;
 	}
+
+	function publishedBook($table) {
+		$conn = connectDB();
+
+		$sql = "SELECT t.no, t.title, t.author, t.category, t.description, b.publish_date, t.status FROM $table t
+				INNER JOIN book b on b.upload_id = t.no
+				WHERE user_id = '".$_SESSION["namauser"]."'";
+
+		if(!$result = mysqli_query($conn, $sql)) {
+			die("Error: $sql");
+		}
+		mysqli_close($conn);
+		return $result;
+	}
 ?>
 
 <br>
@@ -115,7 +129,7 @@ session_start();
   												);
   								$split = explode('-', $olddate);
   								$tanggal = $split[2] . ' ' . $bulan[(int)$split[1]] . ' ' . $split[0];
-  								if($row['status'] == "Dalam Proses Review") {
+  								if($row['status'] == "Dalam Proses Review"  || $row['status'] == "Dalam Proses Penyuntingan") {
   									echo'
   									<tbody>
   									<tr>
@@ -123,7 +137,7 @@ session_start();
   										<td class="text-center">'.$row['category'].'</td>
   										<td class="text-center">'.$tanggal.'</td>
   										<td class="text-center">'.$row['status'].'</td>
-  										<td class="text-center"><a class="btn btn-info" href="status-pengajuan-detail.php?id='.$row['no'].'"><i class="fa fa-info"></i>&nbsp;&nbsp;Detail</a></td>
+  										<td class="text-center"><a class="btn btn-info" href="status-pengajuan-detail-published.php?id='.$row['no'].'"><i class="fa fa-info"></i>&nbsp;&nbsp;Detail</a></td>
 
   									</tr>
   									</tbody>';
@@ -151,10 +165,10 @@ session_start();
               </tr>
             </thead>
             <?php
-  						$daftarbuku = daftarBuku("unggah");
+						$daftarbuku = publishedBook("unggah");  
   						if (mysqli_num_rows($daftarbuku) > 0) {
   							while ($row = mysqli_fetch_assoc($daftarbuku)) {
-  								$olddate = $row['upload_date'];
+  								$olddate = $row['publish_date'];
   								$bulan = array (1 =>   	'Januari',
   														'Februari',
   														'Maret',
@@ -179,7 +193,7 @@ session_start();
   											<td class="text-center">'.$tanggal.'</td>
   											<td class="text-center">'.$row['status'].'</td>
   											<td class="text-center">'.$row['status'].'</td>
-  											<td class="text-center"><a class="btn btn-info" href="status-pengajuan-detail.php?id='.$row['no'].'">Detail</a></td>
+  											<td class="text-center"><a class="btn btn-info" href="status-pengajuan-detail-published.php?id='.$row['no'].'">Detail</a></td>
   										</tr>
   										</tbody>';
   								}
