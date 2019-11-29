@@ -1,6 +1,5 @@
 <?php
   require_once("templates/header.php");
-  // session_start();
 ?>
 
 <?php
@@ -300,6 +299,7 @@ function getSoldNonFiksi($bulan){
 </div>
 
 <script src="js/jquery-3.1.0.min.js"> </script>
+<!-- <script src="bootstrap/dist/js/bootstrap.min.js"></script> -->
 
 <script src="plugins/jquery/jquery.min.js"></script>
 <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>

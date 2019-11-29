@@ -241,17 +241,47 @@
                   <ul class="pagination pagination-lg">
 				  <?php
 					$count = getbook();
+					$flag = false;
+					if (!isset($_GET['offset']) || $_GET['offset'] == 0) {
+						$flag = true;
+					}else {
+						echo '
+						<li> <a href="shop.php?offset='.($_GET['offset']-6).'"><i class="fa fa-angle-left" aria-hidden="true"></i></a></li>
+						';
+					}
 					while ($row = mysqli_fetch_row($count)) {
 						$sum = 1;
 						for ($i=0; $i < $row[0]; $i+=6) {
-							echo '
-							<li><a href="shop.php?offset='.$i.'">'.$sum.'</a></li>
-						';
+							if (isset($_GET['offset'])) {
+								if ($_GET['offset'] == $i) {
+									echo '
+									<li class="active active-pagination"><a href="shop.php?offset='.$i.'">'.$sum.'</a></li>
+								';	
+								}else {
+									echo '
+									<li><a href="shop.php?offset='.$i.'">'.$sum.'</a></li>
+								';
+								}
+							}else{
+								if ($i == 0) {
+									echo '
+									<li class="active active-pagination"><a href="shop.php?offset='.$i.'">'.$sum.'</a></li>
+								';
+								}else {
+									echo '
+									<li><a href="shop.php?offset='.$i.'">'.$sum.'</a></li>
+								';
+								}
+							}
 						$sum+=1;
 						}
 					}
+					if ($flag) {
+						echo '
+						<li> <a href="shop.php?offset='.($_GET['offset']+6).'"><i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+						';
+					}
 				?>
-                    <li> <a href="""><i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
                   </ul>
                 </div>
 

@@ -16,6 +16,18 @@ function connectDB() {
   }
   return $conn;
 }
+
+function daftarBuku($table) {
+  $conn = connectDB();
+  
+  $sql = "SELECT no, title, author, category, description, file, upload_date, status FROM $table";
+  
+  if(!$result = mysqli_query($conn, $sql)) {
+    die("Error: $sql");
+  }
+  mysqli_close($conn);
+  return $result;
+}
 ?>
 
 <div class="daftar-pengajuan section-margin">
@@ -26,7 +38,6 @@ function connectDB() {
         <div class="item">
           <div class="card  text-center card-product-details">
             <img class='card-img-top img-circle img-fluid' src='images/avatar.png' alt='card-img'>
-            <!-- <h2>Nando Putra Pratama</h2> -->
           </div>
         </div>
 
@@ -49,9 +60,6 @@ function connectDB() {
                 </li>
                 <li class="active-profil">
                   <a href="daftar-pengajuan.php">Daftar Pengajuan</a>
-                </li>
-                <li>
-                  <a href="status-pengajuan.php">Daftar </a>
                 </li>
               </ul>
             </div>
@@ -76,42 +84,23 @@ function connectDB() {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td class="text-center">How to Code 101</td>
-                <td class="text-center">Nando P. Pratama</td>
-                <td class="text-center">Komputer</td>
-                <td class="text-center">1 Januari 2019</td>
-                <td class="text-center"><button type="button" class="btn btn-primary" onclick="window.location='status-pengajuan-detail.php'"><i class="fa fa-download"></i> &nbsp;Unduh</button></td>
-                <td class="text-center"><button type="button" class="btn btn-warning" onclick="window.location='status-pengajuan-detail-editor.php'"> <i class="fa fa-edit"></i> &nbsp;Update</button></td>
-              </tr>
-
-              <tr>
-                <td class="text-center">How to Code 101</td>
-                <td class="text-center">Nando P. Pratama</td>
-                <td class="text-center">Komputer</td>
-                <td class="text-center">1 Januari 2019</td>
-                <td class="text-center"><button type="button" class="btn btn-primary" onclick="window.location='status-pengajuan-detail.php'"><i class="fa fa-download"></i> &nbsp;Unduh</button></td>
-                <td class="text-center"><button type="button" class="btn btn-warning" onclick="window.location='status-pengajuan-detail-editor.php'"><i class="fa fa-edit"></i> &nbsp;Update</button></td>
-              </tr>
-
-              <tr>
-                <td class="text-center">How to Code 101</td>
-                <td class="text-center">Nando P. Pratama</td>
-                <td class="text-center">Komputer</td>
-                <td class="text-center">1 Januari 2019</td>
-                <td class="text-center"><button type="button" class="btn btn-primary" onclick="window.location='status-pengajuan-detail.php'"><i class="fa fa-download"></i> &nbsp;Unduh</button></td>
-                <td class="text-center"><button type="button" class="btn btn-warning" onclick="window.location='status-pengajuan-detail-editor.php'"><i class="fa fa-edit"></i> &nbsp;Update</button></td>
-              </tr>
-
-              <tr>
-                <td class="text-center">How to Code 101</td>
-                <td class="text-center">Nando P. Pratama</td>
-                <td class="text-center">Komputer</td>
-                <td class="text-center">1 Januari 2019</td>
-                <td class="text-center"><button type="button" class="btn btn-primary" onclick="window.location='status-pengajuan-detail.php'"><i class="fa fa-download"></i> &nbsp;Unduh</button></td>
-                <td class="text-center"><button type="button" class="btn btn-warning" onclick="window.location='status-pengajuan-detail-editor.php'"><i class="fa fa-edit"></i> &nbsp;Update</button></td>
-              </tr>
-
+            <?php
+              $daftarbuku = daftarBuku("unggah");
+              while ($row = mysqli_fetch_array($daftarbuku)) {
+                if($row[7] == "Dalam Proses Review") {
+                  echo '
+                  <tr>
+                  <td class="text-center">'.$row[1].'</td>
+                  <td class="text-center">'.$row[2].'</td>
+                  <td class="text-center">'.$row[3].'</td>
+                  <td class="text-center">'.$row[6].'</td>
+                  <td class="text-center"><a href="services/download.php?nama='.$row[5].'"><button type="button" class="btn btn-primary" ><i class="fa fa-download"></i> &nbsp;Unduh</button></a></td>
+                  <td class="text-center"><a href="status-pengajuan-detail-editor.php?id='.$row[0].'"><button type="button" class="btn btn-warning" > <i class="fa fa-edit"></i> &nbsp;Update</button></a></td>
+                </tr>
+                  '; 
+                }
+              }
+            ?>
             </tbody>
           </table>
         </div>
@@ -127,28 +116,26 @@ function connectDB() {
                 <th class="text-center tabel-header">Kategori</th>
                 <th class="text-center tabel-header">Tanggal Terbit</th>
                 <th class="text-center tabel-header">Status</th>
-                <th class="text-center tabel-header">Jumlah Terjual</th>
                 <th class="text-center tabel-header">Aksi</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td class="text-center">How to Code 101</td>
-                <td class="text-center">Komputer</td>
-                <td class="text-center">1 Juni 2019</td>
-                <td class="text-center">Sudah Diterbitkan</td>
-                <td class="text-center">509</td>
-                <td class="text-center"><button type="button" class="btn btn-info" onclick="window.location='status-pengajuan-detail.php'">Detail</button></td>
-              </tr>
-
-              <tr>
-                <td class="text-center">How to Code 101</td>
-                <td class="text-center">Komputer</td>
-                <td class="text-center">12 Oktober 2019</td>
-                <td class="text-center">Sudah Diterbitkan</td>
-                <td class="text-center">159</td>
-                <td class="text-center"><button type="button" class="btn btn-info" onclick="window.location='status-pengajuan-detail.php'">Detail</button></td>
-              </tr>
+            <?php
+              $daftarbuku = daftarBuku("unggah");
+              while ($row = mysqli_fetch_array($daftarbuku)) {
+                if($row[7] == "Sudah Diterima") {
+                  echo '
+                  <tr>
+                  <td class="text-center">'.$row[1].'</td>
+                  <td class="text-center">'.$row[3].'</td>
+                  <td class="text-center">'.$row[6].'</td>
+                  <td class="text-center">Sudah Diterbitkan</td>
+                  <td class="text-center"><a href="status-pengajuan-detail.php?id='.$row[0].'"><button type="button" class="btn btn-info">Detail</button></a></td>
+                </tr>
+                  '; 
+                }
+              }
+            ?>
 
             </tbody>
           </table>
