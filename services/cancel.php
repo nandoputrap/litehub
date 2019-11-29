@@ -1,4 +1,5 @@
 <?php
+    session_start();
     function connectDB() {
 		$servername = "sql12.freesqldatabase.com";
 		$username = "sql12310568";
@@ -16,7 +17,7 @@
 	}
     function pinjamBuku($book_id, $user_id) {
         $conn = connectDB();
-        $sqlsubmission = "DELETE from submission where book_id = $book_id and user_id = '$user_id'";
+        $sqlsubmission = "DELETE from submission where book_id = $book_id and user_id = $user_id";
 
         if(!$result = mysqli_query($conn, $sqlsubmission)) {
             die("Error: $sqlsubmission");
@@ -28,6 +29,6 @@
         pinjamBuku($_GET['id'],$_SESSION["user_id"]);
     }
     else {
-        echo  "<script type='text/javascript'>alert('Hapus barang pada cart gagal');window.location = './shop.php';</script>";
+        echo  "<script type='text/javascript'>alert('Hapus barang pada cart gagal');window.location = '../shop.php';</script>";
     }
 ?>
