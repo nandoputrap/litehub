@@ -39,7 +39,10 @@
         </li>
         <li>
           <p>Maximum</p>
-          <input type="text" class="form-control" placeholder="Harga tertinggi" name="q">
+          <input type="text" class="form-control" placeholder="Harga tertinggi" name="q"><br>
+        </li>
+        <li>
+          <button type="button" class="btn btn-primary" ><i class="fa fa-search"></i> &nbsp;Cari</button>
         </li>
       </ul>
     </div>

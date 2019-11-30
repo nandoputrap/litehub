@@ -35,35 +35,42 @@ function connectDB() {
           <div class="panel-harga">
             <div class="panel-heading text-center">
               <h3 class="panel-title">
-              <?php 
+              <?php
                 if (isset($_SESSION["namauser"])){
                   echo$_SESSION["nama_lengkap"];
                 }
               ?>
               </h3>
             </div>
-    
+
             <div class="panel-body">
               <ul class="nav nav-pills nav-stacked category-menu">
+
+
+
+
+        <?php
+              if ($_SESSION["role"] === "editor"){
+                echo'
                 <li class="active-profil">
                   <a href="lihat-profil.php">Profil</a>
                 </li>
                 <li>
                   <a href="edit-password.php">Edit Password</a>
                 </li>
-
-        <?php 
-              if ($_SESSION["role"] === "editor"){
-                echo'
                   <li>
                     <a href="daftar-pengajuan.php">Daftar Pengajuan</a>
                   </li>
-                  <li>
-                    <a href="status-pengajuan.php">Daftar </a>
-                  </li>            
+
                 ';
               }else{
                 echo'
+                <li class="active-profil">
+                  <a href="lihat-profil.php">Profil</a>
+                </li>
+                <li>
+                  <a href="edit-password.php">Edit Password</a>
+                </li>
                 <li>
                   <a href="status-pengajuan.php">Status Pengajuan</a>
                 </li>
@@ -99,10 +106,10 @@ function connectDB() {
             <div class="form-group">
               <label for="">E-mail:</label>
               <input type="email" class="form-control form-register" value="'.$_SESSION["email"].'">
-            </div>  
+            </div>
             ';
           }
-        ?>  
+        ?>
           <button type="button" class="btn btn-primary btn-block btn-ebookhub btn-register">Simpan</button>
         </form>
 

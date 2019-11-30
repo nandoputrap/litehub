@@ -105,9 +105,7 @@
       <div class="col-lg-12">
         <ul class="breadcrumb">
           <li><a href="index.php">Home</a></li>
-          <li><a href="index.php">Teknologi</a></li>
-          <li><a href="index.php">Pemrograman</a></li>
-          <li>Buku Sakti Framework Laravel</li>
+          <li><a href="shop.php">Shop</a></li>
         </ul>
       </div>
     </div>

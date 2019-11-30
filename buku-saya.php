@@ -22,7 +22,7 @@ function connectDB() {
 function myBook($table) {
   $conn = connectDB();
 
-  $sql = "SELECT t.purchase_id, t.book_id, t.user_id, t.date, b.title, b.category, u.file FROM $table t 
+  $sql = "SELECT t.purchase_id, t.book_id, t.user_id, t.date, b.title, b.category, u.file FROM $table t
           INNER JOIN book b ON b.book_id = t.book_id
           INNER JOIN unggah u ON u.no = b.upload_id
           WHERE t.user_id = ".$_SESSION["user_id"]."";
@@ -85,7 +85,7 @@ function myBook($table) {
         <h2>Daftar Pembelian Buku Saya</h2>
 
         <div class="table-details">
-          <table class="table table-hover table-bordered table-responsive">
+          <table class="table table-hover table-bordered table-responsive tabel-header">
             <thead>
               <tr>
                 <th class="text-center">Judul Buku</th>
@@ -131,7 +131,7 @@ function myBook($table) {
             ?>
           </table>
         </div>
-        
+
 
       </div>
 
