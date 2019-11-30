@@ -28,17 +28,17 @@
 
   function daftarBuku($table) {
 		$conn = connectDB();
-    
+
     $no = $_GET['id'];
 		$sql = "SELECT book_id, img_path, title, author, publisher, quantity FROM $table WHERE book_id != '$no' AND book_id IN (SELECT FLOOR(RAND()*(10-1+1)+1))";
-		
+
 		if(!$result = mysqli_query($conn, $sql)) {
 			die("Error: $sql");
 		}
 		mysqli_close($conn);
 		return $result;
   }
-  
+
   function selectAllRowsFromSubmission() {
 		$conn = connectDB();
 
@@ -58,10 +58,10 @@
     }
     return $arraysubmission;
   }
-  
+
   function selectAllFromBook($book_id) {
     $conn = connectDB();
-  
+
     $no = $_GET['id'];
     $sql = "SELECT * FROM book WHERE book_id != '$no' AND book_id = $book_id LIMIT 4";
     if(!$result = mysqli_query($conn, $sql)) {
@@ -98,7 +98,7 @@
   }
 
 ?>
-
+<br>
 <div class="shop section-mini-margin">
   <div class="container">
     <div class="row">
@@ -242,7 +242,7 @@
 
         <?php
               $arraybook = selectAllBooks();
-              for ($i=0; $i < count($arraybook); $i++) { 
+              for ($i=0; $i < count($arraybook); $i++) {
                 $buku = selectAllFromBook($arraybook[$i]);
                 while ($row = mysqli_fetch_row($buku)) {
                   echo '
