@@ -84,7 +84,7 @@
                   $daftarkategori = daftarKategori("category");
                   while ($row = mysqli_fetch_row($daftarkategori)) {
                     echo '
-                    <a class="dropdown-item" href="#">'.$row[1].'</a>
+                    <a class="dropdown-item" href="shop-category.php?id='.$row[1].'">'.$row[1].'</a>
                     ';
                   }
                 ?>
