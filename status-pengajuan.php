@@ -36,13 +36,26 @@ session_start();
 	function publishedBook($table) {
 		$conn = connectDB();
 
-		$sql = "SELECT t.no, t.title, t.author, t.category, t.description, b.publish_date, t.status FROM $table t
+		$sql = "SELECT t.no, t.title, t.author, t.category, t.description, b.publish_date, t.status, b.book_id FROM $table t
 				INNER JOIN book b on b.upload_id = t.no
 				WHERE user_id = '".$_SESSION["namauser"]."'";
 
 		if(!$result = mysqli_query($conn, $sql)) {
 			die("Error: $sql");
 		}
+		mysqli_close($conn);
+		return $result;
+	}
+
+	function sold($id) {
+		$conn = connectDB();
+
+		$sql = "SELECT count(*) AS terjual FROM purchase WHERE book_id = '".$id."'";
+
+		if(!$result = mysqli_query($conn, $sql)) {
+			die("Error: $sql");
+		}
+
 		mysqli_close($conn);
 		return $result;
 	}
@@ -168,35 +181,41 @@ session_start();
 						$daftarbuku = publishedBook("unggah");  
   						if (mysqli_num_rows($daftarbuku) > 0) {
   							while ($row = mysqli_fetch_assoc($daftarbuku)) {
-  								$olddate = $row['publish_date'];
-  								$bulan = array (1 =>   	'Januari',
-  														'Februari',
-  														'Maret',
-  														'April',
-  														'Mei',
-  														'Juni',
-  														'Juli',
-  														'Agustus',
-  														'September',
-  														'Oktober',
-  														'November',
-  														'Desember'
-  												);
-  								$split = explode('-', $olddate);
-  								$tanggal = $split[2] . ' ' . $bulan[(int)$split[1]] . ' ' . $split[0];
-  								if($row['status'] == "Sudah Diterbitkan") {
-  									echo'
-  										<tbody>
-  										<tr>
-  											<td class="text-center">'.$row['title'].'</td>
-  											<td class="text-center">'.$row['category'].'</td>
-  											<td class="text-center">'.$tanggal.'</td>
-  											<td class="text-center">'.$row['status'].'</td>
-  											<td class="text-center">'.$row['status'].'</td>
-  											<td class="text-center"><a class="btn btn-info" href="status-pengajuan-detail-published.php?id='.$row['no'].'">Detail</a></td>
-  										</tr>
-  										</tbody>';
-  								}
+								$book_id = $row['book_id'];
+								$sold = sold("$book_id");
+								if (mysqli_num_rows($sold) > 0) {
+									while ($row_sold = mysqli_fetch_assoc($sold)){
+										$olddate = $row['publish_date'];
+										$bulan = array (1 =>   	'Januari',
+																'Februari',
+																'Maret',
+																'April',
+																'Mei',
+																'Juni',
+																'Juli',
+																'Agustus',
+																'September',
+																'Oktober',
+																'November',
+																'Desember'
+														);
+										$split = explode('-', $olddate);
+										$tanggal = $split[2] . ' ' . $bulan[(int)$split[1]] . ' ' . $split[0];
+										if($row['status'] == "Sudah Diterbitkan") {
+											echo'
+												<tbody>
+												<tr>
+													<td class="text-center">'.$row['title'].'</td>
+													<td class="text-center">'.$row['category'].'</td>
+													<td class="text-center">'.$tanggal.'</td>
+													<td class="text-center">'.$row['status'].'</td>
+													<td class="text-center">'.$row_sold['terjual'].'</td>
+													<td class="text-center"><a class="btn btn-info" href="status-pengajuan-detail-published.php?id='.$row['no'].'">Detail</a></td>
+												</tr>
+												</tbody>';
+										}
+									}
+								}
   							}
   						}
   					?>

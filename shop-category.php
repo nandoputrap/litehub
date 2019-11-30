@@ -42,9 +42,11 @@
 
 	function getbook() {
 		$conn = connectDB();
-
-		$sql = "SELECT count(*) FROM book";
-
+		if (isset($_GET['id'])) {
+			$category = $_GET['id'];
+			$sql = "SELECT count(*) FROM book WHERE category = '$category'";
+		}
+		
 		if(!$result = mysqli_query($conn, $sql)) {
 			die("Error: $sql");
 		}

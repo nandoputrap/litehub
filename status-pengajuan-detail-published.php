@@ -21,9 +21,22 @@
 	if (isset($_GET['id'])) {
 		$no = $_GET['id'];
 	  }
-	  else {
+	else {
 		header('Location:status-pengajuan.php');
-	  }
+  }
+  
+  function sold($id) {
+		$conn = connectDB();
+
+		$sql = "SELECT count(*) AS terjual FROM purchase WHERE book_id = '".$id."'";
+
+		if(!$result = mysqli_query($conn, $sql)) {
+			die("Error: $sql");
+		}
+
+		mysqli_close($conn);
+		return $result;
+	}
 ?>
 
 <div class="status-pengajuan-detail section-margin">
@@ -77,74 +90,69 @@
                 where no = '$no'";
       $detail_publish = mysqli_query($conn, $query);
       
-      // $terjual = "SELECT count(p.*) as terjual, FROM purchase p
-      //             WHERE book_id = '".$detail_publish['b.book_id']."'";
-			// $sum_sold = mysqli_query($conn, $query);
-
-			if (mysqli_num_rows($detail_publish) > 0) {
+      if (mysqli_num_rows($detail_publish) > 0) {
         $row = mysqli_fetch_assoc($detail_publish);
-        $terjual = "SELECT *, (SELECT count(*) FROM purchase WHERE book_id = '".$row['book_id']."') AS terjual
-                    FROM purchase WHERE book_id= '".$row['book_id']."'";
-        $sum_sold = mysqli_query($conn, $query);
-        
-        if (mysqli_num_rows($sum_sold) > 0) {
-          $row_sold = mysqli_fetch_assoc($sum_sold);
-          $olddate = $row['publish_date'];
-          $bulan = array (1 =>   	'Januari',
-                                  'Februari',
-                                  'Maret',
-                                  'April',
-                                  'Mei',
-                                  'Juni',
-                                  'Juli',
-                                  'Agustus',
-                                  'September',
-                                  'Oktober',
-                                  'November',
-                                  'Desember'
-                          );
-          $split = explode('-', $olddate);
-          $tanggal = $split[2] . ' ' . $bulan[(int)$split[1]] . ' ' . $split[0];
-          echo'
-          
-          <div class="col-md-9">
-            <h1 class="register-title">Status Pengajuan</h1>
+        $book_id = $row['book_id'];
+        $sold = sold("$book_id");
+        if (mysqli_num_rows($sold) > 0) {
+          while ($row_sold = mysqli_fetch_assoc($sold)){
+            $olddate = $row['publish_date'];
+            $bulan = array (1 =>   	'Januari',
+                                    'Februari',
+                                    'Maret',
+                                    'April',
+                                    'Mei',
+                                    'Juni',
+                                    'Juli',
+                                    'Agustus',
+                                    'September',
+                                    'Oktober',
+                                    'November',
+                                    'Desember'
+                            );
+            $split = explode('-', $olddate);
+            $tanggal = $split[2] . ' ' . $bulan[(int)$split[1]] . ' ' . $split[0];
+            echo'
+            
+            <div class="col-md-9">
+              <h1 class="register-title">Status Pengajuan</h1>
 
-            <div class="table-details">
-              <table class="table detail-pengajuan table-hover table-bordered table-responsive">
-                <tbody>
-                  <tr>
-                    <td><strong>Judul Buku</strong></td>
-                    <td id="judulBuku">'.$row['title'].'</td>
-                  </tr>
-                  <tr>
-                    <td><strong>Nama Penulis</strong></td>
-                    <td id="namaPenulis">'.$row['author'].'</td>
-                  </tr>
-                  <tr>
-                    <td><strong>Kategori</strong></td>
-                    <td id="kategori">'.$row['category'].'</td>
-                  </tr>
-                  <tr>
-                    <td><strong>Deskripsi/Sinopsis Buku</strong></td>
-                    <td id="deskripsiBuku">'.$row['description'].'</td>
-                  </tr>
-                  <tr>
-                    <td><strong>Tanggal Terbit</strong></td>
-                    <td id="tanggalUpload">'.$tanggal.'</td>
-                  </tr>
-                  <tr>
-                    <td><strong>Jumlah Terjual</strong></td>
-                    <td id="terjual">3</td>
-                  </tr>
-                  <tr>
-                    <td><strong>Status Pengajuan</strong></td>
-                    <td id="status"><h4 class="status">'.$row['status'].'</h4></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>';
+              <div class="table-details">
+                <table class="table detail-pengajuan table-hover table-bordered table-responsive">
+                  <tbody>
+                    <tr>
+                      <td><strong>Judul Buku</strong></td>
+                      <td id="judulBuku">'.$row['title'].'</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Nama Penulis</strong></td>
+                      <td id="namaPenulis">'.$row['author'].'</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Kategori</strong></td>
+                      <td id="kategori">'.$row['category'].'</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Deskripsi/Sinopsis Buku</strong></td>
+                      <td id="deskripsiBuku">'.$row['description'].'</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Tanggal Terbit</strong></td>
+                      <td id="tanggalUpload">'.$tanggal.'</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Jumlah Terjual</strong></td>
+                      <td id="terjual">'.$row_sold['terjual'].'</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Status Pengajuan</strong></td>
+                      <td id="status"><h4 class="status">'.$row['status'].'</h4></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>';
+          }
         }
 			}
 		  ?>
