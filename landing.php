@@ -411,7 +411,7 @@
                   $daftarnon = daftarNon("category");
                   while ($rownon = mysqli_fetch_row($daftarnon)) {
                     echo '
-                    <li><a href="#">'.$rownon[1].'</a></li>
+                    <li><a href="shop-category.php?id='.$rownon[1].'">'.$rownon[1].'</a></li>
                     ';
                   }
                 ?>
@@ -432,7 +432,7 @@
                   $daftarfiks = daftarFiksi("category");
                   while ($rowfiks = mysqli_fetch_row($daftarfiks)) {
                     echo '
-                    <li><a href="#">'.$rowfiks[1].'</a></li>
+                    <li><a href="shop-category.php?id='.$rowfiks[1].'">'.$rowfiks[1].'</a></li>
                     ';
                   }
                 ?>
