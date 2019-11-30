@@ -27,7 +27,7 @@
 		return $result;
 	}
 
-    function insertBuku() {
+    function insertBuku($idUnggah) {
 		$conn = connectDB();
 		
 		$displayBuku = $_POST['displayBuku'];
@@ -46,7 +46,7 @@
 		$uploadOk = 1;
 		$fileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 		// Check if file is on .doc or .docx format
-		$type_apr = array('doc','docx');
+		$type_apr = array('pdf','epug', 'mobi');
 		$x = explode('.', $name_file);
 		$ekstensi = strtolower(end($x));
 		if(isset($_POST["submit"])) {
@@ -69,9 +69,9 @@
 			$uploadOk = 0;
 		}
 		// Allow certain file formats
-		if($fileType != "doc" && $fileType != "docx" && $fileType != "pdf"
+		if($fileType != "epug" && $fileType != "mobi" && $fileType != "pdf"
 		&& $fileType != "txt" ) {
-			echo "Sorry, only DOC, DOCX, PDF, TXT files are allowed.";
+			echo "Sorry, only EPUG, MOBI, PDF, TXT files are allowed.";
 			$uploadOk = 0;
 		}
 		// Check if $uploadOk is set to 0 by an error
@@ -93,7 +93,6 @@
 					}
 				}
 				$_SESSION["titlebookadded"] = $judulBuku;
-				$idUnggah = $_POST['idUnggah'];
 				
 				if($sdhAda == true) {
 					echo  "<script type='text/javascript'>alert('Buku Sudah Ada');</script>";
@@ -103,19 +102,20 @@
 					if (move_uploaded_file($_FILES["fileCover"]["tmp_name"], $target_buku)) {
 						$tanggalUpload = date("Y-m-d");
 						$sql = "INSERT into book (img_path, title, author, publisher, description, quantity, category, publish_date, upload_id, isbn, sku) values('$name_buku', '$judulBuku', '$pengarangBuku', '$penerbitBuku', '$deskripsiBuku', $stokBuku, '$category', '$tanggalUpload', '$idUnggah', '$isbn', '$sku')";
+						if($result = mysqli_query($conn, $sql)) {
+							$diterima = 'Sudah Diterima';
+							$sql2 = "UPDATE unggah SET status = '$diterima' AND file = '$filename' WHERE no = '$idUnggah'";
+							if($result2 = mysqli_query($conn, $sql2)) {
+								echo "New record created successfully <br/>";
+								header("Location: ../daftar-pengajuan.php");
+							}else {
+								die("Error: $sql");
+							}
+						}else {
+							die("Error: $sql");
+						}
 					}else{
 						echo  "<script type='text/javascript'>alert('Upload Cover Error');</script>";
-					}
-				}
-		
-				if($result = mysqli_query($conn, $sql)) {
-					$diterima = 'Sudah Diterima';
-					$sql = "UPDATE unggah SET status = '$diterima' AND file = '$filename' WHERE no = '$idUnggah'";
-					if($result = mysqli_query($conn, $sql)) {
-						echo "New record created successfully <br/>";
-						header("Location: ../daftar-pengajuan.php");
-					}else {
-						die("Error: $sql");
 					}
 				}
 				mysqli_close($conn);
@@ -127,7 +127,7 @@
 	}
 	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		if($_POST['command'] === 'insert') {
-			insertBuku();
+			insertBuku($_POST['idUnggah']);
 		}
 	}
 ?>

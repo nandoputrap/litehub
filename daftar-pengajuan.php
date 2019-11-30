@@ -87,7 +87,7 @@ function daftarBuku($table) {
             <?php
               $daftarbuku = daftarBuku("unggah");
               while ($row = mysqli_fetch_array($daftarbuku)) {
-                if($row[7] == "Dalam Proses Review") {
+                if($row[7] == "Dalam Proses Review" || $row[7] == "Dalam Proses Penyuntingan") {
                   $olddate = $row[6];
   								$bulan = array (1 =>   	'Januari',
   														'Februari',

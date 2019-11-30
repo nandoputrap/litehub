@@ -187,9 +187,17 @@
 	  	<?php
 		$count = getbook();
 		while ($row = mysqli_fetch_row($count)) {
-			echo '
-		  <h4>Menampilkan 1-6 dari '.$row[0].' e-book Teknologi</h4>
-		  ';
+			$awal = $_GET['offset'] + 1;
+			$akhir = $_GET['offset'] + 6;
+			if ($akhir > $row[0]) {
+				echo '
+				<h4>Menampilkan '.$awal.'-'.$row[0].' dari '.$row[0].' e-book</h4>
+				';
+			}else{
+				echo '
+				<h4>Menampilkan '.$awal.'-'.$akhir.' dari '.$row[0].' e-book</h4>
+				';
+			}
 		}
 		?>
 
