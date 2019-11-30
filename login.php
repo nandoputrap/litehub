@@ -18,6 +18,8 @@
 		
 		$username = $_POST['username'];
 		$password = $_POST['password']; 
+		// $email = $_POST['email']; 
+		// $nama_lengkap = $_POST['nama_lengkap']; 
 				
 		$queryLogin = "SELECT * FROM user WHERE username = '$username' AND password = '$password'";
 		$resultLogin = mysqli_query($databaseConnection,$queryLogin);
@@ -33,6 +35,8 @@
 			$_SESSION["user_id"] = $row["user_id"];
 			$_SESSION["namauser"] = $row["username"];
 			$_SESSION["role"] = $row["role"];
+			$_SESSION["email"] = $row["email"];
+			$_SESSION["nama_lengkap"] = $row["nama_lengkap"];
 			
 			// if ($row["role"] === "user"){
 			// 	header("Location: shop.php");
@@ -40,9 +44,9 @@
 			// 	header("Location: upload.php");
       // }else 
       if ($row["role"] === "editor"){
-				header("Location: unduh.php");
+				header("Location: daftar-pengajuan.php");
 			}else if ($row["role"] === "admin"){
-				header("Location: statistik.php");
+				header("Location: statistik2.php");
 			}
 			else{
 				header("Location: landing.php");
@@ -70,7 +74,7 @@
 
         <div class="modal-form text-center input-login">
         <form action="login.php" method="post">
-          <input type="text" id="insert-username" name="username" class="form-control" placeholder="Masukkan E-mail..." required>
+          <input type="text" id="insert-username" name="username" class="form-control" placeholder="Masukkan username..." required>
           <input type="password" id="insert-password" name="password" class="form-control" placeholder="Masukkan kata sandi..." required>
           <input type="hidden" id="insert-command" name="command" value="insert">
           <button type="submit" class="btn btn-primary btn-block btn-ebookhub">Masuk</button>

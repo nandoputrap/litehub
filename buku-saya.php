@@ -18,6 +18,21 @@ function connectDB() {
   }
   return $conn;
 }
+
+function myBook($table) {
+  $conn = connectDB();
+
+  $sql = "SELECT t.purchase_id, t.book_id, t.user_id, t.date, b.title, b.category, u.file FROM $table t
+          INNER JOIN book b ON b.book_id = t.book_id
+          INNER JOIN unggah u ON u.no = b.upload_id
+          WHERE t.user_id = ".$_SESSION["user_id"]."";
+
+  if(!$result = mysqli_query($conn, $sql)) {
+    die("Error: $sql");
+  }
+  mysqli_close($conn);
+  return $result;
+}
 ?>
 
 <div class="status-pengajuan-detail section-margin">
@@ -35,7 +50,13 @@ function connectDB() {
         <div class="panel panel-default sidebar-menu">
           <div class="panel-harga">
             <div class="panel-heading text-center">
-              <h3 class="panel-title">Nando Putra Pratama</h3>
+              <h3 class="panel-title">
+              <?php
+                if (isset($_SESSION["namauser"])){
+                        echo$_SESSION["nama_lengkap"];
+                }
+              ?>
+              </h3>
             </div>
 
             <div class="panel-body">
@@ -61,10 +82,10 @@ function connectDB() {
       <div class="col-md-9">
         <h1 class="register-title">Buku Saya</h1>
 
-        <h2>Daftar Buku Saya</h2>
+        <h2>Daftar Pembelian Buku Saya</h2>
 
         <div class="table-details">
-          <table class="table table-hover table-bordered table-responsive">
+          <table class="table table-hover table-bordered table-responsive tabel-header">
             <thead>
               <tr>
                 <th class="text-center">Judul Buku</th>
@@ -73,72 +94,44 @@ function connectDB() {
                 <th colspan="3" class="text-center">Aksi</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td class="text-center">How to Code 101</td>
-                <td class="text-center">Komputer</td>
-                <td class="text-center">1 Januari 2019</td>
-                <td class="text-center"><button type="button" class="btn btn-info" onclick="window.location='buku-saya-detail.php'"> <i class="fa fa-info"></i>&nbsp; Detail </button></td>
-                <td class="text-center"><button type="button" class="btn btn-warning"> <i class="fa fa-book"></i>&nbsp;Baca</button></td>
-                <td class="text-center"><button type="button" class="btn btn-success"> <i class="fa fa-download"></i>&nbsp;Download</button></td>
-              </tr>
-
-              <tr>
-                <td class="text-center">How to Code 101</td>
-                <td class="text-center">Komputer</td>
-                <td class="text-center">1 Januari 2019</td>
-                <td class="text-center"><button type="button" class="btn btn-info" onclick="window.location='buku-saya-detail.php'"> <i class="fa fa-info"></i>&nbsp; Detail </button></td>
-                <td class="text-center"><button type="button" class="btn btn-warning"> <i class="fa fa-book"></i>&nbsp;Baca</button></td>
-                <td class="text-center"><button type="button" class="btn btn-success"> <i class="fa fa-download"></i>&nbsp;Download</button></td>
-              </tr>
-
-              <tr>
-                <td class="text-center">How to Code 101</td>
-                <td class="text-center">Komputer</td>
-                <td class="text-center">1 Januari 2019</td>
-                <td class="text-center"><button type="button" class="btn btn-info" onclick="window.location='buku-saya-detail.php'"> <i class="fa fa-info"></i>&nbsp; Detail </button></td>
-                <td class="text-center"><button type="button" class="btn btn-warning"> <i class="fa fa-book"></i>&nbsp;Baca</button></td>
-                <td class="text-center"><button type="button" class="btn btn-success"> <i class="fa fa-download"></i>&nbsp;Download</button></td>
-              </tr>
-
-              <tr>
-                <td class="text-center">How to Code 101</td>
-                <td class="text-center">Komputer</td>
-                <td class="text-center">1 Januari 2019</td>
-                <td class="text-center"><button type="button" class="btn btn-info" onclick="window.location='buku-saya-detail.php'"> <i class="fa fa-info"></i>&nbsp; Detail </button></td>
-                <td class="text-center"><button type="button" class="btn btn-warning"> <i class="fa fa-book"></i>&nbsp;Baca</button></td>
-                <td class="text-center"><button type="button" class="btn btn-success"> <i class="fa fa-download"></i>&nbsp;Download</button></td>
-              </tr>
-
-              <tr>
-                <td class="text-center">How to Code 101</td>
-                <td class="text-center">Komputer</td>
-                <td class="text-center">1 Januari 2019</td>
-                <td class="text-center"><button type="button" class="btn btn-info" onclick="window.location='buku-saya-detail.php'"> <i class="fa fa-info"></i>&nbsp; Detail </button></td>
-                <td class="text-center"><button type="button" class="btn btn-warning"> <i class="fa fa-book"></i>&nbsp;Baca</button></td>
-                <td class="text-center"><button type="button" class="btn btn-success"> <i class="fa fa-download"></i>&nbsp;Download</button></td>
-              </tr>
-
-              <tr>
-                <td class="text-center">How to Code 101</td>
-                <td class="text-center">Komputer</td>
-                <td class="text-center">1 Januari 2019</td>
-                <td class="text-center"><button type="button" class="btn btn-info" onclick="window.location='buku-saya-detail.php'"> <i class="fa fa-info"></i>&nbsp; Detail </button></td>
-                <td class="text-center"><button type="button" class="btn btn-warning"> <i class="fa fa-book"></i>&nbsp;Baca</button></td>
-                <td class="text-center"><button type="button" class="btn btn-success"> <i class="fa fa-download"></i>&nbsp;Download</button></td>
-              </tr>
-
-            </tbody>
+            <?php
+  						$daftarbuku = myBook("purchase");
+  						if (mysqli_num_rows($daftarbuku) > 0) {
+                while ($row = mysqli_fetch_assoc($daftarbuku)) {
+                  $olddate = $row['date'];
+  								$bulan = array (1 =>   	'Januari',
+  														'Februari',
+  														'Maret',
+  														'April',
+  														'Mei',
+  														'Juni',
+  														'Juli',
+  														'Agustus',
+  														'September',
+  														'Oktober',
+  														'November',
+  														'Desember'
+  												);
+  								$split = explode('-', $olddate);
+                  $tanggal = $split[2] . ' ' . $bulan[(int)$split[1]] . ' ' . $split[0];
+                  echo '
+                  <tbody>
+                    <tr>
+                      <td class="text-center">'.$row['title'].'</td>
+                      <td class="text-center">'.$row['category'].'</td>
+                      <td class="text-center">'.$tanggal.'</td>
+                      <td class="text-center"><a type="button" class="btn btn-info" href="buku-saya-detail.php?id='.$row['purchase_id'].'"> <i class="fa fa-info"></i>&nbsp; Detail </a></td>
+                      <td class="text-center"><a href="services/preview.php?id='.$row['file'].'" type="button" class="btn btn-warning"> <i class="fa fa-book"></i>&nbsp;Baca</button></td>
+                      <td class="text-center"><a href="services/download.php?id='.$row['file'].'" type="button" class="btn btn-success"> <i class="fa fa-download"></i>&nbsp;Download</button></td>
+                    </tr>
+                  </tbody>
+                  ';
+                }
+              }
+            ?>
           </table>
         </div>
 
-
-        <!-- Jika belum beli buku, maka akan muncul tampilan ini
-             Use JavaScript ehehe.. :))
-       -->
-        <div class="belum-punya-buku text-center">
-          <h4>Maaf kamu belum punya buku yang dibeli :(</h4>
-        </div>
 
       </div>
 

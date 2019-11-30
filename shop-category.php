@@ -23,11 +23,14 @@
 
 	function daftarBuku($table) {
 		$conn = connectDB();
-		if (isset($_GET['offset'])) {
-			$no = $_GET['offset'];
-			$sql = "SELECT book_id, img_path, title, author, publisher, quantity FROM $table LIMIT 6 OFFSET $no";
-		}else{
-			$sql = "SELECT book_id, img_path, title, author, publisher, quantity FROM $table LIMIT 6 OFFSET 0";
+		if (isset($_GET['id'])) {
+			$category = $_GET['id'];
+			if (isset($_GET['offset'])) {
+				$no = $_GET['offset'];
+				$sql = "SELECT book_id, img_path, title, author, publisher, quantity FROM $table WHERE category = '$category' LIMIT 6 OFFSET $no";
+			}else{
+				$sql = "SELECT book_id, img_path, title, author, publisher, quantity FROM $table WHERE category = '$category' LIMIT 6 OFFSET 0";
+			}
 		}
 
 		if(!$result = mysqli_query($conn, $sql)) {
@@ -39,9 +42,11 @@
 
 	function getbook() {
 		$conn = connectDB();
-
-		$sql = "SELECT count(*) FROM book";
-
+		if (isset($_GET['id'])) {
+			$category = $_GET['id'];
+			$sql = "SELECT count(*) FROM book WHERE category = '$category'";
+		}
+		
 		if(!$result = mysqli_query($conn, $sql)) {
 			die("Error: $sql");
 		}
@@ -60,37 +65,6 @@
 		mysqli_close($conn);
 		return $result;
 	}
-
-	function pinjamBuku($book_id, $user_id) {
-		$conn = connectDB();
-		$sqlsubmission = "INSERT into submission (book_id, user_id) values ('$book_id','$user_id')";
-
-		$sqlbook = "UPDATE book SET quantity = quantity-1 where book_id = $book_id";
-		if(!$result = mysqli_query($conn, $sqlsubmission)) {
-			die("Error: $sqlsubmission");
-		}
-		if(!$result = mysqli_query($conn, $sqlbook)) {
-			die("Error: $sqlbook");
-		}
-		mysqli_close($conn);
-		header("Location: daftar.php");
-	}
-
-	function balikBuku($book_id, $user_id) {
-		$conn = connectDB($book_id, $user_id);
-		$sqlsubmission = "DELETE FROM submission WHERE book_id = $book_id AND user_id = $user_id";
-
-		$sqlbook = "UPDATE book SET quantity = quantity+1 where book_id = $book_id";
-		if(!$result = mysqli_query($conn, $sqlsubmission)) {
-			die("Error: $sqlsubmission");
-		}
-		if(!$result = mysqli_query($conn, $sqlbook)) {
-			die("Error: $sqlbook");
-		}
-		mysqli_close($conn);
-		header("Location: daftar.php");
-	}
-
 	function showActButton($arraysubmission, $bookid, $stocknum) {
 		$flag = false;
 		for ($i=0; $i < count($arraysubmission); $i++) {
@@ -166,8 +140,8 @@
 	}
 
 ?>
-<br>
-<div class="shop section-mini-margin">
+
+<div class="shop section-margin">
   <div class="container">
     <div class="row">
       <div class="col-lg-12">
@@ -254,30 +228,32 @@
 						$flag = true;
 					}else {
 						echo '
-						<li> <a href="shop.php?offset='.($_GET['offset']-6).'"><i class="fa fa-angle-left" aria-hidden="true"></i></a></li>
+						<li> <a href="shop.php?id='.$_GET['id'].'&offset='.($_GET['offset']-6).'"><i class="fa fa-angle-left" aria-hidden="true"></i></a></li>
 						';
 					}
+					$all = 0;
 					while ($row = mysqli_fetch_row($count)) {
 						$sum = 1;
+						$all = $row[0];
 						for ($i=0; $i < $row[0]; $i+=6) {
 							if (isset($_GET['offset'])) {
 								if ($_GET['offset'] == $i) {
 									echo '
-									<li class="active active-pagination"><a href="shop.php?offset='.$i.'">'.$sum.'</a></li>
-								';
+									<li class="active active-pagination"><a href="shop.php?id='.$_GET['id'].'&offset='.$i.'">'.$sum.'</a></li>
+								';	
 								}else {
 									echo '
-									<li><a href="shop.php?offset='.$i.'">'.$sum.'</a></li>
+									<li><a href="shop-category.php?id='.$_GET['id'].'&offset='.$i.'">'.$sum.'</a></li>
 								';
 								}
 							}else{
 								if ($i == 0) {
 									echo '
-									<li class="active active-pagination"><a href="shop.php?offset='.$i.'">'.$sum.'</a></li>
+									<li class="active active-pagination"><a href="shop.php?id='.$_GET['id'].'&offset='.$i.'">'.$sum.'</a></li>
 								';
 								}else {
 									echo '
-									<li><a href="shop.php?offset='.$i.'">'.$sum.'</a></li>
+									<li><a href="shop-category.php?id='.$_GET['id'].'&offset='.$i.'">'.$sum.'</a></li>
 								';
 								}
 							}
@@ -286,7 +262,7 @@
 					}
 					if ($flag && $all > 6) {
 						echo '
-						<li> <a href="shop.php?offset='.($_GET['offset']+6).'"><i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+						<li> <a href="shop-category.php?id='.$_GET['id'].'&offset='.($_GET['offset']+6).'"><i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
 						';
 					}
 				?>

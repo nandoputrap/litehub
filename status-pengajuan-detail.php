@@ -22,7 +22,7 @@
 		$no = $_GET['id'];
 	  }
 	  else {
-		header('Location:unggah.php');
+		header('Location:status-pengajuan.php');
 	  }
 ?>
 
@@ -44,7 +44,7 @@
               <h3 class="panel-title">
               <?php
                 if (isset($_SESSION["namauser"])){
-                  echo$_SESSION["namauser"];
+                  echo$_SESSION["nama_lengkap"];
                 }
               ?>
               </h3>
@@ -94,7 +94,7 @@
 				$split = explode('-', $olddate);
 				$tanggal = $split[2] . ' ' . $bulan[(int)$split[1]] . ' ' . $split[0];
         echo'
-        
+
         <div class="col-md-9">
           <h1 class="register-title">Status Pengajuan</h1>
 

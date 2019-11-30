@@ -84,19 +84,19 @@
                   $daftarkategori = daftarKategori("category");
                   while ($row = mysqli_fetch_row($daftarkategori)) {
                     echo '
-                    <a class="dropdown-item" href="#">'.$row[1].'</a>
+                    <a class="dropdown-item" href="shop-category.php?id='.$row[1].'&offset=0">'.$row[1].'</a>
                     ';
                   }
                 ?>
               </div>
             </li>
-            <li><a href="shop.php">Shop</a></li>
+            <li><a href="shop.php?offset=0">Shop</a></li>
 
             <li>
 
               <form class="navbar-form" role="search" action="search_shop.php" method="GET">
                   <div class="input-group">
-                      <input type="text" class="form-control" placeholder="Search" name="query">
+                      <input type="text" class="form-control" placeholder="Kata Kunci..." name="query">
                       <div class="input-group-btn">
                           <button class="btn btn-default hidden-xs" type="submit">Cari</button>
                       </div>
@@ -109,16 +109,26 @@
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   '.$_SESSION["namauser"].' <i class="fa fa-angle-down" aria-hidden="true"></i>
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                </a>';
+                if ($_SESSION["role"] === "editor"){
+                  echo '
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" href="lihat-profil.php">Profil</a><br/>
+                  <a class="dropdown-item" href="daftar-pengajuan.php">Editor Area</a><br />  
+                  ';
+                }else if ($_SESSION["role"] === "admin"){
+                  echo '
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" href="lihat-profil.php">Profil</a><br/>
+                  <a class="dropdown-item" href="statistik2.php">Statistik</a><br />  
+                  ';
+                }else{
+                  echo'
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                   <a class="dropdown-item" href="lihat-profil.php">Profil</a><br/>
                   <a class="dropdown-item" href="status-pengajuan.php">Status Pengajuan</a><br/>
                   <a class="dropdown-item" href="buku-saya.php">Buku Saya</a><br/>
                   ';
-                  if ($_SESSION["role"] === "editor"){
-                    echo '
-                    <a class="dropdown-item" href="daftar-pengajuan.php">Editor Area</a><br />
-                    ';
                   }
                   echo '
                   <a href="services/logout.php" class="dropdown-item" href="#">Keluar</a>

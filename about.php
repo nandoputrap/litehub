@@ -29,7 +29,7 @@ function connectDB() {
 
       <div class="col-md-12 text-justify">
         <div class="text-center">
-          <a href="landing.php"><img src="images/logo-about.png" alt=""></a>
+          <a href="landing.php"><img class="img-responsive" src="images/logo-about.png" alt=""></a>
         </div>
         <p>
           <strong>EbookHub.id</strong> adalah perusahaan self publishing/ penerbit <i>indie.</i> Berawal dari interaksi online dengan para pecinta dunia kepenulisan, kami berinisiatif membangun fasilitas yang memudahkan para penulis untuk mengorbitkan karya mereka. EbookHub.id  merupakan tempat yang tepat untuk mempertemukan penulis dengan pembaca guna menyediakan apa yang mereka butuhkan, yaitu sebagai penulis yang membutuhkan wadah menerbitkan buku dengan cara yang lebih mudah dan ekonomis, sedangkan pembaca membutuhkan buku-buku berkualitas dan mudah terjangkau. Di sinilah kami berperan untuk menjembatani kebutuhan penulis dan pembaca.

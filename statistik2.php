@@ -1,10 +1,9 @@
 <?php
   require_once("templates/header.php");
-  session_start();
 ?>
 
 <?php
-	// session_start();
+	session_start();
 	function connectDB() {
 		$servername = "sql12.freesqldatabase.com";
 		$username = "sql12310568";
@@ -300,14 +299,14 @@ function getSoldNonFiksi($bulan){
 </div>
 
 <script src="js/jquery-3.1.0.min.js"> </script>
-<script src="bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- <script src="bootstrap/dist/js/bootstrap.min.js"></script> -->
 
 <script src="plugins/jquery/jquery.min.js"></script>
 <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="dist/js/adminlte.js"></script>
 <script src="js/Chart.min.js"></script>
 <?php
-   $label = ['JULI', 'AGUSTUS', 'SEPTEMBER', 'OKTOBER', 'NOVEMBER'];
+   $label = ['AGUSTUS', 'SEPTEMBER', 'OKTOBER', 'NOVEMBER', 'DESEMBER'];
 ?>
 <script>
 $(function () {
@@ -331,8 +330,8 @@ $(function () {
           backgroundColor: '#007bff',
           borderColor    : '#007bff',
       data           : <?php
-                        for($bulan=7;$bulan<12;$bulan++){
-                          $jumlah_proses[] = getStatus($bulan, "Dalam Proses Penyuntingan");
+                        for($bulan=8;$bulan<=12;$bulan++){
+                          $jumlah_proses[] = getStatus($bulan, "Dalam Proses Review");
                         }
                        echo json_encode($jumlah_proses); ?>
         },
@@ -340,7 +339,7 @@ $(function () {
           backgroundColor: '#ced4da',
           borderColor    : '#ced4da',
 		  data           : <?php
-                        for($bulan=7;$bulan<12;$bulan++){
+                        for($bulan=8;$bulan<=12;$bulan++){
                           $jumlah_diterima[] = getStatus($bulan, "Sudah Diterima");
                         }
                        echo json_encode($jumlah_diterima); ?>
@@ -395,7 +394,7 @@ $(function () {
 
 
         data                : <?php
-                                for($bulan=7;$bulan<12;$bulan++){
+                                for($bulan=8;$bulan<=12;$bulan++){
                                   $jumlah_nf[] = getSoldNonFiksi($bulan);
                                 }
                               echo json_encode($jumlah_nf);
@@ -409,7 +408,7 @@ $(function () {
         {
           type                : 'line',
           data                : <?php
-                                  for($bulan=7;$bulan<12;$bulan++){
+                                  for($bulan=8;$bulan<=12;$bulan++){
                                     $jumlah_f[] = getSoldFiksi($bulan);
                                   }
                                   echo json_encode($jumlah_f);

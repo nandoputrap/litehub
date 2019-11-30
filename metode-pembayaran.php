@@ -28,7 +28,7 @@ function selectRowsFromSubmission() {
   }
   mysqli_close($conn);
   return $result;
-} 
+}
 
 function selectBooks() {
   $pinjam = selectRowsFromSubmission();
@@ -58,35 +58,53 @@ function selectAllFromBook($book_id) {
         <h1 class="register-title">Pilih Metode Pembayaran</h1>
       </div>
 
-      <div class="col-md-4 form-register-group">
-        <form class="" action="" method="post">
-          <div class="radio">
-            <label><input type="radio" name="optradio"> <img src="https://i.ibb.co/7td7Zmp/bni.png" alt="" class="img-bank radio-bank"> </label>
-          </div>
+      <div class="col-pembayaran">
+        <div class="col-md-2 form-register-group">
+          <form class="" action="" method="post">
+            <div class="radio">
+              <label><input type="radio" name="optradio"> <img src="https://i.ibb.co/7td7Zmp/bni.png" alt="" class="img-bank radio-bank"> </label>
+            </div><br>
 
-          <div class="radio">
-            <label><input type="radio" name="optradio"> <img src="https://i.ibb.co/7bvW3Vd/bri.png" alt="" class="img-bank radio-bank"> </label>
-          </div>
+            <div class="radio">
+              <label><input type="radio" name="optradio"> <img src="https://i.ibb.co/7bvW3Vd/bri.png" alt="" class="img-bank radio-bank"> </label>
+            </div>
 
-          <div class="radio">
-            <label><input type="radio" name="optradio"> <img src="https://i.ibb.co/g7Yk44X/bca.png" alt="" class="img-bank radio-bank"> </label>
-          </div>
+          </form>
+        </div>
 
-        </form>
-      </div>
+        <div class="col-md-1">
 
-      <div class="col-md-4 form-register-group">
-        <form class="" action="" method="post">
-          <div class="radio">
-            <label><input type="radio" name="optradio"> <img src="https://i.ibb.co/kJ2MTnt/mandiri.png" alt="" class="img-bank radio-bank"> </label>
-          </div>
+        </div>
 
-          <div class="radio">
-            <label><input type="radio" name="optradio"> <img src="https://i.ibb.co/172GzxX/gopay.png" alt="" class="img-bank radio-bank"> </label>
-          </div>
+        <div class="col-md-2 form-register-group">
+          <form class="" action="" method="post">
+            <div class="radio">
+              <label><input type="radio" name="optradio"> <img src="https://i.ibb.co/kJ2MTnt/mandiri.png" alt="" class="img-bank radio-bank"> </label>
+            </div><br>
+
+            <div class="radio">
+              <label><input type="radio" name="optradio"> <img src="https://i.ibb.co/g7Yk44X/bca.png" alt="" class="img-bank radio-bank"> </label>
+            </div>
 
 
-        </form>
+          </form>
+        </div>
+
+        <div class="col-md-1">
+
+        </div>
+
+        <div class="col-md-2 form-register-group">
+          <form class="" action="" method="post">
+
+
+            <div class="radio">
+              <label><input type="radio" name="optradio"> <img src="https://i.ibb.co/172GzxX/gopay.png" alt="" class="img-bank radio-bank"> </label>
+            </div>
+
+
+          </form>
+        </div>
       </div>
 
       <div class="col-md-3 pull-right">
@@ -108,15 +126,16 @@ function selectAllFromBook($book_id) {
                   if (mysqli_num_rows($detail_unggah) > 0) {
                     $row = mysqli_fetch_assoc($detail_unggah);
                     echo '
-                    <li><p href="#">Jumlah 1</p></li>
-                    <li><p href="#">Total '.$row['quantity'].'</p></li>
+                    <li><p href="#">Jumlah: Rp. '.$row['quantity'].'</p></li>
+                    <li><p href="#">Total 1</p></li>
+                    <a href="status-pembayaran.php?id='.$no.'" class="btn btn-primary btn-block btn-ebookhub btn-register">Bayar Sekarang</a>
                     ';
                   }
                 }else{
                   $arraybook = selectBooks();
                   $sum = 0;
                   $qty = 0;
-                  for ($i=0; $i < count($arraybook); $i++) { 
+                  for ($i=0; $i < count($arraybook); $i++) {
                     $buku = selectAllFromBook($arraybook[$i]);
                     while ($row = mysqli_fetch_row($buku)) {
                       $sum = $sum + $row[6];
@@ -124,13 +143,11 @@ function selectAllFromBook($book_id) {
                     }
                   }
                   echo '
-                  <li><p href="#">Jumlah '.$qty.'</p></li>
-                  <li><p href="#">Total '.$sum.'</p></li>
+                  <li><p href="#">Jumlah: Rp. '.$sum.'</p></li>
+                  <li><p href="#">Total Barang:  1'.$qty.'</p></li>
                   ';
                 }
                 ?>
-
-              <button type="button" class="btn btn-primary btn-block btn-ebookhub btn-register">Bayar sekarang</button>
             </ul>
           </div>
         </div>

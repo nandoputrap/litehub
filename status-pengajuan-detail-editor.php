@@ -15,7 +15,27 @@
 			die("Connection failed: " + mysqli_connect_error());
 		}
 		return $conn;
-	}
+  }
+
+function daftarBuku($table) {
+    $conn = connectDB();
+    $no = $_GET['id'];
+
+    $sql = "SELECT no, title, author, category, description, file, upload_date, status FROM $table WHERE no = '$no'";
+
+    if(!$result = mysqli_query($conn, $sql)) {
+      die("Error: $sql");
+    }
+    mysqli_close($conn);
+    return $result;
+  }
+
+  if (isset($_GET['id'])) {
+		$no = $_GET['id'];
+	  }
+	  else {
+		header('Location:daftar-pengajuan.php');
+	  }
 ?>
 
 <div class="status-pengajuan-detail section-margin">
@@ -26,52 +46,39 @@
         <div class="item">
           <div class="card  text-center card-product-details">
             <img class='card-img-top img-circle img-fluid' src='images/avatar.png' alt='card-img'>
-            <!-- <h2>Nando Putra Pratama</h2> -->
           </div>
         </div>
 
         <div class="panel panel-default sidebar-menu">
           <div class="panel-harga">
             <div class="panel-heading text-center">
-              <h3 class="panel-title">Nando Putra Pratama</h3>
+            <h3 class="panel-title">
+              <?php
+                if (isset($_SESSION["namauser"])){
+                  echo$_SESSION["nama_lengkap"];
+                }
+              ?>
+              </h3>
             </div>
 
             <div class="panel-body">
               <ul class="nav nav-pills nav-stacked category-menu">
                 <li>
-                  <a href="lihat-profil.php">Edit Profil</a>
+                  <a href="lihat-profil.php">Profil</a>
                 </li>
                 <li>
-                  <a href="status-pengajuan.php">Status Pengajuan</a>
+                  <a href="edit-password.php">Edit Password</a>
                 </li>
-                <li>
-                  <a href="buku-saya.php">Buku Saya</a>
-                </li>
-              </ul>
-
-            </div>
-          </div>
-        </div>
-
-
-        <div class="panel panel-default sidebar-menu">
-          <div class="panel-harga">
-            <div class="panel-heading text-center">
-              <h3 class="panel-title">Editor Area</h3>
-            </div>
-
-            <div class="panel-body">
-              <ul class="nav nav-pills nav-stacked category-menu">
-                <li class="active-profil">
-                  <a href="daftar-pengajuan.php">Daftar Pengajuan</a>
-                </li>
-                <li>
-                  <a href="status-pengajuan.php">Status Pengajuan</a>
-                </li>
+                  <li class="active-profil">
+                    <a href="daftar-pengajuan.php">Daftar Pengajuan</a>
+                  </li>
               </ul>
             </div>
           </div>
         </div>
+
+
+
       </div>
 
       <div class="col-md-9">
@@ -80,41 +87,55 @@
         <div class="table-details">
           <table class="table table-hover table-bordered table-responsive">
             <tbody>
-              <tr>
-                <td><strong>Judul Buku</strong></td>
-                <td>How to Code 101</td>
-              </tr>
-              <tr>
-                <td><strong>Nama Penulis</strong></td>
-                <td>Nando P. Pratama</td>
-              </tr>
-              <tr>
-                <td><strong>Kategori</strong></td>
-                <td>Teknologi</td>
-              </tr>
-              <tr>
-                <td><strong>Deskripsi/Sinopsis Buku</strong></td>
-                <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</td>
-              </tr>
-              <tr>
-                <td><strong>Tanggal Unggah</strong></td>
-                <td>1 Januari 2019</td>
-              </tr>
+            <?php
+              $daftarbuku = daftarBuku("unggah");
+              while ($row = mysqli_fetch_array($daftarbuku)) {
+                if($row[7] == "Dalam Proses Review" || $row[7] == "Dalam Proses Penyuntingan") {
+                  echo '
+                  <tr>
+                  <td><strong>Judul Buku</strong></td>
+                  <td>'.$row[1].'</td>
+                </tr>
+                <tr>
+                  <td><strong>Nama Penulis</strong></td>
+                  <td>'.$row[2].'</td>
+                </tr>
+                <tr>
+                  <td><strong>Kategori</strong></td>
+                  <td>'.$row[3].'</td>
+                </tr>
+                <tr>
+                  <td><strong>Deskripsi/Sinopsis Buku</strong></td>
+                  <td>'.$row[4].'</td>
+                </tr>
+                <tr>
+                  <td><strong>Tanggal Unggah</strong></td>
+                  <td>'.$row[6].'</td>
+                </tr>
+                  ';
+                }
+              }
+            ?>
               <tr>
                 <td><strong>Status Pengajuan</strong></td>
                 <td>
 
-                    <select class="form-control" id="kategori" style="height: 100%;">
-                      <option>Dalam Proses Penyuntingan</option>
-                      <option>Sudah Diterbitkan</option>
-                    </select>
+                    <div class="button dropdown">
+                      <select id="status-pengajuan" class="form-control" id="kategori" style="height: 100%;">
+                       <option>Dalam Proses Penyuntingan</option>
+                       <option value="form-publish">Sudah Diterbitkan</option>
+                      </select>
+                    </div>
 
                 </td>
               </tr>
 
-
             </tbody>
           </table>
+          <form action="services/edit.php" method="post" enctype="multipart/form-data">
+          <input type="hidden" id="insert-unggah" name="idUnggah" value=<?php echo $_GET['id'];?>>
+          <button type="submit" class="btn btn-primary btn-block btn-ebookhub btn-register" id="simpan-penyuntingan">Simpan</button>
+          </form>
         </div>
         <br><br>
 
@@ -123,82 +144,95 @@
        -->
 
         <!-- Begin Form buku untuk diterbitkan -->
-        <div class="text-center">
-          <h2>Masukkan info buku untuk diterbitkan</h2>
+        <div class="output">
+          <div class="form-publish">
+            <div class="text-center">
+              <h2>Masukkan info buku untuk diterbitkan</h2>
+            </div>
+
+            <form action="services/sell.php" method="post" enctype="multipart/form-data">
+              <input type="text" class="form-control form-register" id="insert-judulBuku" name="judulBuku" placeholder="Judul buku...">
+              <input type="text" class="form-control form-register" id="insert-namaPenulis" name="pengarangBuku" placeholder="Nama penulis...">
+              <input type="text" class="form-control form-register" id="insert-namaPenerbit" name="penerbitBuku" placeholder="Nama penerbit...">
+              <input type="text" class="form-control form-register" id="insert-harga" name="stokBuku" placeholder="Harga...">
+              <div class="form-group">
+                <label for="kategori"></label>
+                <select class="form-control form-register form-group-kategori" name="kategori" id="kategori">
+                        <option>-Pilih Kategori-</option>
+                        <option>Umum</option>
+    										<option>Filsafat</option>
+    										<option>Psikologi</option>
+    										<option>Agama</option>
+    										<option>Sejarah</option>
+    										<option>Sosial</option>
+    										<option>Bahasa</option>
+    										<option>Sains</option>
+    										<option>Geografi</option>
+    										<option>Teknologi</option>
+    										<option>Seni</option>
+    										<option>Literatur</option>
+    										<option>Sastra</option>
+    										<option>Biografi</option>
+    										<option>Matematika</option>
+    										<option>Novel</option>
+    										<option>Cerpen</option>
+    										<option>Puisi</option>
+    										<option>Drama</option>
+    										<option>Komik</option>
+    										<option>Dongeng</option>
+    										<option>Fabel</option>
+    										<option>Mitos</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="subkategori"></label>
+                <select class="form-control form-register form-group-kategori" id="subkategori">
+                  <!-- <option>-Pilih kategori-</option> -->
+                  <option>-Pilih Sub Kategori-</option>
+                  <option>Fiksi</option>
+                  <option>Non Fiksi</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control form-register" name="isbn" placeholder="ISBN...">
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control form-register" name="sku" placeholder="SKU...">
+              </div>
+              <div class="form-group">
+               <textarea class="form-control" rows="5" id="comment" name="deskripsiBuku" placeholder="Deskripsi/Sinopsis buku..."></textarea>
+              </div>
+
+              <div class="form-group">
+                <label for="exampleFormControlFile1">
+                  Pilih Cover Buku
+                </label>
+                <input type="file" name="fileCover" id="fileCover">
+              </div>
+
+              <div class="form-group">
+                <label for="exampleFormControlFile1">
+                  Format buku dalam bentuk .pdf, .epug atau .mobi. Format penulisan dan layout dapat melihat pada halaman <a href="#">ini.</a> Ukuran file maksimal 50 MB.
+                </label>
+                <input type="file" name="fileEditor" id="fileEditor">
+              </div>
+
+              <input type="hidden" id="insert-command" name="command" value="insert">
+              <input type="hidden" id="insert-unggah" name="idUnggah" value=<?php echo $_GET['id'];?>>
+              <button type="submit" class="btn btn-primary btn-block btn-ebookhub btn-register">Simpan</button>
+            </form>
+
+
+
+          </div>
         </div>
 
-        <form action="services/upload.php" method="post" enctype="multipart/form-data">
-          <input type="text" class="form-control form-register" id="insert-judulBuku" name="judulBuku" placeholder="Judul buku...">
-          <input type="text" class="form-control form-register" id="insert-namaPenulis" name="namaPenulis" placeholder="Nama penulis...">
-          <div class="form-group">
-            <label for="kategori"></label>
-            <select class="form-control form-register form-group-kategori" name="kategori" id="kategori">
-            <option>Umum</option>
-										<option>Filsafat</option>
-										<option>Psikologi</option>
-										<option>Agama</option>
-										<option>Sejarah</option>
-										<option>Sosial</option>
-										<option>Bahasa</option>
-										<option>Sains</option>
-										<option>Geografi</option>
-										<option>Teknologi</option>
-										<option>Seni</option>
-										<option>Literatur</option>
-										<option>Sastra</option>
-										<option>Biografi</option>
-										<option>Matematika</option>
-										<option>Novel</option>
-										<option>Cerpen</option>
-										<option>Puisi</option>
-										<option>Drama</option>
-										<option>Komik</option>
-										<option>Dongeng</option>
-										<option>Fabel</option>
-										<option>Mitos</option>
-            </select>
-          </div>
+        <!-- tandai -->
 
-          <div class="form-group">
-            <label for="subkategori"></label>
-            <select class="form-control form-register form-group-kategori" id="subkategori">
-              <!-- <option>-Pilih kategori-</option> -->
-              <option>SubKategori 1</option>
-              <option>SubKategori 2</option>
-              <option>SubKategori 3</option>
-              <option>SubKategori 4</option>
-              <option>SubKategori 5</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <input type="text" class="form-control form-register" placeholder="ISBN...">
-          </div>
-          <div class="form-group">
-            <input type="text" class="form-control form-register" placeholder="SKU...">
-          </div>
-          <div class="form-group">
-           <textarea class="form-control" rows="5" id="comment" name="deskripsiBuku" placeholder="Deskripsi/Sinopsis buku..."></textarea>
-          </div>
-
-          <div class="form-group">
-            <label for="exampleFormControlFile1">
-              Pilih Cover Buku
-            </label>
-            <input type="file" class="form-control-file" name="fileToUpload" id="exampleFormControlFile1">
-          </div>
-
-          <div class="form-group">
-            <label for="exampleFormControlFile1">
-              Format buku dalam bentuk .doc atau .docx. Format penulisan dan layout dapat melihat pada halaman <a href="#">ini.</a> Ukuran file maksimal 50 MB.
-            </label>
-            <input type="file" class="form-control-file" name="fileToUpload" id="exampleFormControlFile1">
-          </div>
-
-          <input type="hidden" id="insert-command" name="command" value="insert">
-        </form>
         <!-- End Form buku untuk diterbitkan -->
 
-        <button type="button" class="btn btn-primary btn-block btn-ebookhub btn-register">Simpan</button>
+
       </div>
 
 

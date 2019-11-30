@@ -28,7 +28,7 @@ h4 {
   background-color: #0A5494;
   color: #fff;
   padding: 100px 25px;
-  font-family: Montserrat, sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
 .container-fluid {
   padding: 60px 50px;
@@ -121,7 +121,7 @@ h4 {
   line-height: 1.42857143 !important;
   letter-spacing: 4px;
   border-radius: 0;
-  font-family: Montserrat, sans-serif;
+  font-family: Lato, sans-serif;
   padding: 15px 0;
 
 }
@@ -255,6 +255,19 @@ footer .glyphicon {
   font-size: 24px;
 }
 
+/* .btn-bacaupload{
+  margin: 5px auto;
+} */
+
+@media (max-width: 768px) {
+  .btn-bacaupload{
+    margin: 10px auto;
+  }
+
+  .box-how-to-use{
+    margin: 40px auto;
+  }
+}
 .devices{
   margin: 50px auto;
 }
@@ -722,6 +735,10 @@ box-shadow: 5px 5px 20px 0px rgba(0,0,0,0.5);
 .panduan-pembayaran{
   margin-bottom: 100px;
 }
+
+.col-pembayaran{
+  margin: auto 15px;
+}
 /* METODE-PEMBAYARAN.PHP */
 
 /* UNGGAH.PHP */
@@ -809,4 +826,36 @@ position:absolute;
   font-weight: bold;
   color: #0A5494;
   font-size: 20px;
+}
+
+/* status pembayaran */
+.hehe{
+  padding-left: 100px;
+}
+/* EDIT STATUS PENGAJUAN */
+/* .item1 a {
+  text-decoration: none;
+}
+.item1 #content1 {
+  display: none;
+}
+
+#content1 {
+  background: green;
+  color: white;
+  padding: 5em;
+}
+
+#content1:target {
+  display: block;
+ */
+
+.form-publish{
+  display: none;
+}
+
+/* TABEL HEADER */
+.tabel-header{
+  background-color: #D72323;
+  color: white;
 }

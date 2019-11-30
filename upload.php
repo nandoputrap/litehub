@@ -21,7 +21,7 @@
 			die("Connection failed: " + mysqli_connect_error());
 		}
 		return $conn;
-	}
+  }
 ?>
 
 <div class="register">
@@ -30,11 +30,11 @@
       <div class="col-md-12">
         <h1 class="register-title">Unggah Buku</h1>
       </div>
-
       <div class="col-md-9 form-register-group">
         <form action="services/upload.php" method="post" enctype="multipart/form-data">
           <input type="text" class="form-control form-register" id="insert-judulBuku" name="judulBuku" placeholder="Judul buku...">
           <input type="text" class="form-control form-register" id="insert-namaPenulis" name="namaPenulis" placeholder="Nama penulis...">
+          <br>
           <div class="form-group">
             <label for="kategori"></label>
             <select class="form-control form-register form-group-kategori" name="kategori" id="kategori">
@@ -64,17 +64,6 @@
             </select>
           </div>
 
-          <div class="form-group">
-            <label for="subkategori"></label>
-            <select class="form-control form-register form-group-kategori" id="subkategori">
-              <!-- <option>-Pilih kategori-</option> -->
-              <option>SubKategori 1</option>
-              <option>SubKategori 2</option>
-              <option>SubKategori 3</option>
-              <option>SubKategori 4</option>
-              <option>SubKategori 5</option>
-            </select>
-          </div>
           <div class="form-group">
            <textarea class="form-control" rows="5" id="comment" name="deskripsiBuku" placeholder="Deskripsi/Sinopsis buku..."></textarea>
           </div>

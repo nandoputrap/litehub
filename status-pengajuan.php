@@ -24,7 +24,7 @@ session_start();
 	function daftarBuku($table) {
 		$conn = connectDB();
 
-		$sql = "SELECT no, title, author, category, description, file, upload_date, status FROM $table where author = '".$_SESSION["namauser"]."'";
+		$sql = "SELECT no, title, author, category, description, file, upload_date, status FROM $table where user_id = '".$_SESSION["namauser"]."'";
 
 		if(!$result = mysqli_query($conn, $sql)) {
 			die("Error: $sql");
@@ -32,9 +32,37 @@ session_start();
 		mysqli_close($conn);
 		return $result;
 	}
+
+	function publishedBook($table) {
+		$conn = connectDB();
+
+		$sql = "SELECT t.no, t.title, t.author, t.category, t.description, b.publish_date, t.status, b.book_id FROM $table t
+				INNER JOIN book b on b.upload_id = t.no
+				WHERE user_id = '".$_SESSION["namauser"]."'";
+
+		if(!$result = mysqli_query($conn, $sql)) {
+			die("Error: $sql");
+		}
+		mysqli_close($conn);
+		return $result;
+	}
+
+	function sold($id) {
+		$conn = connectDB();
+
+		$sql = "SELECT count(*) AS terjual FROM purchase WHERE book_id = '".$id."'";
+
+		if(!$result = mysqli_query($conn, $sql)) {
+			die("Error: $sql");
+		}
+
+		mysqli_close($conn);
+		return $result;
+	}
 ?>
 
-<div class="status-pengajuan-detail section-margin">
+<br>
+<div class="status-pengajuan-detail section-mini-margin">
   <div class="container">
 
     <div class="row">
@@ -52,7 +80,7 @@ session_start();
               <h3 class="panel-title">
 			  <?php
 			  	if (isset($_SESSION["namauser"])){
-					echo$_SESSION["namauser"];
+          			echo$_SESSION["nama_lengkap"];
 				}
 			  ?>
 			  </h3>
@@ -87,11 +115,11 @@ session_start();
           <table class="table table-hover table-bordered table-responsive">
             <thead>
               <tr>
-                <th class="text-center panel-danger">Judul Buku</th>
-                <th class="text-center panel-danger">Kategori</th>
-                <th class="text-center panel-danger">Tanggal Unggah</th>
-                <th class="text-center panel-danger">Status</th>
-                <th class="text-center panel-danger">Aksi</th>
+                <th class="text-center tabel-header">Judul Buku</th>
+                <th class="text-center tabel-header">Kategori</th>
+                <th class="text-center tabel-header">Tanggal Unggah</th>
+                <th class="text-center tabel-header">Status</th>
+                <th class="text-center tabel-header">Aksi</th>
               </tr>
             </thead>
             <?php
@@ -114,7 +142,7 @@ session_start();
   												);
   								$split = explode('-', $olddate);
   								$tanggal = $split[2] . ' ' . $bulan[(int)$split[1]] . ' ' . $split[0];
-  								if($row['status'] == "Dalam Proses Penyuntingan") {
+  								if($row['status'] == "Dalam Proses Review"  || $row['status'] == "Dalam Proses Penyuntingan") {
   									echo'
   									<tbody>
   									<tr>
@@ -122,7 +150,7 @@ session_start();
   										<td class="text-center">'.$row['category'].'</td>
   										<td class="text-center">'.$tanggal.'</td>
   										<td class="text-center">'.$row['status'].'</td>
-  										<td class="text-center"><a class="btn btn-info" href="status-pengajuan-detail.php?id='.$row['no'].'">Detail</a></td>
+  										<td class="text-center"><a class="btn btn-info" href="status-pengajuan-detail-published.php?id='.$row['no'].'"><i class="fa fa-info"></i>&nbsp;&nbsp;Detail</a></td>
 
   									</tr>
   									</tbody>';
@@ -141,47 +169,53 @@ session_start();
           <table class="table table-hover table-bordered table-responsive">
             <thead>
               <tr>
-                <th class="text-center btn-danger">Judul Buku</th>
-                <th class="text-center btn-danger">Kategori</th>
-                <th class="text-center btn-danger">Tanggal Terbit</th>
-                <th class="text-center btn-danger">Status</th>
-                <th class="text-center btn-danger">Jumlah Terjual</th>
-                <th class="text-center btn-danger">Aksi</th>
+                <th class="text-center tabel-header">Judul Buku</th>
+                <th class="text-center tabel-header">Kategori</th>
+                <th class="text-center tabel-header">Tanggal Terbit</th>
+                <th class="text-center tabel-header">Status</th>
+                <th class="text-center tabel-header">Jumlah Terjual</th>
+                <th class="text-center tabel-header">Aksi</th>
               </tr>
             </thead>
             <?php
-  						$daftarbuku = daftarBuku("unggah");
+						$daftarbuku = publishedBook("unggah");  
   						if (mysqli_num_rows($daftarbuku) > 0) {
   							while ($row = mysqli_fetch_assoc($daftarbuku)) {
-  								$olddate = $row['upload_date'];
-  								$bulan = array (1 =>   	'Januari',
-  														'Februari',
-  														'Maret',
-  														'April',
-  														'Mei',
-  														'Juni',
-  														'Juli',
-  														'Agustus',
-  														'September',
-  														'Oktober',
-  														'November',
-  														'Desember'
-  												);
-  								$split = explode('-', $olddate);
-  								$tanggal = $split[2] . ' ' . $bulan[(int)$split[1]] . ' ' . $split[0];
-  								if($row['status'] == "Sudah Diterima") {
-  									echo'
-  										<tbody>
-  										<tr>
-  											<td class="text-center">'.$row['title'].'</td>
-  											<td class="text-center">'.$row['category'].'</td>
-  											<td class="text-center">'.$tanggal.'</td>
-  											<td class="text-center">'.$row['status'].'</td>
-  											<td class="text-center">'.$row['status'].'</td>
-  											<td class="text-center"><a class="btn btn-info" href="status-pengajuan-detail.php?id='.$row['no'].'">Detail</a></td>
-  										</tr>
-  										</tbody>';
-  								}
+								$book_id = $row['book_id'];
+								$sold = sold("$book_id");
+								if (mysqli_num_rows($sold) > 0) {
+									while ($row_sold = mysqli_fetch_assoc($sold)){
+										$olddate = $row['publish_date'];
+										$bulan = array (1 =>   	'Januari',
+																'Februari',
+																'Maret',
+																'April',
+																'Mei',
+																'Juni',
+																'Juli',
+																'Agustus',
+																'September',
+																'Oktober',
+																'November',
+																'Desember'
+														);
+										$split = explode('-', $olddate);
+										$tanggal = $split[2] . ' ' . $bulan[(int)$split[1]] . ' ' . $split[0];
+										if($row['status'] == "Sudah Diterbitkan") {
+											echo'
+												<tbody>
+												<tr>
+													<td class="text-center">'.$row['title'].'</td>
+													<td class="text-center">'.$row['category'].'</td>
+													<td class="text-center">'.$tanggal.'</td>
+													<td class="text-center">'.$row['status'].'</td>
+													<td class="text-center">'.$row_sold['terjual'].'</td>
+													<td class="text-center"><a class="btn btn-info" href="status-pengajuan-detail-published.php?id='.$row['no'].'">Detail</a></td>
+												</tr>
+												</tbody>';
+										}
+									}
+								}
   							}
   						}
   					?>
