@@ -166,8 +166,8 @@
 	}
 
 ?>
-
-<div class="shop section-margin">
+<br>
+<div class="shop section-mini-margin">
   <div class="container">
     <div class="row">
       <div class="col-lg-12">
@@ -264,7 +264,7 @@
 								if ($_GET['offset'] == $i) {
 									echo '
 									<li class="active active-pagination"><a href="shop.php?offset='.$i.'">'.$sum.'</a></li>
-								';	
+								';
 								}else {
 									echo '
 									<li><a href="shop.php?offset='.$i.'">'.$sum.'</a></li>

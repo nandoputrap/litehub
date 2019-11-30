@@ -24,7 +24,7 @@
 	else {
 		header('Location:status-pengajuan.php');
   }
-  
+
   function sold($id) {
 		$conn = connectDB();
 
@@ -65,18 +65,37 @@
 
             <div class="panel-body">
               <ul class="nav nav-pills nav-stacked category-menu">
-                <li>
-                  <a href="lihat-profil.php">Profil</a>
-                </li>
-                <li>
-                  <a href="edit-password.php">Edit Password</a>
-                </li>
-                <li class="active-profil">
-                  <a href="status-pengajuan.php">Status Pengajuan</a>
-                </li>
-                <li>
-                  <a href="buku-saya.php">Buku Saya</a>
-                </li>
+                <?php
+                      if ($_SESSION["role"] === "editor"){
+                        echo'
+                        <li>
+                          <a href="lihat-profil.php">Profil</a>
+                        </li>
+                        <li>
+                          <a href="edit-password.php">Edit Password</a>
+                        </li>
+                          <li class="active-profil">
+                            <a href="daftar-pengajuan.php">Daftar Pengajuan</a>
+                          </li>
+
+                        ';
+                      }else{
+                        echo'
+                        <li class="active-profil">
+                          <a href="lihat-profil.php">Profil</a>
+                        </li>
+                        <li>
+                          <a href="edit-password.php">Edit Password</a>
+                        </li>
+                        <li>
+                          <a href="status-pengajuan.php">Status Pengajuan</a>
+                        </li>
+                        <li>
+                          <a href="buku-saya.php">Buku Saya</a>
+                        </li>
+                        ';
+                      }
+                    ?>
               </ul>
             </div>
           </div>
@@ -89,7 +108,7 @@
                 INNER JOIN book b on b.upload_id = u.no
                 where no = '$no'";
       $detail_publish = mysqli_query($conn, $query);
-      
+
       if (mysqli_num_rows($detail_publish) > 0) {
         $row = mysqli_fetch_assoc($detail_publish);
         $book_id = $row['book_id'];
@@ -113,7 +132,7 @@
             $split = explode('-', $olddate);
             $tanggal = $split[2] . ' ' . $bulan[(int)$split[1]] . ' ' . $split[0];
             echo'
-            
+
             <div class="col-md-9">
               <h1 class="register-title">Status Pengajuan</h1>
 

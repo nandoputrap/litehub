@@ -19,9 +19,9 @@ function connectDB() {
 
 function daftarBuku($table) {
   $conn = connectDB();
-  
+
   $sql = "SELECT no, title, author, category, description, file, upload_date, status FROM $table";
-  
+
   if(!$result = mysqli_query($conn, $sql)) {
     die("Error: $sql");
   }
@@ -56,11 +56,14 @@ function daftarBuku($table) {
             <div class="panel-body">
               <ul class="nav nav-pills nav-stacked category-menu">
                 <li>
-                  <a href="edit-profil.php">Edit Profil</a>
+                  <a href="lihat-profil.php">Profil</a>
                 </li>
-                <li class="active-profil">
-                  <a href="daftar-pengajuan.php">Daftar Pengajuan</a>
+                <li>
+                  <a href="edit-password.php">Edit Password</a>
                 </li>
+                  <li class="active-profil">
+                    <a href="daftar-pengajuan.php">Daftar Pengajuan</a>
+                  </li>
               </ul>
             </div>
           </div>
@@ -113,7 +116,7 @@ function daftarBuku($table) {
                   <td class="text-center"><a href="services/download.php?id='.$row[5].'"><button type="button" class="btn btn-primary" ><i class="fa fa-download"></i> &nbsp;Unduh</button></a></td>
                   <td class="text-center"><a href="status-pengajuan-detail-editor.php?id='.$row[0].'"><button type="button" class="btn btn-warning" > <i class="fa fa-edit"></i> &nbsp;Update</button></a></td>
                 </tr>
-                  '; 
+                  ';
                 }
               }
             ?>
@@ -148,7 +151,7 @@ function daftarBuku($table) {
                   <td class="text-center">Sudah Diterbitkan</td>
                   <td class="text-center"><a href="status-pengajuan-detail.php?id='.$row[0].'"><button type="button" class="btn btn-info">Detail</button></a></td>
                 </tr>
-                  '; 
+                  ';
                 }
               }
             ?>

@@ -20,16 +20,16 @@
 function daftarBuku($table) {
     $conn = connectDB();
     $no = $_GET['id'];
-    
+
     $sql = "SELECT no, title, author, category, description, file, upload_date, status FROM $table WHERE no = '$no'";
-    
+
     if(!$result = mysqli_query($conn, $sql)) {
       die("Error: $sql");
     }
     mysqli_close($conn);
     return $result;
   }
-  
+
   if (isset($_GET['id'])) {
 		$no = $_GET['id'];
 	  }
@@ -64,39 +64,21 @@ function daftarBuku($table) {
             <div class="panel-body">
               <ul class="nav nav-pills nav-stacked category-menu">
                 <li>
-                  <a href="lihat-profil.php">Edit Profil</a>
+                  <a href="lihat-profil.php">Profil</a>
                 </li>
                 <li>
-                  <a href="status-pengajuan.php">Status Pengajuan</a>
+                  <a href="edit-password.php">Edit Password</a>
                 </li>
-                <li>
-                  <a href="buku-saya.php">Buku Saya</a>
-                </li>
-              </ul>
-
-            </div>
-          </div>
-        </div>
-
-
-        <div class="panel panel-default sidebar-menu">
-          <div class="panel-harga">
-            <div class="panel-heading text-center">
-              <h3 class="panel-title">Editor Area</h3>
-            </div>
-
-            <div class="panel-body">
-              <ul class="nav nav-pills nav-stacked category-menu">
-                <li class="active-profil">
-                  <a href="daftar-pengajuan.php">Daftar Pengajuan</a>
-                </li>
-                <li>
-                  <a href="status-pengajuan.php">Status Pengajuan</a>
-                </li>
+                  <li class="active-profil">
+                    <a href="daftar-pengajuan.php">Daftar Pengajuan</a>
+                  </li>
               </ul>
             </div>
           </div>
         </div>
+
+
+
       </div>
 
       <div class="col-md-9">
@@ -130,7 +112,7 @@ function daftarBuku($table) {
                   <td><strong>Tanggal Unggah</strong></td>
                   <td>'.$row[6].'</td>
                 </tr>
-                  '; 
+                  ';
                 }
               }
             ?>
@@ -152,7 +134,7 @@ function daftarBuku($table) {
           </table>
           <form action="services/edit.php" method="post" enctype="multipart/form-data">
           <input type="hidden" id="insert-unggah" name="idUnggah" value=<?php echo $_GET['id'];?>>
-          <button type="submit" class="btn btn-primary btn-block btn-ebookhub btn-register">Simpan</button>
+          <button type="submit" class="btn btn-primary btn-block btn-ebookhub btn-register" id="simpan-penyuntingan">Simpan</button>
           </form>
         </div>
         <br><br>
