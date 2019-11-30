@@ -284,7 +284,7 @@
 						$sum+=1;
 						}
 					}
-					if ($flag) {
+					if ($flag && $all > 6) {
 						echo '
 						<li> <a href="shop.php?offset='.($_GET['offset']+6).'"><i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
 						';
