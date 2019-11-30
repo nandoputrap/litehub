@@ -859,3 +859,7 @@ position:absolute;
   background-color: #D72323;
   color: white;
 }
+
+.td-padding{
+  padding: 25px !important;
+}
