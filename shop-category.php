@@ -1,6 +1,5 @@
 <?php
   require_once("templates/header.php");
-
 ?>
 
 <?php
@@ -41,6 +40,7 @@
 	}
 
 	function getbook() {
+		//fungsi untuk menghitung jumlah terjual
 		$conn = connectDB();
 		if (isset($_GET['id'])) {
 			$category = $_GET['id'];

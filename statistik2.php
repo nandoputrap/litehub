@@ -279,11 +279,11 @@ function getSoldNonFiksi($bulan){
                   <br>
                   <div class="d-flex flex-row justify-content-end">
                     <span class="mr-2 text-tiny">
-                      <i class="fa fa-square text-primary" style="color:#007bff"></i> Dalam proses pengajuan &nbsp;&nbsp;
+                      <i class="fa fa-square text-primary" style="color:#007bff"></i> Dalam proses review &nbsp;&nbsp;
                     </span>
 
                     <span class="text-tiny">
-                      <i class="fa fa-square text-gray" style="color:#ced4da"></i> Sudah diterima
+                      <i class="fa fa-square text-gray" style="color:#ced4da"></i> Sudah diterbitkan
                     </span>
                   </div>
                 </div>
@@ -340,7 +340,7 @@ $(function () {
           borderColor    : '#ced4da',
 		  data           : <?php
                         for($bulan=8;$bulan<=12;$bulan++){
-                          $jumlah_diterima[] = getStatus($bulan, "Sudah Diterima");
+                          $jumlah_diterima[] = getStatus($bulan, "Sudah Diterbitkan");
                         }
                        echo json_encode($jumlah_diterima); ?>
         }
