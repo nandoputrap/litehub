@@ -176,7 +176,7 @@
         <p class="ebook-description text-justify">'.$row['description'].'</p>
         <p class="ebook-author">Format yang tersedia:</p>
         <ul class="list-inline">
-          <li><a href="services/read.php?name='.$row['title'].'">.pdf</a></li>
+          <li>.pdf</li>
           <li>.epub</li>
           <li>.mobi</li>
         </ul>
