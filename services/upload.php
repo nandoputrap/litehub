@@ -30,7 +30,7 @@ $x = explode('.', $name_file);
 $ekstensi = strtolower(end($x));
 if(isset($_POST["submit"])) {
     if(in_array($ekstensi, $type_apr) === true) {
-        echo "File is a document.";
+        // echo "File is a document.";
         $uploadOk = 1;
     } else {
         echo "File is not a document.";
@@ -60,22 +60,23 @@ if ($uploadOk == 0) {
 } else {
     if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
         $filename = $_FILES["fileToUpload"]["name"];
-        echo "The file ". basename( $filename). " has been uploaded.";
+        // echo "The file ". basename( $filename). " has been uploaded.";
         $conn = connectDB();
         $judulBuku = $_POST['judulBuku'];
         $namaPenulis = $_POST['namaPenulis'];
         $kategori = $_POST['kategori'];
         $deskripsiBuku = $_POST['deskripsiBuku'];
-        $file = $_POST['fileBuku'];
+        $file = $filename;
         $tanggalUpload = date("Y-m-d");
         $status = 'Dalam Proses Review';
         $user_id = $_SESSION["namauser"];
         $_SESSION["titlebookadded"] = $judulBuku;
 		
-        $sql = "INSERT into unggah (title, author, category, description, file, upload_date, status, user_id) values('$judulBuku', '$namaPenulis', '$kategori', '$deskripsiBuku', '$filename', '$tanggalUpload', '$status', '$user_id')";
+        $sql = "INSERT into unggah (title, author, category, description, file, upload_date, status, user_id) values ('$judulBuku', '$namaPenulis', '$kategori', '$deskripsiBuku', '$filename', '$tanggalUpload', '$status', '$user_id')";
 
         if($result = mysqli_query($conn, $sql)) {
-            echo "New record created successfully <br/>";
+            // echo  "<script type='text/javascript'>alert('The file ". basename( $filename). " has been uploaded');window.location = './status-pengajuan.php';</script>";
+            // echo "New record created successfully <br/>";
             header("Location: ../status-pengajuan.php");
         } 
         else {
