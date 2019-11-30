@@ -13,7 +13,7 @@
         while ($row = mysqli_fetch_row($daftarkategori)) {
           if ($limit < 5) {
             echo '
-            <li><a href="#">'.$row[1].'</a></li>
+            <li><a href="shop-category.php?id='.$row[1].'&offset=0">'.$row[1].'</a></li>
             ';
             $limit++;
           }
