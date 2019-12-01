@@ -36,7 +36,8 @@ CREATE TABLE `unggah` (
   `description` varchar(255) DEFAULT NULL,
   `file` text DEFAULT NULL,
   `upload_date` date DEFAULT NULL,
-  `status` varchar(30) DEFAULT NULL
+  `status` varchar(30) DEFAULT NULL,
+  `user_id` varchar(30)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -44,10 +45,10 @@ CREATE TABLE `unggah` (
 --
 
 INSERT INTO `unggah` (`no`, `title`, `author`, `category`, `description`, `file`, `upload_date`, `status`) VALUES
-(1, 'Mencari Ramai dalam Sepi', 'Fid Rian', 'Novel', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras efficitur, ex aliquam tempus rhoncus, enim erat viverra felis, at volutpat orci purus sit amet ante. Maecenas luctus scelerisque velit. Mauris sit amet iaculis turpis, at venenatis ante.', NULL, '2019-11-05', 'Dalam proses penyuntingan'),
-(12, 'How to Code', 'David Robertino', 'Pilih kategori...', 'Lorem ipsum dolor sit amet', 'Bing kelas duabelas.docx', '2019-11-05', 'Dalam proses penyuntingan'),
-(38, 'sgrreytrher', 'fdhrhrtjt', 'Pilih kategori...', 'sgrhrehjer', 'Asisten BAPSI.docx', '2019-11-06', 'Dalam proses penyuntingan'),
-(39, 'Buku Belajar', 'Kartiko', 'Pilih kategori...', 'loremloreman', 'Application Form Anterin.docx', '2019-11-06', 'Dalam proses penyuntingan');
+(1, 'Mencari Ramai dalam Sepi', 'Fid Rian', 'Novel', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras efficitur, ex aliquam tempus rhoncus, enim erat viverra felis, at volutpat orci purus sit amet ante. Maecenas luctus scelerisque velit. Mauris sit amet iaculis turpis, at venenatis ante.', NULL, '2019-11-05', 'Dalam Proses Penyuntingan'),
+(12, 'How to Code', 'David Robertino', 'Pilih kategori...', 'Lorem ipsum dolor sit amet', 'Bing kelas duabelas.docx', '2019-11-05', 'Dalam Proses Penyuntingan'),
+(38, 'sgrreytrher', 'fdhrhrtjt', 'Pilih kategori...', 'sgrhrehjer', 'Asisten BAPSI.docx', '2019-11-06', 'Dalam Proses Penyuntingan'),
+(39, 'Buku Belajar', 'Kartiko', 'Pilih kategori...', 'loremloreman', 'Application Form Anterin.docx', '2019-11-06', 'Dalam Proses Penyuntingan');
 
 --
 -- Indexes for dumped tables

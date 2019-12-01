@@ -1,9 +1,9 @@
 <?php
     function connectDB() {
 		$servername = "sql12.freesqldatabase.com";
-		$username = "sql12310568";
-		$password = "wmiLAF7a6g";
-		$dbname = "sql12310568";
+		$username = "sql12313869";
+		$password = "qy1jlUjdiy";
+		$dbname = "sql12313869";
 		
 		// Create connection
 		$conn = mysqli_connect($servername, $username, $password, $dbname);
@@ -101,25 +101,33 @@
 					$target_buku = $target_dir . basename($name_buku);
 					if (move_uploaded_file($_FILES["fileCover"]["tmp_name"], $target_buku)) {
 						$tanggalUpload = date("Y-m-d");
-						$sql = "INSERT into book (img_path, title, author, publisher, description, quantity, category, publish_date, upload_id, isbn, sku) values('$name_buku', '$judulBuku', '$pengarangBuku', '$penerbitBuku', '$deskripsiBuku', $stokBuku, '$category', '$tanggalUpload', '$idUnggah', '$isbn', '$sku')";
-						if($result = mysqli_query($conn, $sql)) {
-							$diterima = 'Sudah Diterima';
-							$sql2 = "UPDATE unggah SET status = '$diterima' AND file = '$filename' WHERE no = '$idUnggah'";
-							if($result2 = mysqli_query($conn, $sql2)) {
-								echo "New record created successfully <br/>";
-								header("Location: ../daftar-pengajuan.php");
-							}else {
-								die("Error: $sql");
+						$sql = "INSERT into book (img_path, title, author, publisher, description, quantity, category, publish_date, upload_id, isbn, sku) values('$name_buku', '$judulBuku', '$pengarangBuku', '$penerbitBuku', '$deskripsiBuku', $stokBuku, '$category', '$tanggalUpload', '$idUnggah', '$isbn', '$sku');";
+						$diterima = 'Sudah Diterbitkan';
+						$sql .= "UPDATE unggah SET status = '$diterima' AND file = '$filename' WHERE no = '$idUnggah'";
+						// Execute multi query
+						if (mysqli_multi_query($conn,$sql))
+						{
+						do
+							{
+							// Store first result set
+							if ($result=mysqli_store_result($con)) {
+							// Fetch one and one row
+							while ($row=mysqli_fetch_row($result))
+								{
+									echo "New record created successfully <br/>";
+								}
+							// Free result set
+							mysqli_free_result($result);
 							}
-						}else {
-							die("Error: $sql");
+							}
+						while (mysqli_next_result($con));
 						}
+						header("Location: ./update.php");
 					}else{
 						echo  "<script type='text/javascript'>alert('Upload Cover Error');</script>";
 					}
 				}
 				mysqli_close($conn);
-				header("Location: ../daftar-pengajuan.php");
 			} else {
 				echo "Sorry, there was an error ". $_FILES['fileEditor']['error']. " uploading your file.";
 			}
