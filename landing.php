@@ -31,24 +31,24 @@
 		mysqli_close($conn);
 		return $result;
   }
-  
+
   function daftarNon($table) {
 		$conn = connectDB();
-		
+
 		$sql = "SELECT * FROM $table WHERE category = 'Non Fiksi'";
-		
+
 		if(!$result = mysqli_query($conn, $sql)) {
 			die("Error: $sql");
 		}
 		mysqli_close($conn);
 		return $result;
   }
-  
+
   function daftarFiksi($table) {
 		$conn = connectDB();
-		
+
 		$sql = "SELECT * FROM $table WHERE category = 'Fiksi'";
-		
+
 		if(!$result = mysqli_query($conn, $sql)) {
 			die("Error: $sql");
 		}
@@ -77,7 +77,7 @@
 		mysqli_close($conn);
 		return $result;
   }
-  
+
   function selectBooks() {
     $pinjam = selectRowsFromSubmission();
     $arraysubmission = array();
@@ -95,10 +95,10 @@
     }
     return $arraysubmission;
   }
-  
+
   function selectAllFromBook($book_id) {
     $conn = connectDB();
-  
+
     $sql = "SELECT * FROM book WHERE book_id = $book_id";
     if(!$result = mysqli_query($conn, $sql)) {
       die("Error: $sql");
@@ -224,10 +224,10 @@
         <h3 id="greetings-3">Ebookhub ingin membantu meningkatkan minat baca di Indonesia, ayo mulai sekarang!</h3>
 
         <div class="col-md-6">
-        <button type="button" class="btn btn-primary btn-block btn-ebookhub" onclick="window.location='shop.php'">Mulai Baca</button>
+        <button type="button" class="btn btn-primary btn-block btn-ebookhub btn-bacaupload" onclick="window.location='shop.php?offset=0'">Mulai Baca</button>
         </div>
         <div class="col-md-6">
-        <button type="button" class="btn btn-primary btn-block btn-ebookhub" onclick="window.location='upload.php'">Mulai Terbitkan</button>
+        <button type="button" class="btn btn-primary btn-block btn-ebookhub btn-bacaupload" onclick="window.location='upload.php'">Mulai Terbitkan</button>
         </div>
       </div>
 
@@ -305,7 +305,7 @@
               echo '
                     <div class="item">
                       <div class="card box-shadow">
-                        <img class="card-img-top img-fluid" style="height:300px;" src="'.$row[1].'" alt="card-img">
+                        <img class="card-img-top img-fluid" style="height:400px;" src="'.$row[1].'" alt="card-img">
                         <div class="card-body">
                           <a href="details.php?id='.$row[0].'"><h3 class="card-title ebook-title" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><strong>'.$row[2].'</strong></h3></a>
                           <p class="card-text ebook-author">'.$row[3].'</p>
@@ -349,13 +349,13 @@
         <div id="owl-buku-terpopuler" class="owl-carousel owl-theme">
         <?php
               $arraybook = selectAllBooks();
-              for ($i=0; $i < count($arraybook); $i++) { 
+              for ($i=0; $i < count($arraybook); $i++) {
                 $buku = selectAllFromBook($arraybook[$i]);
                 while ($row = mysqli_fetch_row($buku)) {
                   echo '
                   <div class="item">
                     <div class="card box-shadow">
-                      <img class="card-img-top img-fluid" style="height:300px;" src="'.$row[1].'" alt="card-img">
+                      <img class="card-img-top img-fluid" style="height:400px;" src="'.$row[1].'" alt="card-img">
                       <div class="card-body">
                         <a href="details.php?id='.$row[0].'"><h3 class="card-title ebook-title" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><strong>'.$row[2].'</strong></h3></a>
                         <p class="card-text ebook-author">'.$row[3].'</p>
@@ -411,7 +411,7 @@
                   $daftarnon = daftarNon("category");
                   while ($rownon = mysqli_fetch_row($daftarnon)) {
                     echo '
-                    <li><a href="shop-category.php?id='.$rownon[1].'">'.$rownon[1].'</a></li>
+                    <li><a href="shop-category.php?id='.$rownon[1].'&offset=0">'.$rownon[1].'</a></li>
                     ';
                   }
                 ?>
@@ -432,7 +432,7 @@
                   $daftarfiks = daftarFiksi("category");
                   while ($rowfiks = mysqli_fetch_row($daftarfiks)) {
                     echo '
-                    <li><a href="shop-category.php?id='.$rowfiks[1].'">'.$rowfiks[1].'</a></li>
+                    <li><a href="shop-category.php?id='.$rowfiks[1].'&offset=0">'.$rowfiks[1].'</a></li>
                     ';
                   }
                 ?>
@@ -455,16 +455,16 @@
       </div>
 
       <div class="col-md-3 col-sm-12">
-        <img src="images/gramedia.png" alt="">
+        <a href="https://gramedia.com"><img src="images/gramedia.png" alt=""></a>
       </div>
       <div class="col-md-3 col-sm-12">
-        <img src="images/kompas.jpg" alt="">
+        <a href="http://www.kompasgramedia.com"><img src="images/kompas.jpg" alt=""></a>
       </div>
       <div class="col-md-3 col-sm-12">
-        <img src="images/elex.png" alt="">
+        <a href="http://www.elexmedia.id"><img src="images/elex.png" alt=""></a>
       </div>
       <div class="col-md-3 col-sm-12">
-        <img src="images/mizan.jpg" alt="">
+        <a href="https://mizan.com"><img src="images/mizan.jpg" alt=""></a>
       </div>
     </div>
   </div>

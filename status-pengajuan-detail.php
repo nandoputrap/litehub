@@ -94,7 +94,7 @@
 				$split = explode('-', $olddate);
 				$tanggal = $split[2] . ' ' . $bulan[(int)$split[1]] . ' ' . $split[0];
         echo'
-        
+
         <div class="col-md-9">
           <h1 class="register-title">Status Pengajuan</h1>
 

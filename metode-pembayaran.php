@@ -144,7 +144,8 @@ function selectAllFromBook($book_id) {
                   }
                   echo '
                   <li><p href="#">Jumlah: Rp. '.$sum.'</p></li>
-                  <li><p href="#">Total Barang:  1'.$qty.'</p></li>
+                  <li><p href="#">Total Barang:  '.$qty.'</p></li>
+                  <a href="status-pembayaran.php" class="btn btn-primary btn-block btn-ebookhub btn-register">Bayar Sekarang</a>
                   ';
                 }
                 ?>

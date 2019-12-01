@@ -92,9 +92,12 @@
     	});
     });
 
+// fungsi untuk menampilkan form ketika mengganti status pengajuan
     $(function() {
   $('#status-pengajuan').change(function(){
     $('.form-publish').show();
+    $('#simpan-penyuntingan').hide();
     $('#' + $(this).val()).hide();
   });
+
 });

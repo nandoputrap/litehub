@@ -255,6 +255,19 @@ footer .glyphicon {
   font-size: 24px;
 }
 
+/* .btn-bacaupload{
+  margin: 5px auto;
+} */
+
+@media (max-width: 768px) {
+  .btn-bacaupload{
+    margin: 10px auto;
+  }
+
+  .box-how-to-use{
+    margin: 40px auto;
+  }
+}
 .devices{
   margin: 50px auto;
 }
@@ -845,4 +858,8 @@ position:absolute;
 .tabel-header{
   background-color: #D72323;
   color: white;
+}
+
+.td-padding{
+  padding: 25px !important;
 }

@@ -46,18 +46,37 @@ function connectDB() {
 
             <div class="panel-body">
               <ul class="nav nav-pills nav-stacked category-menu">
-                <li>
-                  <a href="lihat-profil.php">Profil</a>
-                </li>
-                <li class="active-profil">
-                  <a href="edit-password.php">Edit Password</a>
-                </li>
-                <li>
-                  <a href="status-pengajuan.php">Status Pengajuan</a>
-                </li>
-                <li>
-                  <a href="buku-saya.php">Buku Saya</a>
-                </li>
+                <?php
+                      if ($_SESSION["role"] === "editor"){
+                        echo'
+                        <li class="active-profil">
+                          <a href="lihat-profil.php">Profil</a>
+                        </li>
+                        <li>
+                          <a href="edit-password.php">Edit Password</a>
+                        </li>
+                          <li>
+                            <a href="daftar-pengajuan.php">Daftar Pengajuan</a>
+                          </li>
+
+                        ';
+                      }else{
+                        echo'
+                        <li class="active-profil">
+                          <a href="lihat-profil.php">Profil</a>
+                        </li>
+                        <li>
+                          <a href="edit-password.php">Edit Password</a>
+                        </li>
+                        <li>
+                          <a href="status-pengajuan.php">Status Pengajuan</a>
+                        </li>
+                        <li>
+                          <a href="buku-saya.php">Buku Saya</a>
+                        </li>
+                        ';
+                      }
+                    ?>
               </ul>
             </div>
           </div>

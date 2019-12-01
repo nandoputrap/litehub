@@ -166,8 +166,8 @@
 	}
 
 ?>
-
-<div class="shop section-margin">
+<br>
+<div class="shop section-mini-margin">
   <div class="container">
     <div class="row">
       <div class="col-lg-12">
@@ -190,9 +190,15 @@
 			$awal = $_GET['offset'] + 1;
 			$akhir = $_GET['offset'] + 6;
 			if ($akhir > $row[0]) {
-				echo '
-				<h4>Menampilkan '.$awal.'-'.$row[0].' dari '.$row[0].' e-book</h4>
-				';
+				if ($row[0] == 0) {
+					echo '
+					<h4>Tidak ada e-book tersedia</h4>
+					';
+				}else {
+					echo '
+					<h4>Menampilkan '.$awal.'-'.$row[0].' dari '.$row[0].' e-book</h4>
+					';
+				}
 			}else{
 				echo '
 				<h4>Menampilkan '.$awal.'-'.$akhir.' dari '.$row[0].' e-book</h4>
@@ -257,14 +263,16 @@
 						<li> <a href="shop.php?offset='.($_GET['offset']-6).'"><i class="fa fa-angle-left" aria-hidden="true"></i></a></li>
 						';
 					}
+					$all = 0;
 					while ($row = mysqli_fetch_row($count)) {
 						$sum = 1;
+						$all = $row[0];
 						for ($i=0; $i < $row[0]; $i+=6) {
 							if (isset($_GET['offset'])) {
 								if ($_GET['offset'] == $i) {
 									echo '
 									<li class="active active-pagination"><a href="shop.php?offset='.$i.'">'.$sum.'</a></li>
-								';	
+								';
 								}else {
 									echo '
 									<li><a href="shop.php?offset='.$i.'">'.$sum.'</a></li>
@@ -284,7 +292,7 @@
 						$sum+=1;
 						}
 					}
-					if ($flag) {
+					if ($flag && $all > 6) {
 						echo '
 						<li> <a href="shop.php?offset='.($_GET['offset']+6).'"><i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
 						';

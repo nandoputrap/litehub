@@ -50,33 +50,37 @@ if(!isset($_SESSION['namauser'])) {
 
             <div class="panel-body">
               <ul class="nav nav-pills nav-stacked category-menu">
-                <li class="active-profil">
-                  <a href="lihat-profil.php">Profil</a>
-                </li>
-                <li>
-                  <a href="edit-password.php">Edit Password</a>
-                </li>
                 <?php
-                if ($_SESSION["role"] === "editor"){
-                  echo '
-                  <li>
-                    <a href="daftar-pengajuan.php">Daftar Pengajuan</a>
-                  </li>
-                  <li>
-                    <a href="status-pengajuan.php">Daftar </a>
-                  </li>
-                  ';
-                }else{
-                  echo'
-                  <li>
-                    <a href="status-pengajuan.php">Status Pengajuan</a>
-                  </li>
-                  <li>
-                    <a href="buku-saya.php">Buku Saya</a>
-                  </li>
-                  ';
-                }
-                ?>
+                      if ($_SESSION["role"] === "editor"){
+                        echo'
+                        <li class="active-profil">
+                          <a href="lihat-profil.php">Profil</a>
+                        </li>
+                        <li>
+                          <a href="edit-password.php">Edit Password</a>
+                        </li>
+                          <li>
+                            <a href="daftar-pengajuan.php">Daftar Pengajuan</a>
+                          </li>
+
+                        ';
+                      }else{
+                        echo'
+                        <li class="active-profil">
+                          <a href="lihat-profil.php">Profil</a>
+                        </li>
+                        <li>
+                          <a href="edit-password.php">Edit Password</a>
+                        </li>
+                        <li>
+                          <a href="status-pengajuan.php">Status Pengajuan</a>
+                        </li>
+                        <li>
+                          <a href="buku-saya.php">Buku Saya</a>
+                        </li>
+                        ';
+                      }
+                    ?>
               </ul>
             </div>
           </div>
@@ -94,17 +98,17 @@ if(!isset($_SESSION['namauser'])) {
                 <label for="">Nama Lengkap:</label>
                 <input type="text" name="nama_lengkap" class="form-control form-register" value="'.$_SESSION["nama_lengkap"].'" disabled>
               </div>
-    
+
               <div class="form-group">
                 <label for="">Nama Pengguna:</label>
                 <input type="text" name="namauser" class="form-control form-register" value="'.$_SESSION["namauser"].'" disabled>
               </div>
-    
+
               <div class="form-group">
                 <label for="">E-mail:</label>
                 <input type="email" name="email" class="form-control form-register" value="'.$_SESSION["email"].'" disabled>
               </div>
-  
+
               ';
             }
           ?>
