@@ -5,9 +5,9 @@ require_once("templates/header.php");
 <?php
 function connectDB() {
   $servername = "sql12.freesqldatabase.com";
-  $username = "sql12310568";
-  $password = "wmiLAF7a6g";
-  $dbname = "sql12310568";
+  $username = "sql12313869";
+  $password = "qy1jlUjdiy";
+  $dbname = "sql12313869";
 
   // Create connection
   $conn = mysqli_connect($servername, $username, $password, $dbname);
