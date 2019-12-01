@@ -81,7 +81,7 @@ function daftarBuku($table) {
               <tr>
                 <th class="text-center tabel-header">Judul Buku</th>
                 <th class="text-center tabel-header">Nama Penulis</th>
-                <th class="text-center tabel-header">Kategori</th>
+                <th class="text-center tabel-header">Status</th>
                 <th class="text-center tabel-header">Tanggal Unggah</th>
                 <th colspan="2" class="text-center tabel-header">Aksi</th>
               </tr>

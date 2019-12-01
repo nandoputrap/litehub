@@ -6,29 +6,29 @@
 		$username = "sql12310568";
 		$password = "wmiLAF7a6g";
 		$dbname = "sql12310568";
-		
+
 		// Create connection
 		$conn = mysqli_connect($servername, $username, $password, $dbname);
-		
+
 		// Check connection
 		if (!$conn) {
 			die("Connection failed: " + mysqli_connect_error());
 		}
 		return $conn;
 	}
-	
+
 	function daftarBuku($table) {
 		$conn = connectDB();
-		
+
 		$sql = "SELECT no, title, author, category, description, file, upload_date, status FROM $table";
-		
+
 		if(!$result = mysqli_query($conn, $sql)) {
 			die("Error: $sql");
 		}
 		mysqli_close($conn);
 		return $result;
 	}
-	
+
 ?>
 
 <!-- start fungsinya -->
@@ -50,7 +50,7 @@
 			.field-pengajuan{
                 font-weight: bold;
                 vertical-align: text-top;
-                width: 130px; 
+                width: 130px;
         	}
             .isi-pengajuan{
                 text-align:justify;
@@ -233,7 +233,7 @@
 									 }
 								}
 							}
-							
+
 						?>
 					</table>
 					<label class="labelunggah">Sudah Diterima</label>
@@ -293,4 +293,4 @@
 		<hr>
 		<h4>&copy; 2019 Litehub Inc. All rights reserved</h4>
 	</footer>
-</html>							
+</html>
