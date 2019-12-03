@@ -12,9 +12,9 @@
 	function connectDB() {
 		// require 'config/connect.php';
 		$servername = "sql12.freesqldatabase.com";
-		$username = "sql12310568";
-		$password = "wmiLAF7a6g";
-		$dbname = "sql12310568";
+		$username = "sql12313869";
+		$password = "qy1jlUjdiy";
+		$dbname = "sql12313869";
 
 		// Create connection
 		$conn = mysqli_connect($servername, $username, $password, $dbname);
@@ -176,7 +176,7 @@
         <p class="ebook-description text-justify">'.$row['description'].'</p>
         <p class="ebook-author">Format yang tersedia:</p>
         <ul class="list-inline">
-          <li><a href="services/read.php?name='.$row['title'].'">.pdf</a></li>
+          <li>.pdf</li>
           <li>.epub</li>
           <li>.mobi</li>
         </ul>

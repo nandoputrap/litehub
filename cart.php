@@ -7,9 +7,9 @@ session_start();
 function connectDB() {
   // require 'config/connect.php';
   $servername = "sql12.freesqldatabase.com";
-  $username = "sql12310568";
-  $password = "wmiLAF7a6g";
-  $dbname = "sql12310568";
+  $username = "sql12313869";
+  $password = "qy1jlUjdiy";
+  $dbname = "sql12313869";
 
   // Create connection
   $conn = mysqli_connect($servername, $username, $password, $dbname);
@@ -72,9 +72,9 @@ if(!isset($_SESSION['namauser'])) {
                 <table class="table">
                   <thead>
                     <tr>
-                      <th colspan="2">Produk</th>
-                      <th>Harga</th>
-                      <th>Aksi</th>
+                      <th class="tad-padding" colspan="2">Produk</th>
+                      <th class="tad-padding">Harga</th>
+                      <th class="tad-padding">Aksi</th>
                     </tr>
                   </thead>
 
@@ -90,16 +90,16 @@ if(!isset($_SESSION['namauser'])) {
                           $row = mysqli_fetch_assoc($detail_unggah);
                           echo '
                           <tr>
-                          <td class="col-md-2"><img class="card-img-top img-responsive img-cart" src="'.$row['img_path'].'" alt="card-img"></td>
-                          <td>
+                          <td class="col-md-2 td-padding"><img class="card-img-top img-responsive img-cart" src="'.$row['img_path'].'" alt="card-img"></td>
+                          <td class="td-padding">
                           <h2 id="ebook-title">'.$row['title'].'</h2>
                           <h4 class="ebook-author">'.$row['author'].'</h4>
                           <p>Penerbit : '.$row['publisher'].'</p>
                           <p>SKU : '.$row['book_id'].'</p>
                           </td>
 
-                          <td> <h4> Rp. '.$row['quantity'].'</h4> </td>
-                          <td> <a href="details.php?id='.$no.'" class="btn btn-danger btn-hapus text-capitalize"><i class="fa fa-trash"> &nbsp; Hapus</i></a> </td>
+                          <td class="td-padding"> <h4> Rp. '.$row['quantity'].'</h4> </td>
+                          <td class="td-padding"> <a href="details.php?id='.$no.'" class="btn btn-danger btn-hapus text-capitalize"><i class="fa fa-trash"> &nbsp; Hapus</i></a> </td>
                           </tr>
                           ';
                         }
@@ -110,16 +110,16 @@ if(!isset($_SESSION['namauser'])) {
                           while ($row = mysqli_fetch_row($buku)) {
                             echo '
                             <tr>
-                            <td class="col-md-2"><img class="card-img-top img-responsive img-cart" src="'.$row[1].'" alt="card-img"></td>
-                            <td>
+                            <td class="col-md-2 td-padding"><img class="card-img-top img-responsive img-cart" src="'.$row[1].'" alt="card-img"></td>
+                            <td class="td-padding">
                             <h2 id="ebook-title">'.$row[2].'</h2>
                             <h4 class="ebook-author">'.$row[3].'</h4>
                             <p>Penerbit : '.$row[4].'</p>
                             <p>SKU : '.$row[0].'</p>
                             </td>
 
-                            <td> <h4> Rp. '.$row[6].'</h4> </td>
-                            <td> <a href="services/cancel.php?id='.$row[0].'" class="btn btn-danger btn-hapus text-capitalize"><i class="fa fa-trash"> &nbsp; Hapus</i></a> </td>
+                            <td class="td-padding"> <h4> Rp. '.$row[6].'</h4> </td>
+                            <td class="td-padding"> <a href="services/cancel.php?id='.$row[0].'" class="btn btn-danger btn-hapus text-capitalize"><i class="fa fa-trash"> &nbsp; Hapus</i></a> </td>
                             </tr>
                             ';
                           }
@@ -128,8 +128,8 @@ if(!isset($_SESSION['namauser'])) {
                       ?>
 
                     <tr>
-                      <th> <a href="shop.php"> <i class="fa fa-angle-left"></i> &nbsp; Lanjutkan belanja</a> </th>
-                      <th class="pull-right">Total</th>
+                      <th class="td-padding"> <a href="shop.php?offset=0"> <i class="fa fa-angle-left"></i> &nbsp; Lanjutkan belanja</a> </th>
+                      <th class="pull-right td-padding">Total</th>
                       <?php
                       $conn = connectDB();
                       if (isset($_GET['id'])) {
@@ -140,8 +140,8 @@ if(!isset($_SESSION['namauser'])) {
                         if (mysqli_num_rows($detail_unggah) > 0) {
                           $row = mysqli_fetch_assoc($detail_unggah);
                           echo '
-                          <th> Rp. '.$row['quantity'].'</th>
-                          <th> <a href="metode-pembayaran.php?id='.$no.'">Lanjut ke pembayaran &nbsp;<i class="fa fa-angle-right"></i></a> </th>
+                          <th class="td-padding"> Rp. '.$row['quantity'].'</th>
+                          <th class="td-padding"> <a href="metode-pembayaran.php?id='.$no.'">Lanjut ke pembayaran &nbsp;<i class="fa fa-angle-right"></i></a> </th>
                           ';
                         }
                       }else{
@@ -154,8 +154,8 @@ if(!isset($_SESSION['namauser'])) {
                           }
                         }
                         echo '
-                          <th>'.$sum.'</th>
-                          <th> <a href="metode-pembayaran.php">Lanjut ke pembayaran</a> </th>
+                          <th class="td-padding"> Rp. '.$sum.'</th>
+                          <th class="td-padding"> <a href="metode-pembayaran.php">Lanjut ke pembayaran</a> </th>
                         ';
                       }
                       ?>

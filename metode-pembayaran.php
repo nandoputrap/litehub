@@ -5,9 +5,9 @@
 <?php
 function connectDB() {
   $servername = "sql12.freesqldatabase.com";
-  $username = "sql12310568";
-  $password = "wmiLAF7a6g";
-  $dbname = "sql12310568";
+  $username = "sql12313869";
+  $password = "qy1jlUjdiy";
+  $dbname = "sql12313869";
 
   // Create connection
   $conn = mysqli_connect($servername, $username, $password, $dbname);
@@ -144,7 +144,8 @@ function selectAllFromBook($book_id) {
                   }
                   echo '
                   <li><p href="#">Jumlah: Rp. '.$sum.'</p></li>
-                  <li><p href="#">Total Barang:  1'.$qty.'</p></li>
+                  <li><p href="#">Total Barang:  '.$qty.'</p></li>
+                  <a href="status-pembayaran.php" class="btn btn-primary btn-block btn-ebookhub btn-register">Bayar Sekarang</a>
                   ';
                 }
                 ?>

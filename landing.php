@@ -3,23 +3,22 @@
 ?>
 
 <?php
-	session_start();
-	function connectDB() {
-		$servername = "sql12.freesqldatabase.com";
-		$username = "sql12310568";
-		$password = "wmiLAF7a6g";
-		$dbname = "sql12310568";
-
-		// Create connection
-		$conn = mysqli_connect($servername, $username, $password, $dbname);
-
-		// Check connection
-		if (!$conn) {
-			die("Connection failed: " + mysqli_connect_error());
-		}
-		return $conn;
-	}
-
+  session_start();
+  function connectDB() {
+    $servername = "sql12.freesqldatabase.com";
+    $username = "sql12313869";
+    $password = "qy1jlUjdiy";
+    $dbname = "sql12313869";
+  
+    // Create connection
+    $conn = mysqli_connect($servername, $username, $password, $dbname);
+  
+    // Check connection
+    if (!$conn) {
+      die("Connection failed: " + mysqli_connect_error());
+    }
+    return $conn;
+    }
 	function daftarBuku($table) {
 		$conn = connectDB();
 
@@ -224,7 +223,7 @@
         <h3 id="greetings-3">Ebookhub ingin membantu meningkatkan minat baca di Indonesia, ayo mulai sekarang!</h3>
 
         <div class="col-md-6">
-        <button type="button" class="btn btn-primary btn-block btn-ebookhub btn-bacaupload" onclick="window.location='shop.php'">Mulai Baca</button>
+        <button type="button" class="btn btn-primary btn-block btn-ebookhub btn-bacaupload" onclick="window.location='shop.php?offset=0'">Mulai Baca</button>
         </div>
         <div class="col-md-6">
         <button type="button" class="btn btn-primary btn-block btn-ebookhub btn-bacaupload" onclick="window.location='upload.php'">Mulai Terbitkan</button>
@@ -411,7 +410,7 @@
                   $daftarnon = daftarNon("category");
                   while ($rownon = mysqli_fetch_row($daftarnon)) {
                     echo '
-                    <li><a href="#">'.$rownon[1].'</a></li>
+                    <li><a href="shop-category.php?id='.$rownon[1].'&offset=0">'.$rownon[1].'</a></li>
                     ';
                   }
                 ?>
@@ -432,7 +431,7 @@
                   $daftarfiks = daftarFiksi("category");
                   while ($rowfiks = mysqli_fetch_row($daftarfiks)) {
                     echo '
-                    <li><a href="#">'.$rowfiks[1].'</a></li>
+                    <li><a href="shop-category.php?id='.$rowfiks[1].'&offset=0">'.$rowfiks[1].'</a></li>
                     ';
                   }
                 ?>

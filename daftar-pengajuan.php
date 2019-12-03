@@ -3,9 +3,9 @@ require_once("templates/header.php");
 
 function connectDB() {
   $servername = "sql12.freesqldatabase.com";
-  $username = "sql12310568";
-  $password = "wmiLAF7a6g";
-  $dbname = "sql12310568";
+  $username = "sql12313869";
+  $password = "qy1jlUjdiy";
+  $dbname = "sql12313869";
 
   // Create connection
   $conn = mysqli_connect($servername, $username, $password, $dbname);
@@ -81,7 +81,7 @@ function daftarBuku($table) {
               <tr>
                 <th class="text-center tabel-header">Judul Buku</th>
                 <th class="text-center tabel-header">Nama Penulis</th>
-                <th class="text-center tabel-header">Kategori</th>
+                <th class="text-center tabel-header">Status</th>
                 <th class="text-center tabel-header">Tanggal Unggah</th>
                 <th colspan="2" class="text-center tabel-header">Aksi</th>
               </tr>

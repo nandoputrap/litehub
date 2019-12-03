@@ -6,9 +6,9 @@
 	session_start();
 	function connectDB() {
 		$servername = "sql12.freesqldatabase.com";
-		$username = "sql12310568";
-		$password = "wmiLAF7a6g";
-		$dbname = "sql12310568";
+		$username = "sql12313869";
+		$password = "qy1jlUjdiy";
+		$dbname = "sql12313869";
 
 		// Create connection
 		$conn = mysqli_connect($servername, $username, $password, $dbname);
@@ -164,13 +164,19 @@
 			$awal = $_GET['offset'] + 1;
 			$akhir = $_GET['offset'] + 6;
 			if ($akhir > $row[0]) {
-				echo '
-				<h4>Menampilkan '.$awal.'-'.$row[0].' dari '.$row[0].' e-book</h4>
-				';
+				if ($row[0] == 0) {
+					echo '
+					<h4>Tidak ada e-book tersedia</h4>
+					';
+				}else {
+					echo '
+					<h4>Menampilkan '.$awal.'-'.$row[0].' dari '.$row[0].' e-book</h4>
+					';
+				}
 			}else{
 				echo '
 				<h4>Menampilkan '.$awal.'-'.$akhir.' dari '.$row[0].' e-book</h4>
-				';
+				';	
 			}
 		}
 		?>

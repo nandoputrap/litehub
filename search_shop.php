@@ -1,15 +1,14 @@
 <?php
   require_once("templates/header.php");
-  session_start();
 ?>
 
 <?php
 	session_start();
 	function connectDB() {
 		$servername = "sql12.freesqldatabase.com";
-		$username = "sql12310568";
-		$password = "wmiLAF7a6g";
-		$dbname = "sql12310568";
+		$username = "sql12313869";
+		$password = "qy1jlUjdiy";
+		$dbname = "sql12313869";
 		
 		// Create connection
 		$conn = mysqli_connect($servername, $username, $password, $dbname);
@@ -34,6 +33,20 @@
 		if(!$result = mysqli_query($conn, $sql)) {
 			die("Error: $sql");
 		}
+		mysqli_close($conn);
+		return $result;
+	}
+
+	function getbook() {
+		$conn = connectDB();
+		$query = $_GET['query']; 
+
+		$sql = "SELECT count(*) FROM book WHERE (`title` LIKE '%".$query."%') OR (`author` LIKE '%".$query."%')";
+
+		if(!$result = mysqli_query($conn, $sql)) {
+			die("Error: $sql");
+		}
+
 		mysqli_close($conn);
 		return $result;
 	}
@@ -172,7 +185,28 @@
       </div>
 
       <div class="col-md-9">
-        <h4>Menampilkan 1-6 dari 200 e-book Teknologi</h4>
+	  <?php
+		$count = getbook();
+		while ($row = mysqli_fetch_row($count)) {
+			$awal = $_GET['offset'] + 1;
+			$akhir = $_GET['offset'] + 6;
+			if ($akhir > $row[0]) {
+				if ($row[0] == 0) {
+					echo '
+					<h4>Tidak ada e-book tersedia</h4>
+					';
+				}else {
+					echo '
+					<h4>Menampilkan '.$awal.'-'.$row[0].' dari '.$row[0].' e-book</h4>
+					';
+				}
+			}else{
+				echo '
+				<h4>Menampilkan '.$awal.'-'.$akhir.' dari '.$row[0].' e-book</h4>
+				';
+			}
+		}
+		?>
 
         <div class="row">
           <div class="product">
@@ -213,6 +247,58 @@
           ?>
 
           </div>
+        </div>
+		<div class="row">
+          <div class="row text-center">
+                  <ul class="pagination pagination-lg">
+				  <?php
+					$count = getbook();
+					$flag = false;
+					if (!isset($_GET['offset']) || $_GET['offset'] == 0) {
+						$flag = true;
+					}else {
+						echo '
+						<li> <a href="shop.php?offset='.($_GET['offset']-6).'"><i class="fa fa-angle-left" aria-hidden="true"></i></a></li>
+						';
+					}
+					$all = 0;
+					while ($row = mysqli_fetch_row($count)) {
+						$sum = 1;
+						$all = $row[0];
+						for ($i=0; $i < $row[0]; $i+=6) {
+							if (isset($_GET['offset'])) {
+								if ($_GET['offset'] == $i) {
+									echo '
+									<li class="active active-pagination"><a href="shop.php?offset='.$i.'">'.$sum.'</a></li>
+								';
+								}else {
+									echo '
+									<li><a href="shop.php?offset='.$i.'">'.$sum.'</a></li>
+								';
+								}
+							}else{
+								if ($i == 0) {
+									echo '
+									<li class="active active-pagination"><a href="shop.php?offset='.$i.'">'.$sum.'</a></li>
+								';
+								}else {
+									echo '
+									<li><a href="shop.php?offset='.$i.'">'.$sum.'</a></li>
+								';
+								}
+							}
+						$sum+=1;
+						}
+					}
+					if ($flag && $all > 6) {
+						echo '
+						<li> <a href="shop.php?offset='.($_GET['offset']+6).'"><i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+						';
+					}
+				?>
+                  </ul>
+                </div>
+
         </div>
       </div>
     </div>

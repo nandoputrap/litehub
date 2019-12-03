@@ -9,9 +9,9 @@
 <?php
   function connectDB() {
 		$servername = "sql12.freesqldatabase.com";
-		$username = "sql12310568";
-		$password = "wmiLAF7a6g";
-		$dbname = "sql12310568";
+		$username = "sql12313869";
+		$password = "qy1jlUjdiy";
+		$dbname = "sql12313869";
 
 		// Create connection
 		$conn = mysqli_connect($servername, $username, $password, $dbname);
@@ -32,12 +32,12 @@
       </div>
       <div class="col-md-9 form-register-group">
         <form action="services/upload.php" method="post" enctype="multipart/form-data">
-          <input type="text" class="form-control form-register" id="insert-judulBuku" name="judulBuku" placeholder="Judul buku...">
-          <input type="text" class="form-control form-register" id="insert-namaPenulis" name="namaPenulis" placeholder="Nama penulis...">
+          <input type="text" class="form-control form-register" id="insert-judulBuku" name="judulBuku" placeholder="Judul buku..." required>
+          <input type="text" class="form-control form-register" id="insert-namaPenulis" name="namaPenulis" placeholder="Nama penulis..." required>
           <br>
           <div class="form-group">
             <label for="kategori"></label>
-            <select class="form-control form-register form-group-kategori" name="kategori" id="kategori">
+            <select class="form-control form-register form-group-kategori" name="kategori" id="kategori" required>
             <option>Umum</option>
 										<option>Filsafat</option>
 										<option>Psikologi</option>
@@ -65,17 +65,17 @@
           </div>
 
           <div class="form-group">
-           <textarea class="form-control" rows="5" id="comment" name="deskripsiBuku" placeholder="Deskripsi/Sinopsis buku..."></textarea>
+           <textarea class="form-control" rows="5" id="comment" name="deskripsiBuku" placeholder="Deskripsi/Sinopsis buku..." required></textarea>
           </div>
 
           <div class="form-group">
             <label for="exampleFormControlFile1">
               Format buku dalam bentuk .doc atau .docx. Format penulisan dan layout dapat melihat pada halaman <a href="#">ini.</a> Ukuran file maksimal 50 MB.
             </label>
-            <input type="file" class="form-control-file" name="fileToUpload" id="exampleFormControlFile1">
+            <input type="file" class="form-control-file" name="fileToUpload" id="exampleFormControlFile1" required>
           </div>
 
-          <input type="hidden" id="insert-command" name="command" value="insert">
+          <input type="hidden" id="insert-command" name="command" value="insert" >
           <button type="submit" name="submit" class="btn btn-primary btn-block btn-ebookhub btn-register">Unggah</button>
         </form>
       </div>
