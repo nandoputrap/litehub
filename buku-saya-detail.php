@@ -78,7 +78,7 @@ else {
           <table class="table table-hover table-bordered table-responsive">
           <?php
             $conn = connectDB();
-            $query = "SELECT t.purchase_id, t.book_id, t.user_id, t.date, b.title, b.author, b.category, b.total_page, b.isbn, b.sku, u.description 
+            $query = "SELECT t.purchase_id, t.book_id, t.user_id, t.date, b.title, b.author, b.category, b.isbn, b.sku, u.description 
                       FROM purchase t 
                       INNER JOIN book b ON b.book_id = t.book_id
                       INNER JOIN unggah u ON u.no = b.upload_id
@@ -124,10 +124,6 @@ else {
               <tr>
                 <td><strong>Tanggal Beli</strong></td>
                 <td>'.$tanggal.'</td>
-              </tr>
-              <tr>
-                <td><strong>Jumlah Halaman</strong></td>
-                <td>'.$row['total_page'].'</td>
               </tr>
               <tr>
                 <td><strong>ISBN</strong></td>
