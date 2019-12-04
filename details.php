@@ -132,26 +132,29 @@
           <div class="table-details">
             <table class="table table-hover table-bordered">
               <tbody>
-                <tr>
+              <?php
+                $conn = connectDB();
+                $query = "SELECT * FROM book where book_id = '$no'";
+                $detail_unggah = mysqli_query($conn, $query);
+
+                if (mysqli_num_rows($detail_unggah) > 0) {
+                  $row = mysqli_fetch_assoc($detail_unggah);
+                  echo '
+                  <tr>
                   <td>Tanggal Terbit</td>
-                  <td>1 Januari 2019</td>
-                </tr>
-                <tr>
-                  <td>Jumlah Halaman</td>
-                  <td>324</td>
-                </tr>
-                <tr>
-                  <td>Bahasa</td>
-                  <td>Indonesia</td>
+                  <td>'.$row['publish_date'].'</td>
                 </tr>
                 <tr>
                   <td>ISBN</td>
-                  <td>9786025904532</td>
+                  <td>'.$row['isbn'].'</td>
                 </tr>
                 <tr>
                   <td>SKU</td>
-                  <td>NFTPR001</td>
+                  <td>'.$row['sku'].'</td>
                 </tr>
+                  ';
+                }
+            ?>
               </tbody>
             </table>
           </div>
