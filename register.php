@@ -29,8 +29,8 @@
 
       <div class="col-md-9 form-register-group">
         <form action="services/register.php" method="post">
-          <input type="text" class="form-control form-register" name="lengkap" placeholder="Nama lengkap..." required>
           <input type="text" class="form-control form-register" name="pengguna" id="insert-username" placeholder="Nama pengguna..." required>
+          <input type="text" class="form-control form-register" name="lengkap" placeholder="Nama lengkap..." required>
           <input type="email" class="form-control form-register" name="email" id="insert-email" placeholder="E-mail..." required>
           <input type="password" class="form-control form-register" id="insert-password" name="password" placeholder="Kata sandi..." required>
           <input type="password" class="form-control form-register" placeholder="Ulangi kata sandi..." required>
