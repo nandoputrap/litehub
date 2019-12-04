@@ -101,9 +101,9 @@
 					$target_buku = $target_dir . basename($name_buku);
 					if (move_uploaded_file($_FILES["fileCover"]["tmp_name"], $target_buku)) {
 						$tanggalUpload = date("Y-m-d");
-						$sql = "INSERT into book (img_path, title, author, publisher, description, quantity, category, publish_date, upload_id, isbn, sku) values('$name_buku', '$judulBuku', '$pengarangBuku', '$penerbitBuku', '$deskripsiBuku', $stokBuku, '$category', '$tanggalUpload', '$idUnggah', '$isbn', '$sku');";
+						$sql = "INSERT into book (img_path, title, author, publisher, description, quantity, category, publish_date, upload_id, isbn, sku) values('$name_buku', '$judulBuku', '$pengarangBuku', '$penerbitBuku', '$deskripsiBuku', $stokBuku, '$kategori', '$tanggalUpload', '$idUnggah', '$isbn', '$sku');";
 						$diterima = 'Sudah Diterbitkan';
-						$sql .= "UPDATE unggah SET status = '$diterima' AND file = '$filename' WHERE no = '$idUnggah'";
+						$sql .= "UPDATE unggah SET status = '$diterima', file = '$filename' WHERE no = '$idUnggah'";
 						// Execute multi query
 						if (mysqli_multi_query($conn,$sql))
 						{
@@ -122,7 +122,9 @@
 							}
 						while (mysqli_next_result($con));
 						}
-						header("Location: ./update.php");
+						// $_SESSION['fileEditor'] = $filename;
+						// header("Location: ./update.php");
+						header("Location: ../daftar-pengajuan.php");
 					}else{
 						echo  "<script type='text/javascript'>alert('Upload Cover Error');</script>";
 					}

@@ -151,13 +151,13 @@ function daftarBuku($table) {
             </div>
 
             <form action="services/sell.php" method="post" enctype="multipart/form-data">
-              <input type="text" class="form-control form-register" id="insert-judulBuku" name="judulBuku" placeholder="Judul buku...">
-              <input type="text" class="form-control form-register" id="insert-namaPenulis" name="pengarangBuku" placeholder="Nama penulis...">
-              <input type="text" class="form-control form-register" id="insert-namaPenerbit" name="penerbitBuku" placeholder="Nama penerbit...">
-              <input type="text" class="form-control form-register" id="insert-harga" name="stokBuku" placeholder="Harga...">
+              <input type="text" class="form-control form-register" id="insert-judulBuku" name="judulBuku" placeholder="Judul buku..." required>
+              <input type="text" class="form-control form-register" id="insert-namaPenulis" name="pengarangBuku" placeholder="Nama penulis..." required>
+              <input type="text" class="form-control form-register" id="insert-namaPenerbit" name="penerbitBuku" placeholder="Nama penerbit..." required>
+              <input type="text" class="form-control form-register" id="insert-harga" name="stokBuku" placeholder="Harga..." required>
               <div class="form-group">
                 <label for="kategori"></label>
-                <select class="form-control form-register form-group-kategori" name="kategori" id="kategori">
+                <select class="form-control form-register form-group-kategori" id="insert-kategori" name="kategori" required>
                         <option>-Pilih Kategori-</option>
                         <option>Umum</option>
     										<option>Filsafat</option>
@@ -187,7 +187,7 @@ function daftarBuku($table) {
 
               <div class="form-group">
                 <label for="subkategori"></label>
-                <select class="form-control form-register form-group-kategori" id="subkategori">
+                <select class="form-control form-register form-group-kategori" id="insert-subkategori" name="subkategori" required>
                   <!-- <option>-Pilih kategori-</option> -->
                   <option>-Pilih Sub Kategori-</option>
                   <option>Fiksi</option>
@@ -195,31 +195,31 @@ function daftarBuku($table) {
                 </select>
               </div>
               <div class="form-group">
-                <input type="text" class="form-control form-register" name="isbn" placeholder="ISBN...">
+                <input type="text" class="form-control form-register" id="insert-isbn" name="isbn" placeholder="ISBN..." required>
               </div>
               <div class="form-group">
-                <input type="text" class="form-control form-register" name="sku" placeholder="SKU...">
+                <input type="text" class="form-control form-register" id="insert-sku" name="sku" placeholder="SKU..." required>
               </div>
               <div class="form-group">
-               <textarea class="form-control" rows="5" id="comment" name="deskripsiBuku" placeholder="Deskripsi/Sinopsis buku..."></textarea>
+               <textarea class="form-control" rows="5" id="insert-deskripsi" name="deskripsiBuku" placeholder="Deskripsi/Sinopsis buku..." required></textarea>
               </div>
 
               <div class="form-group">
                 <label for="exampleFormControlFile1">
                   Pilih Cover Buku
                 </label>
-                <input type="file" name="fileCover" id="fileCover">
+                <input type="file" id="insert-fileCover" name="fileCover" required>
               </div>
 
               <div class="form-group">
                 <label for="exampleFormControlFile1">
                   Format buku dalam bentuk .pdf, .epug atau .mobi. Format penulisan dan layout dapat melihat pada halaman <a href="#">ini.</a> Ukuran file maksimal 50 MB.
                 </label>
-                <input type="file" name="fileEditor" id="fileEditor">
+                <input type="file" id="insert-fileEditor" name="fileEditor" required>
               </div>
 
               <input type="hidden" id="insert-command" name="command" value="insert">
-              <input type="hidden" id="insert-unggah" name="idUnggah" value=<?php echo $_GET['id'];?>>
+              <input type="hidden" id="insert-idunggah" name="idUnggah" value=<?php echo $_GET['id'];?>>
               <button type="submit" class="btn btn-primary btn-block btn-ebookhub btn-register">Simpan</button>
             </form>
 
