@@ -16,7 +16,7 @@ function connectDB() {
     return $conn;
 }
 
-$user = $_SESSION['namauser'];
+$user = $_SESSION['user_id'];
 
 if ($user){
 //user is logged in
@@ -27,7 +27,7 @@ if ($user){
         $newpassword = $_POST['PassNew'];
         $repeatnewpassword = $_POST['PassConfirm'];
         //check password against db
-        $queryget = mysqli_query($conn, "SELECT password FROM user WHERE username='$user'");
+        $queryget = mysqli_query($conn, "SELECT password FROM user WHERE user_id='$user'");
         $row = mysqli_fetch_assoc($queryget);
         $oldpassworddb = $row['password'];
         //check passwords
@@ -35,7 +35,7 @@ if ($user){
             //check the new password
             if ($newpassword==$repeatnewpassword){
             //change password in db
-            $sql = "UPDATE user SET password='$newpassword' WHERE username='$user'";
+            $sql = "UPDATE user SET password='$newpassword' WHERE user_id='$user'";
                 if($result = mysqli_query($conn, $sql)) {
                     header("Location: ../edit-password.php");
                 }
