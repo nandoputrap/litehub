@@ -46,8 +46,11 @@ function daftarBuku($table) {
             <div class="panel-heading text-center">
               <h3 class="panel-title">
               <?php
-                if (isset($_SESSION["namauser"])){
-                  echo$_SESSION["nama_lengkap"];
+                if (isset($_SESSION["user_id"])){
+                  $conn = connectDB();
+                  $query = mysqli_query($conn, "SELECT nama_lengkap FROM user WHERE user_id = '".$_SESSION["user_id"]."'");
+                  $name = mysqli_fetch_assoc($query);
+                  echo $name['nama_lengkap'];
                 }
               ?>
               </h3>
@@ -143,11 +146,27 @@ function daftarBuku($table) {
               $daftarbuku = daftarBuku("unggah");
               while ($row = mysqli_fetch_array($daftarbuku)) {
                 if($row[7] == "Sudah Diterbitkan") {
+                  $olddate = $row[6];
+  								$bulan = array (1 =>   	'Januari',
+  														'Februari',
+  														'Maret',
+  														'April',
+  														'Mei',
+  														'Juni',
+  														'Juli',
+  														'Agustus',
+  														'September',
+  														'Oktober',
+  														'November',
+  														'Desember'
+  												);
+  								$split = explode('-', $olddate);
+  								$tanggal = $split[2] . ' ' . $bulan[(int)$split[1]] . ' ' . $split[0];
                   echo '
                   <tr>
                   <td class="text-center">'.$row[1].'</td>
                   <td class="text-center">'.$row[3].'</td>
-                  <td class="text-center">'.$row[6].'</td>
+                  <td class="text-center">'.$tanggal.'</td>
                   <td class="text-center">Sudah Diterbitkan</td>
                   <td class="text-center"><a href="status-pengajuan-detail.php?id='.$row[0].'"><button type="button" class="btn btn-info">Detail</button></a></td>
                 </tr>

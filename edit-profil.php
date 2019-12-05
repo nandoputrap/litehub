@@ -18,6 +18,20 @@ function connectDB() {
   }
   return $conn;
 }
+
+function profile() {
+  $conn = connectDB();
+
+  $user = $_SESSION['user_id'];
+
+  $sql = "SELECT * FROM user where user_id='$user'";
+
+  if(!$result = mysqli_query($conn, $sql)) {
+    die("Error: $sql");
+  }
+  mysqli_close($conn);
+  return $result;
+}
 ?>
 
 <div class="status-pengajuan-detail section-margin">
@@ -36,8 +50,11 @@ function connectDB() {
             <div class="panel-heading text-center">
               <h3 class="panel-title">
               <?php
-                if (isset($_SESSION["namauser"])){
-                  echo$_SESSION["nama_lengkap"];
+                if (isset($_SESSION["user_id"])){
+                  $conn = connectDB();
+                  $query = mysqli_query($conn, "SELECT nama_lengkap FROM user WHERE user_id = '".$_SESSION["user_id"]."'");
+                  $name = mysqli_fetch_assoc($query);
+                  echo $name['nama_lengkap'];
                 }
               ?>
               </h3>
@@ -89,28 +106,30 @@ function connectDB() {
       <div class="col-md-9">
         <h1 class="register-title">Edit Profil</h1>
 
-        <form class="" action="" method="post">
+        <form class="" action="services/change-profile.php" method="post">
         <?php
-          if (isset($_SESSION["namauser"])){
+          if (isset($_SESSION["user_id"])){
+            $profil = profile();
+            $row = mysqli_fetch_row($profil);
             echo'
             <div class="form-group">
               <label for="">Nama Lengkap:</label>
-              <input type="text" class="form-control form-register" value="'.$_SESSION["nama_lengkap"].'">
+              <input name="namalengkap" type="text" class="form-control form-register" value="'.$row[5].'">
             </div>
 
             <div class="form-group">
               <label for="">Nama Pengguna:</label>
-              <input type="text" class="form-control form-register" value="'.$_SESSION["namauser"].'">
+              <input name="username" type="text" class="form-control form-register" value="'.$row[1].'">
             </div>
 
             <div class="form-group">
               <label for="">E-mail:</label>
-              <input type="email" class="form-control form-register" value="'.$_SESSION["email"].'">
+              <input name="email" type="email" class="form-control form-register" value="'.$row[4].'">
             </div>
             ';
           }
         ?>
-          <button type="button" class="btn btn-primary btn-block btn-ebookhub btn-register">Simpan</button>
+          <button name="submit" type="submit" class="btn btn-primary btn-block btn-ebookhub btn-register">Simpan</button>
         </form>
 
 

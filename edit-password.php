@@ -37,8 +37,11 @@ function connectDB() {
             <div class="panel-heading text-center">
               <h3 class="panel-title">
               <?php
-                if (isset($_SESSION["namauser"])){
-                  echo$_SESSION["nama_lengkap"];
+                if (isset($_SESSION["user_id"])){
+                  $conn = connectDB();
+                  $query = mysqli_query($conn, "SELECT nama_lengkap FROM user WHERE user_id = '".$_SESSION["user_id"]."'");
+                  $name = mysqli_fetch_assoc($query);
+                  echo $name['nama_lengkap'];
                 }
               ?>
               </h3>
@@ -62,10 +65,10 @@ function connectDB() {
                         ';
                       }else{
                         echo'
-                        <li class="active-profil">
+                        <li>
                           <a href="lihat-profil.php">Profil</a>
                         </li>
-                        <li>
+                        <li class="active-profil">
                           <a href="edit-password.php">Edit Password</a>
                         </li>
                         <li>
@@ -86,29 +89,24 @@ function connectDB() {
 
       <div class="col-md-9">
         <h1 class="register-title">Edit Password</h1>
-
-
-        <div class="form-group">
-          <label for="">Password Lama:</label>
-          <input type="password" class="form-control form-register">
-        </div>
+        
+        <form name="changepwd" action="services/change-password.php" method="post" enctype="multipart/form-data">
+          <div class="form-group">
+            <label for="">Password Lama:</label>
+            <input name="PassOld" type="password" class="form-control form-register">
+          </div>
 
           <div class="form-group">
             <label for="">Password Baru:</label>
-            <input type="password" class="form-control form-register">
+            <input name="PassNew" type="password" class="form-control form-register">
           </div>
 
           <div class="form-group">
             <label for="">Konfirmasi Password Baru:</label>
-            <input type="password" class="form-control form-register">
+            <input name="PassConfirm" type="password" class="form-control form-register">
           </div>
 
-
-
-
-
-
-          <button type="button" class="btn btn-primary btn-block btn-ebookhub btn-register">Simpan</button>
+          <button type="submit" name="submit" class="btn btn-primary btn-block btn-ebookhub btn-register">Simpan</button>
         </form>
 
 
