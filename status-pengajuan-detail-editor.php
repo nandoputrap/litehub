@@ -54,8 +54,11 @@ function daftarBuku($table) {
             <div class="panel-heading text-center">
             <h3 class="panel-title">
               <?php
-                if (isset($_SESSION["namauser"])){
-                  echo$_SESSION["nama_lengkap"];
+                if (isset($_SESSION["user_id"])){
+                  $conn = connectDB();
+                  $query = mysqli_query($conn, "SELECT nama_lengkap FROM user WHERE user_id = '".$_SESSION["user_id"]."'");
+                  $name = mysqli_fetch_assoc($query);
+                  echo $name['nama_lengkap'];
                 }
               ?>
               </h3>
