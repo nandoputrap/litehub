@@ -114,7 +114,7 @@ function daftarBuku($table) {
                   <tr>
                   <td class="text-center">'.$row[1].'</td>
                   <td class="text-center">'.$row[2].'</td>
-                  <td class="text-center">'.$row[3].'</td>
+                  <td class="text-center">'.$row[7].'</td>
                   <td class="text-center">'.$tanggal.'</td>
                   <td class="text-center"><a href="services/download.php?id='.$row[5].'"><button type="button" class="btn btn-primary" ><i class="fa fa-download"></i> &nbsp;Unduh</button></a></td>
                   <td class="text-center"><a href="status-pengajuan-detail-editor.php?id='.$row[0].'"><button type="button" class="btn btn-warning" > <i class="fa fa-edit"></i> &nbsp;Update</button></a></td>
