@@ -146,22 +146,26 @@ function daftarBuku($table) {
               $daftarbuku = daftarBuku("unggah");
               while ($row = mysqli_fetch_array($daftarbuku)) {
                 if($row[7] == "Sudah Diterbitkan") {
-                  $olddate = $row[6];
-  								$bulan = array (1 =>   	'Januari',
-  														'Februari',
-  														'Maret',
-  														'April',
-  														'Mei',
-  														'Juni',
-  														'Juli',
-  														'Agustus',
-  														'September',
-  														'Oktober',
-  														'November',
-  														'Desember'
-  												);
-  								$split = explode('-', $olddate);
-  								$tanggal = $split[2] . ' ' . $bulan[(int)$split[1]] . ' ' . $split[0];
+                  $conn = connectDB();
+                  $publish = mysqli_query($conn, "SELECT publish_date FROM book WHERE upload_id = '$row[0]'");
+                  while ($pd = mysqli_fetch_array($publish)) {
+                    $olddate = $pd['publish_date'];
+                    $bulan = array (1 =>   	'Januari',
+                                'Februari',
+                                'Maret',
+                                'April',
+                                'Mei',
+                                'Juni',
+                                'Juli',
+                                'Agustus',
+                                'September',
+                                'Oktober',
+                                'November',
+                                'Desember'
+                            );
+                    $split = explode('-', $olddate);
+                    $tanggal = $split[2] . ' ' . $bulan[(int)$split[1]] . ' ' . $split[0]; 
+                  }
                   echo '
                   <tr>
                   <td class="text-center">'.$row[1].'</td>
