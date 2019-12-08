@@ -80,22 +80,6 @@
 
 			if (mysqli_num_rows($detail_unggah) > 0) {
 				$row = mysqli_fetch_assoc($detail_unggah);
-				$olddate = $row['upload_date'];
-				$bulan = array (1 =>   	'Januari',
-				          							'Februari',
-									          		'Maret',
-											          'April',
-											          'Mei',
-											          'Juni',
-											          'Juli',
-											          'Agustus',
-                                'September',
-                                'Oktober',
-                                'November',
-                                'Desember'
-									      );
-				$split = explode('-', $olddate);
-				$tanggal = $split[2] . ' ' . $bulan[(int)$split[1]] . ' ' . $split[0];
         echo'
 
         <div class="col-md-9">
@@ -119,12 +103,62 @@
                 <tr>
                   <td><strong>Deskripsi/Sinopsis Buku</strong></td>
                   <td id="deskripsiBuku">'.$row['description'].'</td>
-                </tr>
-                <tr>
-                  <td><strong>Tanggal Unggah</strong></td>
-                  <td id="tanggalUpload">'.$tanggal.'</td>
-                </tr>
-                <tr>
+                </tr>';
+                //Fungsi if berikut untuk menampilkan detail buku diterbitkan pada mode editor, untuk mode user di status-pengajuan-detail-published
+                if($row['status'] == "Sudah Diterbitkan") {
+                  $conn = connectDB();
+                  $publish = mysqli_query($conn, "SELECT publish_date FROM book WHERE upload_id = '$no'");
+                  while ($pd = mysqli_fetch_array($publish)) {
+                    $old_pd = $pd['publish_date'];
+                    $month = array (1 =>   	'Januari',
+                                            'Februari',
+                                            'Maret',
+                                            'April',
+                                            'Mei',
+                                            'Juni',
+                                            'Juli',
+                                            'Agustus',
+                                            'September',
+                                            'Oktober',
+                                            'November',
+                                            'Desember'
+                            );
+                    $split = explode('-', $old_pd);
+                    $tanggal_terbit = $split[2] . ' ' . $month[(int)$split[1]] . ' ' . $split[0]; 
+                    echo'
+                    <tr>
+                      <td><strong>Tanggal Terbit</strong></td>
+                      <td id="tanggalUpload">'.$tanggal_terbit.'</td>
+                    </tr>
+                  ';
+                  }
+                }
+                //Fungsi else digunakan untuk detail buku dengan status "Dalam proses review" dan "Dalam proses penyuntingan" pada mode user.
+                else{
+                  $olddate = $row['upload_date'];
+                  $bulan = array (1 =>   	'Januari',
+                                          'Februari',
+                                          'Maret',
+                                          'April',
+                                          'Mei',
+                                          'Juni',
+                                          'Juli',
+                                          'Agustus',
+                                          'September',
+                                          'Oktober',
+                                          'November',
+                                          'Desember'
+                                  );
+                  $split = explode('-', $olddate);
+                  $tanggal = $split[2] . ' ' . $bulan[(int)$split[1]] . ' ' . $split[0];
+                  echo'
+                  <tr>
+                    <td><strong>Tanggal Unggah</strong></td>
+                    <td id="tanggalUpload">'.$tanggal.'</td>
+                  </tr>
+                  ';
+                }
+                echo'<tr>
                   <td><strong>Status Pengajuan</strong></td>
                   <td id="status"><h4 class="status">'.$row['status'].'</h4></td>
                 </tr>

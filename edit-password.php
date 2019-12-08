@@ -52,10 +52,10 @@ function connectDB() {
                 <?php
                       if ($_SESSION["role"] === "editor"){
                         echo'
-                        <li class="active-profil">
+                        <li>
                           <a href="lihat-profil.php">Profil</a>
                         </li>
-                        <li>
+                        <li class="active-profil">
                           <a href="edit-password.php">Edit Password</a>
                         </li>
                           <li>

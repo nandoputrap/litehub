@@ -94,6 +94,22 @@ function daftarBuku($table) {
               $daftarbuku = daftarBuku("unggah");
               while ($row = mysqli_fetch_array($daftarbuku)) {
                 if($row[7] == "Dalam Proses Review" || $row[7] == "Dalam Proses Penyuntingan") {
+                  $olddate = $row[6];
+  								$bulan = array (1 =>   	'Januari',
+                                          'Februari',
+                                          'Maret',
+                                          'April',
+                                          'Mei',
+                                          'Juni',
+                                          'Juli',
+                                          'Agustus',
+                                          'September',
+                                          'Oktober',
+                                          'November',
+                                          'Desember'
+  												);
+  								$split = explode('-', $olddate);
+  								$tanggal = $split[2] . ' ' . $bulan[(int)$split[1]] . ' ' . $split[0];
                   echo '
                   <tr>
                   <td><strong>Judul Buku</strong></td>
@@ -113,7 +129,7 @@ function daftarBuku($table) {
                 </tr>
                 <tr>
                   <td><strong>Tanggal Unggah</strong></td>
-                  <td>'.$row[6].'</td>
+                  <td>'.$tanggal.'</td>
                 </tr>
                   ';
                 }
