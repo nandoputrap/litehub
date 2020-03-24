@@ -1,7 +1,7 @@
 function detailBuku(no){
 	bookPurchase(no);
 	$.ajax({
-		url: "https://desolate-reaches-00434.herokuapp.com/services/detail_upload.php",
+		url: "https://ebookhub.herokuapp.com/services/detail_upload.php",
 		datatype: "html",
 		data: { no : no, command : "detail" },
 		method: "POST"
